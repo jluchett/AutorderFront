@@ -1,0 +1,26 @@
+.body {
+    flex: 1;
+  }
+.pages {
+    display: flex;
+    align-items: center;
+    padding: 9px;
+  }
+  
+  .btn-action {
+    font-size: 30px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    padding: 20px;
+    margin: 20px;
+    font-weight: bold;
+  }
+  
+  .btn-action:hover {
+    background-color: dodgerblue;
+  }
+  
+  .btn-action i {
+    font-size: 40px;
+  }

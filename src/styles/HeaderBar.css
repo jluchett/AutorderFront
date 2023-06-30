@@ -1,48 +1,44 @@
 /* Header.css */
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #f2f2f2;
-  }
-  
-  .logo img {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .user-info {
-    display: flex;
-    align-items: center;
-  }
-  
-  .avatar img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .user-details {
-    text-align: right;
-  }
-  
-  .user-name {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .logout-button {
-    padding: 8px 16px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  .logout-button:hover {
-    background-color: #0056b3;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px;
+  background-color: rgb(0, 60, 211);
+}
+
+.logo img {
+  width: 80%;
+  height: 50px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.avatar i {
+  font-size: 25px;
+  margin-right: 10px;
+  color: #fe9a02;
+}
+
+.user-name {
+  font-size: 18px;
+    
+  color: #fff;
+}
+
+.logout-button {
+  padding: 5px 16px;
+  background-color: rgb(201, 27, 27);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 10px;
+}
+
+.logout-button:hover {
+  background-color: #f73838;
+}

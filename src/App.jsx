@@ -1,10 +1,9 @@
-
-import './App.css'
+//App.jsx
+import './styles/App.css'
 import Home from './pages/Home'
 
 function App() {
   
-
   return (
     <>
       <Home/>
