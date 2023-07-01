@@ -2,14 +2,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
+import '../styles/HeaderBar.css'
 
 const HeaderBar = () => {
   const user = useStore((state) => state.user);
   const logout = useStore((state) => state.logout);
   const navigate = useNavigate();
 
+  console.log(user)
   const handleLogout = () => {
     logout();
+    localStorage.removeItem('user');
     navigate('/login');
   };
 
@@ -22,7 +25,7 @@ const HeaderBar = () => {
         <div className="avatar">
           <i className="fa-solid fa-user"></i>
         </div>
-        <p className="user-name">{user ? user.name : 'Nombre user'}</p>
+        <p className="user-name">{user.name}</p>
         <button className="logout-button" onClick={handleLogout}>
           Salir
         </button>
