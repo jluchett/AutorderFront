@@ -1,9 +1,18 @@
-//componente HeaderBar.jsx
 // eslint-disable-next-line no-unused-vars
-import React from "react";
-import "../styles/HeaderBar.css";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import useStore from '../store';
 
-const HeaderBar = (user, onLogout) => {
+const HeaderBar = () => {
+  const user = useStore((state) => state.user);
+  const logout = useStore((state) => state.logout);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <header className="header">
       <div className="logo">
@@ -12,10 +21,9 @@ const HeaderBar = (user, onLogout) => {
       <div className="user-info">
         <div className="avatar">
           <i className="fa-solid fa-user"></i>
-          
         </div>
-        <p className="user-name">Jorge Luchetta</p>
-        <button className="logout-button" onClick={onLogout}>
+        <p className="user-name">{user ? user.name : 'Nombre user'}</p>
+        <button className="logout-button" onClick={handleLogout}>
           Salir
         </button>
       </div>
@@ -24,3 +32,4 @@ const HeaderBar = (user, onLogout) => {
 };
 
 export default HeaderBar;
+
