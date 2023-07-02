@@ -1,0 +1,80 @@
+.users-page {
+  padding: 10px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table th {
+  font-weight: bold;
+  text-align: left;
+  padding: 5px;
+  background-color: #f2f2f2;
+}
+
+.table td {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.actions button.edit {
+  background-color: #4caf50;
+  color: white;
+}
+
+.actions button.delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.actions button.lock {
+  background-color: #ffc107;
+  color: black;
+}
+
+.actions button:hover {
+  opacity: 0.8;
+}
+
+.regresar-button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #0034f1;
+  opacity: 0.8;
+  color: white;
+  border-radius: 10px;
+}
+
+.regresar-button:hover {
+  opacity: 1;
+}

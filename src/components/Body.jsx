@@ -1,8 +1,14 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
-import '../styles/Body.css'
+import { useNavigate } from "react-router-dom";
+import "../styles/Body.css";
 
 const Body = () => {
+  const navigate = useNavigate();
+  const salir = () => {
+    console.log("se ejeuto la funcion salir")
+    navigate("/users");
+  };
   return (
     <div className="body">
       <div className="pages">
@@ -23,7 +29,7 @@ const Body = () => {
           <p></p>
           Vehiculos
         </button>
-        <button className="btn-action">
+        <button className="btn-action" onClick={salir}>
           <i className="fa-solid fa-circle-user"></i>
           <p></p>
           Usuarios

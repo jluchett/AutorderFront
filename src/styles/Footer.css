@@ -4,8 +4,8 @@
   left: 0;
   width: 100%;
   height: 60px; /* Ajusta el tamaño del footer según sea necesario */
-  
   text-align: center;
+  flex-shrink: 0; /* Evitar que el Footer se encoja */
 }
 
 .social-icons {

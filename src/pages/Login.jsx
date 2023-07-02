@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useStore from "../store";
+import Footer from "../components/Footer";
 import "../styles/Login.css";
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
 
     try {
       // Realizar la llamada al backend para verificar las credenciales
-      const response = await fetch("http://localhost:3001/auth/login", {
+      const response = await fetch("http://192.168.1.9:3001/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,7 +27,7 @@ const Login = () => {
       if (response.ok) {
         const user = await response.json();
         login(user.user);
-        localStorage.setItem('user', JSON.stringify(user.user));
+        localStorage.setItem("user", JSON.stringify(user.user));
         navigate("/");
       } else {
         // Manejo de error de inicio de sesión inválido
@@ -40,39 +41,50 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h1 className="login-title">Iniciar sesión</h1>
-      <form className="login-form" onSubmit={handleLogin}>
-        <div className="form-group">
-          <label htmlFor="id" className="form-label">
-            Usuario:
-          </label>
-          <input
-            type="text"
-            id="id"
-            value={id}
-            name="id"
-            onChange={(e) => setId(e.target.value)}
-            className="form-input"
-          />
+    <div>
+      <header className="header">
+        <div className="logo">
+          <img src="/src/assets/LogoH.png" alt="Logo de la empresa" />
         </div>
-        <div className="form-group">
-          <label htmlFor="password" className="form-label">
-            Contraseña:
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="form-input"
-          />
+      </header>
+      <div className="login-container">
+      <i className="fa-solid fa-user-lock"></i>
+        <h1>Inicia Sesión</h1>
+        <div className="form-container">
+          <form className="login-form" onSubmit={handleLogin}>
+            <div className="form-group">
+              <label htmlFor="id" className="form-label">
+                Usuario
+              </label>
+              <input
+                type="text"
+                id="id"
+                value={id}
+                placeholder="Numero de identificacion"
+                onChange={(e) => setId(e.target.value)}
+                className="form-input"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password" className="form-label">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-input"
+              />
+            </div>
+            <button type="submit" className="login-button">
+              Iniciar sesión
+            </button>
+          </form>
         </div>
-        <button type="submit" className="login-button">
-          Iniciar sesión
-        </button>
-      </form>
+      </div>
+      <Footer />
     </div>
   );
 };

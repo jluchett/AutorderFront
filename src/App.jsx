@@ -10,6 +10,7 @@ import useStore from "./store";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import "./styles/App.css";
+import Users from "./pages/Users";
 
 const App = () => {
   const { user, login } = useStore();
@@ -25,8 +26,6 @@ const App = () => {
     }
   }
 
-  console.log(user);
-
   return (
     <Router>
       <Routes>
@@ -34,6 +33,10 @@ const App = () => {
         <Route
           path="/login"
           element={!user ? <Login /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/users"
+          element={user ? <Users /> : <Navigate to="/login" />}
         />
       </Routes>
     </Router>
