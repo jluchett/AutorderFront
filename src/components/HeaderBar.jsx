@@ -9,7 +9,6 @@ const HeaderBar = () => {
   const logout = useStore((state) => state.logout);
   const navigate = useNavigate();
 
-  console.log(user)
   const handleLogout = () => {
     logout();
     localStorage.removeItem('user');

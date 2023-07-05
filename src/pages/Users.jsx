@@ -1,11 +1,13 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
 import "../styles/Users.css";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Lógica para obtener los usuarios de la base de datos
@@ -53,6 +55,10 @@ const Users = () => {
     }
   };
 
+  const backToMain = () => {
+    navigate('/')
+  }
+
   return (
     <>
       <HeaderBar />
@@ -98,7 +104,7 @@ const Users = () => {
             </tbody>
           </table>
         </div>
-        <button className="regresar-button">Regresar</button>
+        <button className="regresar-button" onClick={backToMain}>Regresar</button>
       </div>
       <Footer />
     </>
