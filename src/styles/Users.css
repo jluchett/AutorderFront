@@ -1,8 +1,8 @@
 .users-page {
-  padding: 10px;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .title {
@@ -32,7 +32,7 @@
   padding: 5px;
   border-bottom: 1px solid #ccc;
   white-space: nowrap;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .actions {
@@ -77,4 +77,27 @@
 
 .regresar-button:hover {
   opacity: 1;
+}
+
+/* Media Queries */
+@media screen and (max-width: 767px) {
+  /* Estilos para pantallas de hasta 767px de ancho (celulares) */
+  .users-page {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  .table {
+    font-size: 16px;
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 5px;
+  }
+
 }
