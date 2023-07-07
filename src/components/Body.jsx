@@ -5,8 +5,7 @@ import "../styles/Body.css";
 
 const Body = () => {
   const navigate = useNavigate();
-  const salir = () => {
-    console.log("se ejeuto la funcion salir")
+  const goToUsers = () => {
     navigate("/users");
   };
   return (
@@ -29,7 +28,7 @@ const Body = () => {
           <p></p>
           Vehiculos
         </button>
-        <button className="btn-action" onClick={salir}>
+        <button className="btn-action" onClick={goToUsers}>
           <i className="fa-solid fa-circle-user"></i>
           <p></p>
           Usuarios

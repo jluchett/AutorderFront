@@ -65,20 +65,24 @@
   opacity: 0.8;
 }
 
-.regresar-button {
+.agregar-button {
   padding: 10px 20px;
   border: none;
   cursor: pointer;
-  background-color: #0034f1;
+  background-color: #46c012;
   opacity: 0.8;
   color: white;
   border-radius: 10px;
+  text-decoration: none;
+  margin-right: 10px;
+}
+.agregar-button:hover {
+  opacity: 1;
 }
 
 .regresar-button:hover {
   opacity: 1;
 }
-
 /* Media Queries */
 @media screen and (max-width: 767px) {
   /* Estilos para pantallas de hasta 767px de ancho (celulares) */

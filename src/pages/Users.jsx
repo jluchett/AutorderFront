@@ -1,38 +1,40 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
+import useStore from "../store";
+import { fetchUsers } from "../api";
 import "../styles/Users.css";
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
-  const navigate = useNavigate();
+  const users= useStore((state) => state.users);
+  const setUsers= useStore((state) => state.setUsers);
 
   useEffect(() => {
     // Lógica para obtener los usuarios de la base de datos
     // y almacenarlos en el estado "users"
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("http://192.168.1.9:3001/users/users");
-        const data = await response.json();
-        setUsers(data.users);
-      } catch (error) {
-        console.log("Error fetching users:", error);
-      }
+    const getUsers = async () => {
+      const data = await fetchUsers();
+      setUsers(data);
     };
 
-    fetchUsers();
-  }, []);
+    getUsers();
+  },[setUsers]);
 
   const deleteUser = async (userId) => {
     // Lógica para eliminar un usuario de la base de datos
     try {
-      await fetch(`http://localhost:3001/users/${userId}`, {
-        method: "DELETE",
-      });
-      // Actualizar el estado "users" eliminando el usuario eliminado
-      setUsers(users.filter((user) => user.id !== userId));
+      const confirmed = window.confirm(
+        "¿Estás seguro de que deseas eliminar este usuario?"
+      );
+      if (confirmed) {
+        await fetch(`http://192.168.1.9:3001/users/${userId}`, {
+          method: "DELETE",
+        });
+        // Actualizar el estado "users" eliminando el usuario eliminado
+        setUsers(users.filter((user) => user.id !== userId));
+      }
     } catch (error) {
       console.log("Error deleting user:", error);
     }
@@ -41,7 +43,7 @@ const Users = () => {
   const lockUser = async (userId) => {
     // Lógica para bloquear un usuario en la base de datos
     try {
-      await fetch(`http://localhost:3001/users/${userId}/lock`, {
+      await fetch(`http://192.168.1.9:3001/users/${userId}/lock`, {
         method: "PUT",
       });
       // Actualizar el estado "users" modificando el campo de estado del usuario bloqueado
@@ -54,10 +56,6 @@ const Users = () => {
       console.log("Error locking user:", error);
     }
   };
-
-  const backToMain = () => {
-    navigate('/')
-  }
 
   return (
     <>
@@ -80,7 +78,7 @@ const Users = () => {
                   <td>{user.name}</td>
                   <td className="actions">
                     <button className="edit">
-                    <i className="fa-solid fa-pen-to-square"></i>
+                      <i className="fa-solid fa-pen-to-square"></i>
                     </button>
                     <button
                       className="delete"
@@ -93,10 +91,12 @@ const Users = () => {
                         className="lock"
                         onClick={() => lockUser(user.id)}
                       >
-                        <i className="fa-solid fa-lock"></i>
+                        <i className="fa-solid fa-lock-open"></i>
                       </button>
                     ) : (
-                      <span className="locked-status">Bloqueado</span>
+                      <button className="locked-status">
+                        <i className="fa-solid fa-lock"></i>
+                      </button>
                     )}
                   </td>
                 </tr>
@@ -104,7 +104,12 @@ const Users = () => {
             </tbody>
           </table>
         </div>
-        <button className="regresar-button" onClick={backToMain}>Regresar</button>
+        <button className="agregar-button" to={"/"}>
+          Agregar Usuario
+        </button>
+        <Link className="regresar-button" to={"/"}>
+          Ir a Home
+        </Link>
       </div>
       <Footer />
     </>
