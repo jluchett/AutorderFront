@@ -4,23 +4,23 @@ import { Link } from "react-router-dom";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
 import useStore from "../store";
-import { fetchUsers } from "../api";
+import { actualUsers } from "../api";
 import "../styles/Users.css";
 
 const Users = () => {
-  const users= useStore((state) => state.users);
-  const setUsers= useStore((state) => state.setUsers);
+  const users = useStore((state) => state.users);
+  const setUsers = useStore((state) => state.setUsers);
 
   useEffect(() => {
     // Lógica para obtener los usuarios de la base de datos
     // y almacenarlos en el estado "users"
     const getUsers = async () => {
-      const data = await fetchUsers();
+      const data = await actualUsers();
       setUsers(data);
     };
 
     getUsers();
-  },[setUsers]);
+  }, [setUsers]);
 
   const deleteUser = async (userId) => {
     // Lógica para eliminar un usuario de la base de datos
@@ -29,11 +29,12 @@ const Users = () => {
         "¿Estás seguro de que deseas eliminar este usuario?"
       );
       if (confirmed) {
-        await fetch(`http://192.168.1.9:3001/users/${userId}`, {
+        await fetch(`http://192.168.1.9:3001/users/delete/${userId}`, {
           method: "DELETE",
         });
         // Actualizar el estado "users" eliminando el usuario eliminado
-        setUsers(users.filter((user) => user.id !== userId));
+        const data = await actualUsers();
+        setUsers(data);
       }
     } catch (error) {
       console.log("Error deleting user:", error);
@@ -43,17 +44,28 @@ const Users = () => {
   const lockUser = async (userId) => {
     // Lógica para bloquear un usuario en la base de datos
     try {
-      await fetch(`http://192.168.1.9:3001/users/${userId}/lock`, {
-        method: "PUT",
-      });
-      // Actualizar el estado "users" modificando el campo de estado del usuario bloqueado
-      setUsers(
-        users.map((user) =>
-          user.id === userId ? { ...user, locked: true } : user
-        )
+      // Obtener el usuario actual por su ID
+      const user = users.find((user) => user.id === userId);
+      // Invertir el valor del campo "locked"
+      const newLockedValue = !user.locked;
+
+      const confirmed = window.confirm(
+        "¿Estás seguro de que deseas eliminar este usuario?"
       );
+      if (confirmed) {
+        await fetch(`http://192.168.1.9:3001/users/lock/${userId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ locked: newLockedValue }),
+        });
+        // Actualizar el estado "users" modificando el campo de estado del usuario bloqueado
+        const data = await actualUsers();
+        setUsers(data);
+      }
     } catch (error) {
-      console.log("Error locking user:", error);
+      console.log("Error updating user:", error);
     }
   };
 
@@ -94,7 +106,10 @@ const Users = () => {
                         <i className="fa-solid fa-lock-open"></i>
                       </button>
                     ) : (
-                      <button className="locked-status">
+                      <button
+                        className="locked-status"
+                        onClick={() => lockUser(user.id)}
+                      >
                         <i className="fa-solid fa-lock"></i>
                       </button>
                     )}
