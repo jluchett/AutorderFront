@@ -50,7 +50,7 @@ const Users = () => {
       const newLockedValue = !user.locked;
 
       const confirmed = window.confirm(
-        "¿Estás seguro de que deseas eliminar este usuario?"
+        "Esto cambiará el acceso del usuario la aplicacion \n¿Desea continuar?"
       );
       if (confirmed) {
         await fetch(`http://192.168.1.9:3001/users/lock/${userId}`, {
@@ -89,9 +89,11 @@ const Users = () => {
                   <td>{user.id}</td>
                   <td>{user.name}</td>
                   <td className="actions">
-                    <button className="edit">
-                      <i className="fa-solid fa-pen-to-square"></i>
-                    </button>
+                    <Link to={`/users/${user.id}`}>
+                      <button className="edit">
+                        <i className="fa-solid fa-pen-to-square"></i>
+                      </button>
+                    </Link>
                     <button
                       className="delete"
                       onClick={() => deleteUser(user.id)}
