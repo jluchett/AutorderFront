@@ -2,10 +2,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useStore from "../store";
+import '../styles/InfoUser.css'
 
 const InfoUser = () => {
   const { userId } = useParams();
   const { users } = useStore();
+  console.log(users)
+  console.log(userId)
   const user = users.find((user) => user.id === userId);
 
   if (!user) {
@@ -13,7 +16,7 @@ const InfoUser = () => {
   }
 
   return (
-    <div>
+    <div className="info-user">
       <h2>Información del usuario</h2>
       <form>
         <div>
