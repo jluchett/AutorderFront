@@ -16,7 +16,7 @@ const Login = () => {
 
     try {
       // Realizar la llamada al backend para verificar las credenciales
-      const response = await fetch("http://192.168.1.9:3001/auth/login", {
+      const response = await fetch("http://192.168.1.20:3001/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
