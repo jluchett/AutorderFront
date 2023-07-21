@@ -11,20 +11,30 @@ const InfoUser = () => {
 
   const [editingName, setEditingName] = useState(false);
   const [newName, setNewName] = useState(user.name);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
+    setShowSuccessMessage(false);
   };
 
-  const handleSaveName = () => {
+  const handleSaveName = async () => {
     // Lógica para guardar el nuevo nombre en la base de datos
-    
-    console.log("Nuevo nombre:", newName);
+    await fetch(`http://192.168.1.9:3001/users/update/${user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: newName }),
+    });
+    user.name = newName
     setEditingName(false);
+    setShowSuccessMessage(true);
   };
 
   const handleEditName = () => {
     setEditingName(true);
+    setShowSuccessMessage(false);
   };
 
   const handleCancelEditName = () => {
@@ -62,6 +72,9 @@ const InfoUser = () => {
             <span>{user.locked.toString()}</span>
           </div>
         </div>
+        {showSuccessMessage && (
+          <div className="success-message">Nombre modificado exitosamente</div>
+        )}
         <div>
           {editingName ? (
             <div className="name-display">
@@ -95,7 +108,7 @@ const InfoUser = () => {
         <Link className="regresar-button" to={"/"}>
           Regresar a Home
         </Link>
-        <span className="separador"></span> 
+        <span className="separador"></span>
         <Link className="regresar-button" to={"/users"}>
           Regresar a Usuarios
         </Link>
