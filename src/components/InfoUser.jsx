@@ -12,6 +12,10 @@ const InfoUser = () => {
   const [editingName, setEditingName] = useState(false);
   const [newName, setNewName] = useState(user.name);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -27,7 +31,7 @@ const InfoUser = () => {
       },
       body: JSON.stringify({ name: newName }),
     });
-    user.name = newName
+    user.name = newName;
     setEditingName(false);
     setShowSuccessMessage(true);
   };
@@ -42,11 +46,27 @@ const InfoUser = () => {
     setEditingName(false);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = async (e) => {
     e.preventDefault();
+    if (password.length < 8) {
+      setErrorMessage("La contraseña debe tener al menos 8 caracteres.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrorMessage("Las contraseñas no coinciden.");
+      return;
+    }
     // Lógica para cambiar la contraseña del usuario
+    await fetch(`http://192.168.1.9:3001/users/update/${user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: newName, password }),
+    });
     // Implementar la lógica de cambio de contraseña según tus necesidades
-    console.log("Cambio de contraseña");
+    setSuccessMessage("Contraseña cambiada exitosamente")
   };
 
   if (!user) {
@@ -94,12 +114,34 @@ const InfoUser = () => {
           <form>
             <div>
               <label>Nueva contraseña:</label>
-              <input type="password" />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setErrorMessage("");
+                  setSuccessMessage("");
+                }}
+              />
             </div>
             <div>
               <label>Confirmar contraseña:</label>
-              <input type="password" />
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  setErrorMessage("");
+                  setSuccessMessage("");
+                }}
+              />
             </div>
+            {errorMessage && (
+              <span className="error-message">{errorMessage}</span>
+            )}
+            {successMessage && (
+              <span className="success-message">{successMessage}</span>
+            )}
             <button onClick={handlePasswordChange}>Guardar</button>
           </form>
         </div>
