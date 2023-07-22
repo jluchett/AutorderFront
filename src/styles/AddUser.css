@@ -1,0 +1,72 @@
+.encabezado {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos para el ícono del usuario */
+.user-add {
+  font-size: 40px;
+  margin-right: 10px;
+  color: green;
+}
+
+.form-add {
+  padding: 20px;
+  padding-bottom: 5px;
+}
+
+/* Estilos para el contenedor del input con el efecto "floating label" */
+.input-container {
+  position: relative;
+}
+
+/* Estilos para el label que actuará como el "floating label" */
+.label-float {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  pointer-events: none;
+  font-size: 16px;
+  color: #545454;
+  transition: 0.2s ease-out;
+  opacity: 0.5;
+  transform-origin: 0 0;
+}
+
+/* Estilos para el input */
+.input-float {
+  width: 96%;
+  padding-top: 15px;
+  padding-left: 10px;
+  padding-bottom: 3px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Estilos para el label (placeholder) cuando el input está enfocado o tiene contenido */
+.input-float:focus + .label-float,
+.input-float:not(:placeholder-shown) + .label-float {
+  transform: translateY(-8px) scale(0.7);
+  opacity: 0.8;
+}
+
+/* Estilos para el botón con efecto hover */
+.add-button {
+  width: 100%;
+  padding: 8px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}

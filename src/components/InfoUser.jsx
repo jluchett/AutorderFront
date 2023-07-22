@@ -66,7 +66,7 @@ const InfoUser = () => {
       body: JSON.stringify({ name: newName, password }),
     });
     // Implementar la lógica de cambio de contraseña según tus necesidades
-    setSuccessMessage("Contraseña cambiada exitosamente")
+    setSuccessMessage("Contraseña cambiada exitosamente");
   };
 
   if (!user) {
@@ -79,7 +79,7 @@ const InfoUser = () => {
         <h2>Datos del usuario</h2>
         <div className="user-details">
           <div className="user-image">
-            <i className="fa-solid fa-user-tie"></i>
+            <i className="fa-solid fa-user"></i>
           </div>
           <div className="user-data">
             <label>ID: </label>

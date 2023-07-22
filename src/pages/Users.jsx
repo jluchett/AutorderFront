@@ -121,9 +121,9 @@ const Users = () => {
             </tbody>
           </table>
         </div>
-        <button className="agregar-button" to={"/"}>
+        <Link className="agregar-button" to={"/users/add"}>
           Agregar Usuario
-        </button>
+        </Link>
         <Link className="regresar-button" to={"/"}>
           Ir a Home
         </Link>
