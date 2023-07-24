@@ -17,6 +17,7 @@ const AddUser = () => {
     e.preventDefault();
     if (!id || !name) {
       setErrorMesage("Todos los datos son necesarios");
+      setSuccesMesage("")
       return;
     }
     // Comprobar aquí si el campo de entrada contiene solo números
@@ -24,14 +25,17 @@ const AddUser = () => {
     if (!isNumeric) {
       // Muestra un mensaje de error o realiza otra acción en caso de que el campo no contenga solo números
       setErrorMesage("El campo Identificacion debe contener solo números.");
+      setSuccesMesage("")
       return;
     }
     if (password.length < 8) {
       setErrorMesage("La contraseña debe tener al menos 8 caracteres");
+      setSuccesMesage("")
       return;
     }
     if (password != confPassword) {
       setErrorMesage("La confrmacion es diferente a la contraseña");
+      setSuccesMesage("")
       return;
     }
     fetch("http://192.168.1.9:3001/users/signup", {
@@ -48,6 +52,10 @@ const AddUser = () => {
       .then((response) => response.json())
       .then((data) => {
         data.succes ? setSuccesMesage(data.message) : setErrorMesage(data.message)
+        setId("")
+        setName("")
+        setPassword("")
+        setConfPassword("")
       })
       .catch((error) => {
         console.log(error);
