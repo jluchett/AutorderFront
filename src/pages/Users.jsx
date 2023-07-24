@@ -94,12 +94,6 @@ const Users = () => {
                         <i className="fa-solid fa-pen-to-square"></i>
                       </button>
                     </Link>
-                    <button
-                      className="delete"
-                      onClick={() => deleteUser(user.id)}
-                    >
-                      <i className="fa-regular fa-trash-can"></i>
-                    </button>
                     {!user.locked ? (
                       <button
                         className="lock"
@@ -115,6 +109,12 @@ const Users = () => {
                         <i className="fa-solid fa-lock"></i>
                       </button>
                     )}
+                    <button
+                      className="delete"
+                      onClick={() => deleteUser(user.id)}
+                    >
+                      <i className="fa-regular fa-trash-can"></i>
+                    </button>
                   </td>
                 </tr>
               ))}
