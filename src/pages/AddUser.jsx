@@ -15,19 +15,43 @@ const AddUser = () => {
 
   const handledSubmit = (e) => {
     e.preventDefault();
-    if( !id || !name ) {
-      setErrorMesage("Todos los datos son necesarios")
-      return
+    if (!id || !name) {
+      setErrorMesage("Todos los datos son necesarios");
+      return;
     }
-    if (password.length < 8){
-      setErrorMesage("La contraseña debe tener al menos 8 caracteres")
-      return
+    // Comprobar aquí si el campo de entrada contiene solo números
+    const isNumeric = /^\d+$/.test(id);
+    if (!isNumeric) {
+      // Muestra un mensaje de error o realiza otra acción en caso de que el campo no contenga solo números
+      setErrorMesage("El campo Identificacion debe contener solo números.");
+      return;
+    }
+    if (password.length < 8) {
+      setErrorMesage("La contraseña debe tener al menos 8 caracteres");
+      return;
     }
     if (password != confPassword) {
-      setErrorMesage("La confrmacion es diferente a la contraseña")
-      return
+      setErrorMesage("La confrmacion es diferente a la contraseña");
+      return;
     }
-    return setSuccesMesage("Datos almacenados")
+    fetch("http://192.168.1.9:3001/users/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        name,
+        password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        data.succes ? setSuccesMesage(data.message) : setErrorMesage(data.message)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -51,6 +75,8 @@ const AddUser = () => {
                 value={id}
                 onChange={(e) => {
                   setId(e.target.value);
+                  setErrorMesage("");
+                  setSuccesMesage("");
                 }}
               />
               <label className="label-float">Número identificación</label>
@@ -64,6 +90,8 @@ const AddUser = () => {
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
+                  setErrorMesage("");
+                  setSuccesMesage("");
                 }}
               />
               <label className="label-float">Nombre usuario</label>
@@ -77,6 +105,8 @@ const AddUser = () => {
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
+                  setErrorMesage("");
+                  setSuccesMesage("");
                 }}
               />
               <label className="label-float">Contraseña</label>
@@ -90,6 +120,8 @@ const AddUser = () => {
                 value={confPassword}
                 onChange={(e) => {
                   setConfPassword(e.target.value);
+                  setErrorMesage("");
+                  setSuccesMesage("");
                 }}
               />
               <label className="label-float">Confirmar contraseña</label>
