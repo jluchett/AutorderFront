@@ -73,7 +73,12 @@ const Users = () => {
     <>
       <HeaderBar />
       <div className="users-page">
-        <h2 className="title">Usuarios</h2>
+        <div className="encabezado">
+          <div className="users">
+            <i className="fa-solid fa-users"></i>
+          </div>
+          <h2>Usuarios</h2>
+        </div>
         <div className="table-container">
           <table className="table">
             <thead>

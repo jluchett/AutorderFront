@@ -8,3 +8,14 @@ export const actualUsers = async () => {
     return [];
   }
 };
+
+export const actualClients = async () => {
+  try {
+    const response = await fetch("http://192.168.1.9:3001/clients/");
+    const data = await response.json();
+    return data.clients;
+  } catch (error) {
+    console.log("Error fetching clients");
+    return [];
+  }
+}

@@ -8,6 +8,10 @@ const Body = () => {
   const goToUsers = () => {
     navigate("/users");
   };
+
+  const goToClients = () => {
+    navigate("/clients");
+  };
   return (
     <div className="body">
       <div className="pages">
@@ -18,12 +22,12 @@ const Body = () => {
           <p></p>
           Ordenes
         </button>
-        <button className="btn-action">
+        <button className="btn-action" onClick={goToClients}>
           <i className="fa-solid fa-id-card"></i>
           <p></p>
           Clientes
         </button>
-        <button className="btn-action">
+        <button className="btn-action" >
           <i className="fa-solid fa-car-side"></i>
           <p></p>
           Vehiculos

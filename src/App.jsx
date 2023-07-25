@@ -8,6 +8,7 @@ import "./styles/App.css";
 import Users from "./pages/Users";
 import UserDetail from "./pages/UserDetail";
 import AddUser from "./pages/AddUser";
+import Clients from "./pages/Clients";
 
 const App = () => {
   const { user, login } = useStore();
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/users" element={user ? <Users /> : <Navigate to="/login" />} />
         <Route path="/users/:userId" element={user ? <UserDetail /> : <Navigate to="/login" />} />
         <Route path="/users/add" element={user ? <AddUser /> : <Navigate to="/login" />} />
+        <Route path="/clients" element={user ? <Clients/> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
