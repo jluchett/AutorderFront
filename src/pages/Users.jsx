@@ -12,8 +12,7 @@ const Users = () => {
   const setUsers = useStore((state) => state.setUsers);
 
   useEffect(() => {
-    // Lógica para obtener los usuarios de la base de datos
-    // y almacenarlos en el estado "users"
+    // Lógica para obtener los usuarios de la base de datos y almacenarlos en el estado "users"
     const getUsers = async () => {
       const data = await actualUsers();
       setUsers(data);

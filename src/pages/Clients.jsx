@@ -19,8 +19,23 @@ const Clients = () => {
     getClients();
   }, [setClients]);
 
-  const deleteClient = () => {
-    alert("Hola mundo")
+  const deleteClient = async(clientId) => {
+    // Lógica para eliminar un cliente de la base de datos
+    try {
+      const confirmed = window.confirm(
+        "¿Estás seguro de que deseas eliminar este Cliente?"
+      );
+      if (confirmed) {
+        await fetch(`http://192.168.1.9:3001/clients/delete/${clientId}`, {
+          method: "DELETE",
+        });
+        // Actualizar el estado "clients" eliminando el cliente 
+        const data = await actualClients();
+        setClients(data);
+      }
+    } catch (error) {
+      console.log("Error al eliminar cliente:", error);
+    }
   };
 
   return (
@@ -65,8 +80,8 @@ const Clients = () => {
             </tbody>
           </table>
         </div>
-        <Link className="agregar-button" to={"/users/add"}>
-          Agregar Usuario
+        <Link className="agregar-button" to={"/clients/add"}>
+          Agregar Cliente
         </Link>
         <Link className="regresar-button" to={"/"}>
           Ir a Home
