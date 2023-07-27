@@ -17,7 +17,7 @@ const Clients = () => {
       setClients(data);
     };
     getClients();
-  }, [setClients]);
+  },[setClients]);
 
   const deleteClient = async(clientId) => {
     // Lógica para eliminar un cliente de la base de datos
