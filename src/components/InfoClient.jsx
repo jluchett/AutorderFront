@@ -92,8 +92,46 @@ const InfoClient = () => {
                   onChange={handleChange}
                 />
               </div>
+
               <button onClick={handleSaveClient}>Guardar</button>
               <button onClick={handleCancelEdit}>Cancelar</button>
+
+              <div className="password-change">
+                <h3>Cambiar contraseña</h3>
+                <form>
+                  <div>
+                    <label>Nueva contraseña:</label>
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        setErrorMessage("");
+                        setSuccessMessage("");
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label>Confirmar contraseña:</label>
+                    <input
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                        setErrorMessage("");
+                        setSuccessMessage("");
+                      }}
+                    />
+                  </div>
+                  {errorMessage && (
+                    <span className="error-message">{errorMessage}</span>
+                  )}
+                  {successMessage && (
+                    <span className="success-message">{successMessage}</span>
+                  )}
+                  <button onClick={handlePasswordChange}>Guardar</button>
+                </form>
+              </div>
             </div>
           ) : (
             <div className="name-display">
