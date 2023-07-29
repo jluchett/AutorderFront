@@ -9,22 +9,28 @@ const InfoClient = () => {
   const client = clients.find((cli) => cli.id === clientId);
   const [datos, setDatos] = useState(client);
   const [editingClient, setEditingClient] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     setDatos({
       ...datos,
       [e.target.name]: e.target.value,
     });
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
-  const handleSaveClient = async () => {
+  const handleSaveClient = async (e) => {
+    e.preventDefault();
+    console.log(datos)
     // Lógica para guardar nuevos datos en la base de datos
     await fetch(`http://192.168.1.9:3001/clients/update/${client.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ datos }),
+      body: JSON.stringify(datos),
     });
     setEditingClient(false);
   };
@@ -47,80 +53,50 @@ const InfoClient = () => {
           </div>
           <div className="user-data">
             <label>ID: </label>
-            <span>{client.id}</span>
+            <span>{datos.id}</span>
             <div>
               <label>Nombre: </label>
-              <span>{client.nombre}</span>
+              <span>{datos.nombre}</span>
             </div>
             <label>Telefono: </label>
-            <span>{client.telefono}</span>
+            <span>{datos.telefono}</span>
             <div>
               <label>Email: </label>
-              <span>{client.email}</span>
+              <span>{datos.email}</span>
             </div>
           </div>
         </div>
         <div>
           {editingClient ? (
             <div className="name-display">
-              <div>
-                <label>Nombre: </label>
-                <input
-                  type="text"
-                  name="nombre"
-                  value={datos.nombre}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div>
-                <label>Telefono: </label>
-                <input
-                  type="text"
-                  name="telefono"
-                  value={datos.telefono}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div>
-                <label>Email: </label>
-                <input
-                  type="text"
-                  name="email"
-                  value={datos.email}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <button onClick={handleSaveClient}>Guardar</button>
-              <button onClick={handleCancelEdit}>Cancelar</button>
-
               <div className="password-change">
                 <h3>Cambiar contraseña</h3>
                 <form>
                   <div>
-                    <label>Nueva contraseña:</label>
+                    <label>Nombre: </label>
                     <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                        setErrorMessage("");
-                        setSuccessMessage("");
-                      }}
+                      type="text"
+                      name="nombre"
+                      value={datos.nombre}
+                      onChange={handleChange}
                     />
                   </div>
                   <div>
-                    <label>Confirmar contraseña:</label>
+                    <label>Telefono: </label>
                     <input
-                      type="password"
-                      value={confirmPassword}
-                      onChange={(e) => {
-                        setConfirmPassword(e.target.value);
-                        setErrorMessage("");
-                        setSuccessMessage("");
-                      }}
+                      type="text"
+                      name="telefono"
+                      value={datos.telefono}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div>
+                    <label>Email: </label>
+                    <input
+                      type="text"
+                      name="email"
+                      value={datos.email}
+                      onChange={handleChange}
                     />
                   </div>
                   {errorMessage && (
@@ -129,13 +105,14 @@ const InfoClient = () => {
                   {successMessage && (
                     <span className="success-message">{successMessage}</span>
                   )}
-                  <button onClick={handlePasswordChange}>Guardar</button>
+                  <button onClick={handleSaveClient}>Guardar</button>
+                  <button onClick={handleCancelEdit}>Cancelar</button>
                 </form>
               </div>
             </div>
           ) : (
             <div className="name-display">
-              <button onClick={handleEditCli}>Cambiar nombre</button>
+              <button onClick={handleEditCli}>Modificar datos</button>
             </div>
           )}
         </div>
