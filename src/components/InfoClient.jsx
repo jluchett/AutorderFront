@@ -23,7 +23,6 @@ const InfoClient = () => {
 
   const handleSaveClient = async (e) => {
     e.preventDefault();
-    console.log(datos)
     // Lógica para guardar nuevos datos en la base de datos
     await fetch(`http://192.168.1.9:3001/clients/update/${client.id}`, {
       method: "PUT",
@@ -33,14 +32,18 @@ const InfoClient = () => {
       body: JSON.stringify(datos),
     });
     setEditingClient(false);
+    setSuccessMessage("Datos actualizados");
+    
   };
 
   const handleEditCli = () => {
     setEditingClient(true);
+    setSuccessMessage("")
   };
 
   const handleCancelEdit = () => {
     setEditingClient(false);
+    setDatos(client)
   };
 
   return (
@@ -68,10 +71,10 @@ const InfoClient = () => {
         </div>
         <div>
           {editingClient ? (
-            <div className="name-display">
+            <div>
               <div className="password-change">
-                <h3>Cambiar contraseña</h3>
                 <form>
+                  <br />
                   <div>
                     <label>Nombre: </label>
                     <input
@@ -102,9 +105,6 @@ const InfoClient = () => {
                   {errorMessage && (
                     <span className="error-message">{errorMessage}</span>
                   )}
-                  {successMessage && (
-                    <span className="success-message">{successMessage}</span>
-                  )}
                   <button onClick={handleSaveClient}>Guardar</button>
                   <button onClick={handleCancelEdit}>Cancelar</button>
                 </form>
@@ -114,6 +114,9 @@ const InfoClient = () => {
             <div className="name-display">
               <button onClick={handleEditCli}>Modificar datos</button>
             </div>
+          )}
+          {successMessage && (
+            <span className="success-message">{successMessage}</span>
           )}
         </div>
       </div>
