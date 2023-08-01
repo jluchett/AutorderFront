@@ -124,7 +124,7 @@ const InfoUser = () => {
                   setSuccessMessage("");
                 }}
               />
-              <label className="label-float">Nueva contraseña:</label>
+              <label className="label-float">Nueva contraseña</label>
             </div>
             <div className="input-container">
               
@@ -139,7 +139,7 @@ const InfoUser = () => {
                   setSuccessMessage("");
                 }}
               />
-              <label className="label-float">Confirmar contraseña:</label>
+              <label className="label-float">Confirmar contraseña</label>
             </div>
             {errorMessage && (
               <span className="error-message">{errorMessage}</span>
