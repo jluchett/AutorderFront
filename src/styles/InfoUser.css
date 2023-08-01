@@ -16,8 +16,7 @@ h2 {
 
 .user-details {
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+  align-items: center;  
 }
 
 .user-image {
@@ -43,6 +42,7 @@ span {
 .name-display {
   display: flex;
   align-items: center;
+  margin-left: 5px;
 }
 
 .name-display span {
@@ -84,51 +84,24 @@ span {
   font-size: 14px;
 }
 
-.password-change {
+.password {
   margin-top: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
-.password-change h3 {
+.password form {
+  padding: 10px;
+  padding-left: 30px; 
+  padding-right: 30px;
+}
+
+.password h3 {
   font-size: 16px;
   text-align: center;
-  padding: 5px;
-}
-
-.password-change form {
-  display: grid;
-  gap: 5px;
-}
-
-.password-change label {
-  font-weight: bold;
-  margin-left: 10px;
-}
-
-.password-change input {
-  width: 60%;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-left: 10px;
-}
-
-.password-change button {
-  padding: 8px 10px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-.password-change button:hover {
-  background-color: #555;
+  margin: 0;
+  padding-top: 10px;
 }
 
 .separador {

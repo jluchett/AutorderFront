@@ -109,13 +109,14 @@ const InfoUser = () => {
             </div>
           )}
         </div>
-        <div className="password-change">
+        <div className="password">
           <h3>Cambiar contraseña</h3>
           <form>
-            <div>
-              <label>Nueva contraseña:</label>
+            <div className="input-container"> 
               <input
                 type="password"
+                className="input-float"
+                placeholder=" "
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -123,11 +124,14 @@ const InfoUser = () => {
                   setSuccessMessage("");
                 }}
               />
+              <label className="label-float">Nueva contraseña:</label>
             </div>
-            <div>
-              <label>Confirmar contraseña:</label>
+            <div className="input-container">
+              
               <input
                 type="password"
+                className="input-float"
+                placeholder=" "
                 value={confirmPassword}
                 onChange={(e) => {
                   setConfirmPassword(e.target.value);
@@ -135,6 +139,7 @@ const InfoUser = () => {
                   setSuccessMessage("");
                 }}
               />
+              <label className="label-float">Confirmar contraseña:</label>
             </div>
             {errorMessage && (
               <span className="error-message">{errorMessage}</span>
@@ -142,7 +147,7 @@ const InfoUser = () => {
             {successMessage && (
               <span className="success-message">{successMessage}</span>
             )}
-            <button onClick={handlePasswordChange}>Guardar</button>
+            <button onClick={handlePasswordChange} className="add-button">Guardar</button>
           </form>
         </div>
       </div>

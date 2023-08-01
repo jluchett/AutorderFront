@@ -50,8 +50,8 @@ const InfoClient = () => {
       <div className="info-user">
         <h2>Datos del cliente</h2>
         <div className="user-details">
-          <div className="user-image">
-            <i className="fa-solid fa-user"></i>
+          <div className="client-image">
+            <i className="fa-solid fa-user-tie"></i>
           </div>
           <div className="user-data">
             <label>ID: </label>
@@ -71,46 +71,49 @@ const InfoClient = () => {
         <div>
           {editingClient ? (
             <div>
-              <div className="password-change">
+              <div className="form-conte">
                 <form>
                   <br />
-                  <div>
-                    <label className="label-float">Nombre: </label>
+                  <div className="input-container">
                     <input
                       className="input-float"
+                      placeholder=" "
                       type="text"
                       name="nombre"
                       value={datos.nombre}
                       onChange={handleChange}
                     />
+                    <label className="label-float">Nombre</label>
                   </div>
-                  <div>
-                    <label className="label-float">Telefono: </label>
+                  <div className="input-container">
                     <input
+                      placeholder=" "
                       className="input-float"
                       type="text"
                       name="telefono"
                       value={datos.telefono}
                       onChange={handleChange}
                     />
+                    <label className="label-float">Telefono</label>
                   </div>
-                  <div>
-                    <label className="label-float">Email: </label>
+                  <div className="input-container">
                     <input
                       className="input-float"
+                      placeholder=" "
                       type="text"
                       name="email"
                       value={datos.email}
                       onChange={handleChange}
                     />
+                     <label className="label-float">Email</label>
                   </div>
                   {errorMessage && (
                     <span className="error-message">{errorMessage}</span>
                   )}
-                  <button onClick={handleSaveClient}>Guardar</button>
-                  <button onClick={handleCancelEdit}>Cancelar</button>
+                  <button onClick={handleSaveClient} className="add-button">Guardar</button>
+                  <button onClick={handleCancelEdit} className="add-button">Cancelar</button>
                 </form>
-              </div>
+              </div>  
             </div>
           ) : (
             <div className="name-display">

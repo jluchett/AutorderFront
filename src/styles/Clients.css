@@ -1,5 +1,11 @@
 .client {
-    font-size: 40px;
-    margin-right: 10px; 
-    color: rgb(4, 117, 209);
-  }
+  font-size: 40px;
+  margin-right: 10px;
+  color: rgb(4, 117, 209);
+}
+
+.client-image {
+  color: rgb(4, 117, 209);
+  margin: 10px;
+  font-size: 65px;
+}

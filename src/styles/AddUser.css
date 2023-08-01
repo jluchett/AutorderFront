@@ -10,7 +10,9 @@
   margin-right: 10px;
   color: green;
 }
-
+.form-conte {
+  padding: 10px;
+}
 .form-add {
   padding: 20px;
   padding-bottom: 5px;
@@ -57,7 +59,8 @@
 .add-button {
   width: 100%;
   padding: 8px;
-  background-color: #007bff;
+  
+  background-color: #0056b3;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -65,8 +68,9 @@
   font-size: 16px;
   font-weight: bold;
   transition: background-color 0.3s ease;
+  margin-top: 10px;
 }
 
 .add-button:hover {
-  background-color: #0056b3;
+  background-color: #007bff;
 }
