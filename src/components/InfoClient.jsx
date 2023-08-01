@@ -33,17 +33,16 @@ const InfoClient = () => {
     });
     setEditingClient(false);
     setSuccessMessage("Datos actualizados");
-    
   };
 
   const handleEditCli = () => {
     setEditingClient(true);
-    setSuccessMessage("")
+    setSuccessMessage("");
   };
 
   const handleCancelEdit = () => {
     setEditingClient(false);
-    setDatos(client)
+    setDatos(client);
   };
 
   return (
@@ -76,8 +75,9 @@ const InfoClient = () => {
                 <form>
                   <br />
                   <div>
-                    <label>Nombre: </label>
+                    <label className="label-float">Nombre: </label>
                     <input
+                      className="input-float"
                       type="text"
                       name="nombre"
                       value={datos.nombre}
@@ -85,8 +85,9 @@ const InfoClient = () => {
                     />
                   </div>
                   <div>
-                    <label>Telefono: </label>
+                    <label className="label-float">Telefono: </label>
                     <input
+                      className="input-float"
                       type="text"
                       name="telefono"
                       value={datos.telefono}
@@ -94,8 +95,9 @@ const InfoClient = () => {
                     />
                   </div>
                   <div>
-                    <label>Email: </label>
+                    <label className="label-float">Email: </label>
                     <input
+                      className="input-float"
                       type="text"
                       name="email"
                       value={datos.email}
