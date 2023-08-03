@@ -23,6 +23,10 @@ const InfoClient = () => {
 
   const handleSaveClient = async (e) => {
     e.preventDefault();
+    if (datos.nombre ==="" || datos.telefono ==="" || datos.email ==="" ){
+      setErrorMessage("Los datos no pueden estar vacios")
+      return
+    }
     // Lógica para guardar nuevos datos en la base de datos
     await fetch(`http://192.168.1.9:3001/clients/update/${client.id}`, {
       method: "PUT",
