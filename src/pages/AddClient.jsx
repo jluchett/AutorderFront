@@ -17,14 +17,18 @@ const AddClient = () => {
   const [succesMesage, setSuccesMesage] = useState("");
 
   const handleChange = (e) => {
-    setClient(...client, (e.target.name = e.target.value));
+    setClient({
+      ...client,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handledSubmit = () =>{
-    console.log("Hola enviaste el form")
-    setErrorMesage("")
-    setSuccesMesage("")
-  }
+  const handledSubmit = (e) => {
+    e.preventDefault();
+    console.log("Hola enviaste el form");
+    setErrorMesage("");
+    setSuccesMesage("");
+  };
   return (
     <>
       <HeaderBar />
