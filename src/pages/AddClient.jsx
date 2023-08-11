@@ -21,6 +21,8 @@ const AddClient = () => {
       ...client,
       [e.target.name]: e.target.value,
     });
+    setErrorMesage("");
+      setSuccesMesage("");
   };
 
   function validarForm(obj) {
@@ -43,9 +45,28 @@ const AddClient = () => {
       setSuccesMesage("");
       return;
     }
-    console.log("Hola enviaste el form");
-    setErrorMesage("");
-    setSuccesMesage("Hola enviaste el form");
+
+    fetch("http://192.168.1.9:3001/clients/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: client.id,
+        nombre: client.nombre,
+        telefono: client.telefono,
+        email: client.email,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        data.succes
+          ? (setSuccesMesage(data.message), setClient(initialForm))
+          : setErrorMesage(data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <>
