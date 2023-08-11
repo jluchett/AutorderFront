@@ -23,11 +23,29 @@ const AddClient = () => {
     });
   };
 
+  function validarForm(obj) {
+    return Object.values(obj).every((value) => value !== "");
+  }
+
   const handledSubmit = (e) => {
     e.preventDefault();
+    const isFormValid = validarForm(client);
+    if (!isFormValid) {
+      setErrorMesage("Todos los datos son necesarios");
+      setSuccesMesage("");
+      return;
+    }
+    // Comprobar aquí si el campo de entrada contiene solo números
+    const isNumeric = /^\d+$/.test(client.id);
+    if (!isNumeric) {
+      // Muestra un mensaje de error o realiza otra acción en caso de que el campo no contenga solo números
+      setErrorMesage("El campo Identificacion debe contener solo números.");
+      setSuccesMesage("");
+      return;
+    }
     console.log("Hola enviaste el form");
     setErrorMesage("");
-    setSuccesMesage("");
+    setSuccesMesage("Hola enviaste el form");
   };
   return (
     <>
@@ -35,9 +53,9 @@ const AddClient = () => {
       <div className="info-user">
         <div className="encabezado">
           <div className="user-add">
-            <i className="fa-solid fa-user-plus"></i>
+            <img src="/src/assets/client.png" className="imgCli"></img>
           </div>
-          <h2>Agregar usuario</h2>
+          <h2>Agregar Cliente</h2>
         </div>
         <div className="form-add">
           <form>
