@@ -5,6 +5,7 @@ import "../styles/Body.css";
 
 const Body = () => {
   const navigate = useNavigate();
+
   const goToUsers = () => {
     navigate("/users");
   };
@@ -12,6 +13,10 @@ const Body = () => {
   const goToClients = () => {
     navigate("/clients");
   };
+
+  const goToVehicles = () =>{
+    navigate("/vehicles")
+  }
   return (
     <div className="body">
       <div className="pages">
@@ -27,7 +32,7 @@ const Body = () => {
           <p></p>
           Clientes
         </button>
-        <button className="btn-action" >
+        <button className="btn-action" onClick={goToVehicles}>
           <i className="fa-solid fa-car-side"></i>
           <p></p>
           Vehiculos

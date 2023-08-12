@@ -11,6 +11,7 @@ import AddUser from "./pages/AddUser";
 import Clients from "./pages/Clients";
 import ClientDetail from "./pages/ClientDetail";
 import AddClient from "./pages/AddClient";
+import Vehicles from "./pages/Vehicles";
 
 const App = () => {
   const { user, login } = useStore();
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/clients" element={user ? <Clients/> : <Navigate to="/login" />} />
         <Route path="/clients/:clientId" element={user ? <ClientDetail/> : <Navigate to="/login" />} />
         <Route path="/clients/add" element={user ? <AddClient /> : <Navigate to="/login" />} />
+        <Route path="/vehicles" element={user ? <Vehicles/> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

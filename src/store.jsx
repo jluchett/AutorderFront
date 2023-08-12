@@ -8,7 +8,9 @@ const useStore = create((set) => ({
   users: [],
   setUsers: (users) => set({ users }),
   clients:[],
-  setClients: (clients) => set({clients})
+  setClients: (clients) => set({clients}),
+  vehicles:[],
+  setVehicles: (vehicles) => set({vehicles})
 }));
 
 export default useStore;

@@ -12,3 +12,8 @@ body {
   height: 100%;
 }
 
+.vehicle {
+  font-size: 40px;
+  margin-right: 10px;
+  color: rgb(255, 244, 36);
+}

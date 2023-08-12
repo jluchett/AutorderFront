@@ -18,4 +18,15 @@ export const actualClients = async () => {
     console.log("Error fetching clients");
     return [];
   }
-}
+};
+
+export const actualVehicles = async () => {
+  try {
+    const response = await fetch("http://192.168.1.9:3001/vehicles/");
+    const data = await response.json();
+    return data.vehicles;
+  } catch (error) {
+    console.log("Error fetching clients");
+    return [];
+  }
+};
