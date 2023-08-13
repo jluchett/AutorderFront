@@ -69,7 +69,7 @@ const Users = () => {
   };
 
   return (
-    <>
+    <div className="app">
       <HeaderBar />
       <div className="users-page">
         <div className="encabezado">
@@ -133,7 +133,7 @@ const Users = () => {
         </Link>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

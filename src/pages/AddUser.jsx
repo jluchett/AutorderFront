@@ -17,7 +17,7 @@ const AddUser = () => {
     e.preventDefault();
     if (!id || !name) {
       setErrorMesage("Todos los datos son necesarios");
-      setSuccesMesage("")
+      setSuccesMesage("");
       return;
     }
     // Comprobar aquí si el campo de entrada contiene solo números
@@ -25,17 +25,17 @@ const AddUser = () => {
     if (!isNumeric) {
       // Muestra un mensaje de error o realiza otra acción en caso de que el campo no contenga solo números
       setErrorMesage("El campo Identificacion debe contener solo números.");
-      setSuccesMesage("")
+      setSuccesMesage("");
       return;
     }
     if (password.length < 8) {
       setErrorMesage("La contraseña debe tener al menos 8 caracteres");
-      setSuccesMesage("")
+      setSuccesMesage("");
       return;
     }
     if (password != confPassword) {
       setErrorMesage("La confrmacion es diferente a la contraseña");
-      setSuccesMesage("")
+      setSuccesMesage("");
       return;
     }
     fetch("http://192.168.1.9:3001/users/signup", {
@@ -51,11 +51,13 @@ const AddUser = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        data.succes ? setSuccesMesage(data.message) : setErrorMesage(data.message)
-        setId("")
-        setName("")
-        setPassword("")
-        setConfPassword("")
+        data.succes
+          ? setSuccesMesage(data.message)
+          : setErrorMesage(data.message);
+        setId("");
+        setName("");
+        setPassword("");
+        setConfPassword("");
       })
       .catch((error) => {
         console.log(error);
@@ -63,100 +65,103 @@ const AddUser = () => {
   };
 
   return (
-    <>
+    <div className="app">
       <HeaderBar />
-      <div className="info-user">
-        <div className="encabezado">
-          <div className="user-add">
-            <i className="fa-solid fa-user-plus"></i>
+      <section className="users-page">
+        <div className="info-user">
+          <div className="encabezado">
+            <div className="user-add">
+              <i className="fa-solid fa-user-plus"></i>
+            </div>
+            <h2>Agregar usuario</h2>
           </div>
-          <h2>Agregar usuario</h2>
+          <div className="form-add">
+            <form>
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  value={id}
+                  onChange={(e) => {
+                    setId(e.target.value);
+                    setErrorMesage("");
+                    setSuccesMesage("");
+                  }}
+                />
+                <label className="label-float">Número identificación</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setErrorMesage("");
+                    setSuccesMesage("");
+                  }}
+                />
+                <label className="label-float">Nombre usuario</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="password"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setErrorMesage("");
+                    setSuccesMesage("");
+                  }}
+                />
+                <label className="label-float">Contraseña</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="password"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  value={confPassword}
+                  onChange={(e) => {
+                    setConfPassword(e.target.value);
+                    setErrorMesage("");
+                    setSuccesMesage("");
+                  }}
+                />
+                <label className="label-float">Confirmar contraseña</label>
+              </div>
+              {errorMesage && (
+                <span className="error-message">{errorMesage}</span>
+              )}
+              {succesMesage && (
+                <span className="success-message">{succesMesage}</span>
+              )}
+              <button className="add-button" onClick={handledSubmit}>
+                Guardar
+              </button>
+            </form>
+          </div>
+          <div className="enlaces">
+            <Link className="regresar-button" to={"/"}>
+              Regresar a Home
+            </Link>
+            <span className="separador"></span>
+            <Link className="regresar-button" to={"/users"}>
+              Regresar a Usuarios
+            </Link>
+          </div>
         </div>
-        <div className="form-add">
-          <form>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                value={id}
-                onChange={(e) => {
-                  setId(e.target.value);
-                  setErrorMesage("");
-                  setSuccesMesage("");
-                }}
-              />
-              <label className="label-float">Número identificación</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setErrorMesage("");
-                  setSuccesMesage("");
-                }}
-              />
-              <label className="label-float">Nombre usuario</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="password"
-                placeholder=" "
-                required
-                className="input-float"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setErrorMesage("");
-                  setSuccesMesage("");
-                }}
-              />
-              <label className="label-float">Contraseña</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="password"
-                placeholder=" "
-                required
-                className="input-float"
-                value={confPassword}
-                onChange={(e) => {
-                  setConfPassword(e.target.value);
-                  setErrorMesage("");
-                  setSuccesMesage("");
-                }}
-              />
-              <label className="label-float">Confirmar contraseña</label>
-            </div>
-            {errorMesage && (
-              <span className="error-message">{errorMesage}</span>
-            )}
-            {succesMesage && (
-              <span className="success-message">{succesMesage}</span>
-            )}
-            <button className="add-button" onClick={handledSubmit}>
-              Guardar
-            </button>
-          </form>
-        </div>
-        <div className="enlaces">
-          <Link className="regresar-button" to={"/"}>
-            Regresar a Home
-          </Link>
-          <span className="separador"></span>
-          <Link className="regresar-button" to={"/users"}>
-            Regresar a Usuarios
-          </Link>
-        </div>
-      </div>
+      </section>
+
       <Footer />
-    </>
+    </div>
   );
 };
 

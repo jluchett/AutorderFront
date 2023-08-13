@@ -1,13 +1,12 @@
 .users-page {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 80px; /* Ajusta el tamaño del footer según sea necesario */
 }
 
 .users {
   font-size: 40px;
-  margin-right: 10px; 
+  margin-right: 10px;
   color: gold;
 }
 .title {
@@ -109,5 +108,4 @@
   td {
     padding: 5px;
   }
-
 }

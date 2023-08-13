@@ -1,17 +1,17 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 import HeaderBar from "../components/HeaderBar";
-import InfoUser from "../components/InfoUser";
 import Footer from "../components/Footer";
+import InfoVehicle from "../components/InfoVehicle";
 
-const UserDetail = () => {
+const VehicleDetail = () => {
   return (
     <div className="app">
       <HeaderBar />
-      <InfoUser />
+      <InfoVehicle />
       <Footer />
     </div>
   );
 };
 
-export default UserDetail;
+export default VehicleDetail;

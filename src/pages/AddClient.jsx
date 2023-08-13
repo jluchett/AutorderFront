@@ -69,7 +69,7 @@ const AddClient = () => {
       });
   };
   return (
-    <>
+    <div className="app">
       <HeaderBar />
       <div className="info-user">
         <div className="encabezado">
@@ -150,7 +150,7 @@ const AddClient = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

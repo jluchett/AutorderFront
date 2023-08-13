@@ -52,6 +52,7 @@ const Vehicles = () => {
               <tr>
                 <th>Placa</th>
                 <th>Marca</th>
+                <th>Modelo</th>
                 <th>Cliente</th>
                 <th>Acciones</th>
               </tr>
@@ -61,6 +62,7 @@ const Vehicles = () => {
                 <tr key={vehicle.placa}>
                   <td>{vehicle.placa}</td>
                   <td>{vehicle.marca}</td>
+                  <td>{vehicle.modelo}</td>
                   <td>{vehicle.nombre_cliente}</td>
                   <td className="actions">
                     <Link to={`/vehicles/${vehicle.placa}`}>
@@ -80,8 +82,8 @@ const Vehicles = () => {
             </tbody>
           </table>
         </div>
-        <Link className="agregar-button" to={"/clients/add"}>
-          Agregar Cliente
+        <Link className="agregar-button" to={"/vehicles/add"}>
+          Agregar Vehiculo
         </Link>
         <Link className="regresar-button" to={"/"}>
           Ir a Home

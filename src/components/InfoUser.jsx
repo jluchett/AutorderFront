@@ -74,7 +74,7 @@ const InfoUser = () => {
   }
 
   return (
-    <>
+    <div className="users-page" >
       <div className="info-user">
         <h2>Datos del usuario</h2>
         <div className="user-details">
@@ -160,7 +160,7 @@ const InfoUser = () => {
           Regresar a Usuarios
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 
