@@ -10,6 +10,7 @@ import '../styles/Clients.css'
 const Clients = () => {
   const clients = useStore((state) => state.clients);
   const setClients = useStore((state) => state.setClients);
+  const {ipHost} = useStore()
 
   useEffect(() => {
     const getClients = async () => {
@@ -26,7 +27,7 @@ const Clients = () => {
         "¿Estás seguro de que deseas eliminar este Cliente?"
       );
       if (confirmed) {
-        await fetch(`http://192.168.1.9:3001/clients/delete/${clientId}`, {
+        await fetch(`http://${ipHost}:3001/clients/delete/${clientId}`, {
           method: "DELETE",
         });
         // Actualizar el estado "clients" eliminando el cliente 

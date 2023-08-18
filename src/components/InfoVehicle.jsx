@@ -5,6 +5,7 @@ import useStore from "../store";
 
 const InfoVehicle = () => {
   const vehicles = useStore((state) => state.vehicles);
+  const {ipHost} = useStore()
   const { vehicPlaca } = useParams();
   const vehicle = vehicles.find((vehic) => vehic.placa === vehicPlaca);
   const [datos, setDatos] = useState(vehicle);
@@ -28,7 +29,7 @@ const InfoVehicle = () => {
       return
     }
     // Lógica para guardar nuevos datos en la base de datos
-    await fetch(`http://192.168.1.9:3001/vehicles/update/${vehicle.placa}`, {
+    await fetch(`http://${ipHost}:3001/vehicles/update/${vehicle.placa}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

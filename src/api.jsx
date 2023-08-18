@@ -1,6 +1,7 @@
+const ipHost = '172.37.19.242'
 export const actualUsers = async () => {
   try {
-    const response = await fetch("http://192.168.1.9:3001/users/");
+    const response = await fetch(`http://${ipHost}:3001/users/`);
     const data = await response.json();
     return data.users;
   } catch (error) {
@@ -11,22 +12,22 @@ export const actualUsers = async () => {
 
 export const actualClients = async () => {
   try {
-    const response = await fetch("http://192.168.1.9:3001/clients/");
+    const response = await fetch(`http://${ipHost}:3001/clients/`);
     const data = await response.json();
     return data.clients;
   } catch (error) {
-    console.log("Error fetching clients");
+    console.log("Error fetching clients", error);
     return [];
   }
 };
 
 export const actualVehicles = async () => {
   try {
-    const response = await fetch("http://192.168.1.9:3001/vehicles/");
+    const response = await fetch(`http://${ipHost}:3001/vehicles/`);
     const data = await response.json();
     return data.vehicles;
   } catch (error) {
-    console.log("Error fetching clients");
+    console.log("Error fetching vehicles", error);
     return [];
   }
 };

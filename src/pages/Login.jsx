@@ -10,13 +10,14 @@ const Login = () => {
   const login = useStore((state) => state.login);
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const { ipHost } = useStore();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
       // Realizar la llamada al backend para verificar las credenciales
-      const response = await fetch("http://192.168.1.9:3001/auth/login", {
+      const response = await fetch(`http://${ipHost}:3001/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +49,7 @@ const Login = () => {
         </div>
       </header>
       <div className="login-container">
-      <i className="fa-solid fa-user-lock"></i>
+        <i className="fa-solid fa-user-lock"></i>
         <h1>Inicia Sesión</h1>
         <div className="form-container">
           <form className="login-form" onSubmit={handleLogin}>

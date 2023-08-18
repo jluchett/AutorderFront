@@ -10,6 +10,7 @@ import "../styles/Users.css";
 const Users = () => {
   const users = useStore((state) => state.users);
   const setUsers = useStore((state) => state.setUsers);
+  const {ipHost} = useStore()
 
   useEffect(() => {
     // Lógica para obtener los usuarios de la base de datos y almacenarlos en el estado "users"
@@ -28,7 +29,7 @@ const Users = () => {
         "¿Estás seguro de que deseas eliminar este usuario?"
       );
       if (confirmed) {
-        await fetch(`http://192.168.1.9:3001/users/delete/${userId}`, {
+        await fetch(`http://${ipHost}:3001/users/delete/${userId}`, {
           method: "DELETE",
         });
         // Actualizar el estado "users" eliminando el usuario eliminado
@@ -52,7 +53,7 @@ const Users = () => {
         "Esto cambiará el acceso del usuario la aplicacion \n¿Desea continuar?"
       );
       if (confirmed) {
-        await fetch(`http://192.168.1.9:3001/users/lock/${userId}`, {
+        await fetch(`http://${ipHost}:3001/users/lock/${userId}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

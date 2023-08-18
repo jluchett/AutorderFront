@@ -8,7 +8,7 @@ const InfoUser = () => {
   const { userId } = useParams();
   const { users } = useStore();
   const user = users.find((user) => user.id === userId);
-
+  const {ipHost}= useStore()
   const [editingName, setEditingName] = useState(false);
   const [newName, setNewName] = useState(user.name);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -17,6 +17,7 @@ const InfoUser = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+
   const handleNameChange = (event) => {
     setNewName(event.target.value);
     setShowSuccessMessage(false);
@@ -24,7 +25,7 @@ const InfoUser = () => {
 
   const handleSaveName = async () => {
     // Lógica para guardar el nuevo nombre en la base de datos
-    await fetch(`http://192.168.1.9:3001/users/update/${user.id}`, {
+    await fetch(`http://${ipHost}:3001/users/update/${user.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +59,7 @@ const InfoUser = () => {
       return;
     }
     // Lógica para cambiar la contraseña del usuario
-    await fetch(`http://192.168.1.9:3001/users/update/${user.id}`, {
+    await fetch(`http://${ipHost}:3001/users/update/${user.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

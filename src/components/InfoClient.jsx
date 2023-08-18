@@ -11,6 +11,7 @@ const InfoClient = () => {
   const [editingClient, setEditingClient] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const {ipHost} = useStore()
 
   const handleChange = (e) => {
     setDatos({
@@ -28,7 +29,7 @@ const InfoClient = () => {
       return
     }
     // Lógica para guardar nuevos datos en la base de datos
-    await fetch(`http://192.168.1.9:3001/clients/update/${client.id}`, {
+    await fetch(`http://${ipHost}:3001/clients/update/${client.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

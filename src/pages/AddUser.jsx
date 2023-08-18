@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useStore from "../store";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
 import "../styles/AddUser.css";
@@ -12,6 +13,7 @@ const AddUser = () => {
   const [confPassword, setConfPassword] = useState("");
   const [errorMesage, setErrorMesage] = useState("");
   const [succesMesage, setSuccesMesage] = useState("");
+  const {ipHost} = useStore()
 
   const handledSubmit = (e) => {
     e.preventDefault();
@@ -38,7 +40,7 @@ const AddUser = () => {
       setSuccesMesage("");
       return;
     }
-    fetch("http://192.168.1.9:3001/users/signup", {
+    fetch(`http://${ipHost}:3001/users/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
