@@ -11,7 +11,7 @@ const useStore = create((set) => ({
   setClients: (clients) => set({ clients }),
   vehicles: [],
   setVehicles: (vehicles) => set({ vehicles }),
-  ipHost: "172.37.19.242",
+  ipHost: "192.168.1.19",
 }));
 
 export default useStore;
