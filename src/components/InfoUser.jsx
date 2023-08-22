@@ -8,7 +8,7 @@ const InfoUser = () => {
   const { userId } = useParams();
   const { users } = useStore();
   const user = users.find((user) => user.id === userId);
-  const {ipHost}= useStore()
+  const { ipHost } = useStore();
   const [editingName, setEditingName] = useState(false);
   const [newName, setNewName] = useState(user.name);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -16,7 +16,6 @@ const InfoUser = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -75,91 +74,100 @@ const InfoUser = () => {
   }
 
   return (
-    <div className="users-page" >
-      <div className="info-user">
-        <h2>Datos del usuario</h2>
-        <div className="user-details">
-          <div className="user-image">
-            <i className="fa-solid fa-user"></i>
-          </div>
-          <div className="user-data">
-            <label>ID: </label>
-            <span>{user.id}</span>
-            <div>
-              <label>Nombre: </label>
-              <span>{newName}</span>
+    <div className="body">
+      <div className="users-page">
+        <div className="info-user">
+          <h2>Datos del usuario</h2>
+          <div className="user-details">
+            <div className="user-image">
+              <i className="fa-solid fa-user"></i>
             </div>
-            <label>Locked: </label>
-            <span>{user.locked.toString()}</span>
-          </div>
-        </div>
-        {showSuccessMessage && (
-          <div className="success-message">Nombre modificado exitosamente</div>
-        )}
-        <div>
-          {editingName ? (
-            <div className="name-display">
-              <input type="text" value={newName} onChange={handleNameChange} />
-
-              <button onClick={handleSaveName}>Guardar</button>
-              <button onClick={handleCancelEditName}>Cancelar</button>
+            <div className="user-data">
+              <label>ID: </label>
+              <span>{user.id}</span>
+              <div>
+                <label>Nombre: </label>
+                <span>{newName}</span>
+              </div>
+              <label>Locked: </label>
+              <span>{user.locked.toString()}</span>
             </div>
-          ) : (
-            <div className="name-display">
-              <button onClick={handleEditName}>Cambiar nombre</button>
+          </div>
+          {showSuccessMessage && (
+            <div className="success-message">
+              Nombre modificado exitosamente
             </div>
           )}
-        </div>
-        <div className="password">
-          <h3>Cambiar contraseña</h3>
-          <form>
-            <div className="input-container"> 
-              <input
-                type="password"
-                className="input-float"
-                placeholder=" "
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setErrorMessage("");
-                  setSuccessMessage("");
-                }}
-              />
-              <label className="label-float">Nueva contraseña</label>
-            </div>
-            <div className="input-container">
-              
-              <input
-                type="password"
-                className="input-float"
-                placeholder=" "
-                value={confirmPassword}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                  setErrorMessage("");
-                  setSuccessMessage("");
-                }}
-              />
-              <label className="label-float">Confirmar contraseña</label>
-            </div>
-            {errorMessage && (
-              <span className="error-message">{errorMessage}</span>
+          <div>
+            {editingName ? (
+              <div className="name-display">
+                <input
+                  type="text"
+                  value={newName}
+                  onChange={handleNameChange}
+                />
+
+                <button onClick={handleSaveName}>Guardar</button>
+                <button onClick={handleCancelEditName}>Cancelar</button>
+              </div>
+            ) : (
+              <div className="name-display">
+                <button onClick={handleEditName}>Cambiar nombre</button>
+              </div>
             )}
-            {successMessage && (
-              <span className="success-message">{successMessage}</span>
-            )}
-            <button onClick={handlePasswordChange} className="add-button">Guardar</button>
-          </form>
+          </div>
+          <div className="password">
+            <h3>Cambiar contraseña</h3>
+            <form>
+              <div className="input-container">
+                <input
+                  type="password"
+                  className="input-float"
+                  placeholder=" "
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setErrorMessage("");
+                    setSuccessMessage("");
+                  }}
+                />
+                <label className="label-float">Nueva contraseña</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="password"
+                  className="input-float"
+                  placeholder=" "
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    setErrorMessage("");
+                    setSuccessMessage("");
+                  }}
+                />
+                <label className="label-float">Confirmar contraseña</label>
+              </div>
+              {errorMessage && (
+                <span className="error-message">{errorMessage}</span>
+              )}
+              {successMessage && (
+                <span className="success-message">{successMessage}</span>
+              )}
+              <button onClick={handlePasswordChange} className="add-button">
+                Guardar
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-      <div className="enlaces">
-        <Link className="regresar-button" to={"/"}>
-          Regresar a Home
-        </Link>
-        <span className="separador"></span>
-        <Link className="regresar-button" to={"/users"}>
-          Regresar a Usuarios
-        </Link>
+        <div className="enlaces">
+          <Link className="regresar-button" to={"/"}>
+            Regresar a Home
+          </Link>
+          <span className="separador"></span>
+          <Link className="regresar-button" to={"/users"}>
+            Regresar a Usuarios
+          </Link>
+        </div>
       </div>
     </div>
   );

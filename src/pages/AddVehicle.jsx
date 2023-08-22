@@ -21,7 +21,7 @@ const AddVehicle = () => {
   const [vehicle, setVehicle] = useState(initialForm);
   const [errorMesage, setErrorMesage] = useState("");
   const [succesMesage, setSuccesMesage] = useState("");
-  const {ipHost} = useStore()
+  const { ipHost } = useStore();
 
   const handleChange = (e) => {
     setVehicle({
@@ -80,134 +80,141 @@ const AddVehicle = () => {
       });
   };
   return (
-    <main>
+    <main className="app">
       <HeaderBar />
-      <div className="info-user">
-        <div className="encabezado">
-          <div className="user-add">
-            <i className="fa-solid fa-car-side"></i>
+      <section className="body">
+        <div className="users-page">
+        <div className="info-user">
+          <div className="encabezado">
+            <div className="user-add">
+              <i className="fa-solid fa-car-side"></i>
+            </div>
+            <h2>Agregar Vehiculo</h2>
           </div>
-          <h2>Agregar Vehiculo</h2>
+          <div className="form-add">
+            <form>
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  name="placa"
+                  value={vehicle.placa}
+                  onChange={handleChange}
+                />
+                <label className="label-float">Placa del vehiculo</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  name="marca"
+                  value={vehicle.marca}
+                  onChange={handleChange}
+                />
+                <label className="label-float">Marca vehiculo</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  name="modelo"
+                  value={vehicle.modelo}
+                  onChange={handleChange}
+                />
+                <label className="label-float">Modelo vehiculo</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  name="anio"
+                  value={vehicle.anio}
+                  onChange={handleChange}
+                />
+                <label className="label-float">Año vehiculo</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  name="kilometraje"
+                  value={vehicle.kilometraje}
+                  onChange={handleChange}
+                />
+                <label className="label-float">Kilometraje</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  name="motor"
+                  value={vehicle.motor}
+                  onChange={handleChange}
+                />
+                <label className="label-float">Motor cc</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  name="transmision"
+                  value={vehicle.transmision}
+                  onChange={handleChange}
+                />
+                <label className="label-float">Transmision</label>
+              </div>
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder=" "
+                  required
+                  className="input-float"
+                  name="cliente_id"
+                  value={vehicle.cliente_id}
+                  onChange={handleChange}
+                />
+                <label className="label-float">Id del Cliente</label>
+              </div>
+              {errorMesage && (
+                <span className="error-message">{errorMesage}</span>
+              )}
+              {succesMesage && (
+                <span className="success-message">{succesMesage}</span>
+              )}
+              <button className="add-button" onClick={handledSubmit}>
+                Guardar
+              </button>
+            </form>
+          </div>
+          <div className="enlaces">
+            <Link className="regresar-button" to={"/"}>
+              Regresar a Home
+            </Link>
+            <span className="separador"></span>
+            <Link className="regresar-button" to={"/vehicles"}>
+              Regresar a vehiculos
+            </Link>
+          </div>
         </div>
-        <div className="form-add">
-          <form>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="placa"
-                value={vehicle.placa}
-                onChange={handleChange}
-              />
-              <label className="label-float">Placa del vehiculo</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="marca"
-                value={vehicle.marca}
-                onChange={handleChange}
-              />
-              <label className="label-float">Marca vehiculo</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="modelo"
-                value={vehicle.modelo}
-                onChange={handleChange}
-              />
-              <label className="label-float">Modelo vehiculo</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="anio"
-                value={vehicle.anio}
-                onChange={handleChange}
-              />
-              <label className="label-float">Año vehiculo</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="kilometraje"
-                value={vehicle.kilometraje}
-                onChange={handleChange}
-              />
-              <label className="label-float">Kilometraje</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="motor"
-                value={vehicle.motor}
-                onChange={handleChange}
-              />
-              <label className="label-float">Motor cc</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="transmision"
-                value={vehicle.transmision}
-                onChange={handleChange}
-              />
-              <label className="label-float">Transmision</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="cliente_id"
-                value={vehicle.cliente_id}
-                onChange={handleChange}
-              />
-              <label className="label-float">Id del Cliente</label>
-            </div>
-            {errorMesage && (
-              <span className="error-message">{errorMesage}</span>
-            )}
-            {succesMesage && (
-              <span className="success-message">{succesMesage}</span>
-            )}
-            <button className="add-button" onClick={handledSubmit}>
-              Guardar
-            </button>
-          </form>
+
         </div>
-        <div className="enlaces">
-          <Link className="regresar-button" to={"/"}>
-            Regresar a Home
-          </Link>
-          <span className="separador"></span>
-          <Link className="regresar-button" to={"/vehicles"}>
-            Regresar a vehiculos
-          </Link>
-        </div>
-      </div>
+        
+      </section>
+
       <Footer />
     </main>
   );

@@ -13,7 +13,7 @@ const AddUser = () => {
   const [confPassword, setConfPassword] = useState("");
   const [errorMesage, setErrorMesage] = useState("");
   const [succesMesage, setSuccesMesage] = useState("");
-  const {ipHost} = useStore()
+  const { ipHost } = useStore();
 
   const handledSubmit = (e) => {
     e.preventDefault();
@@ -69,99 +69,100 @@ const AddUser = () => {
   return (
     <div className="app">
       <HeaderBar />
-      <section className="users-page">
-        <div className="info-user">
-          <div className="encabezado">
-            <div className="user-add">
-              <i className="fa-solid fa-user-plus"></i>
+      <div className="body">
+        <section className="users-page">
+          <div className="info-user">
+            <div className="encabezado">
+              <div className="user-add">
+                <i className="fa-solid fa-user-plus"></i>
+              </div>
+              <h2>Agregar usuario</h2>
             </div>
-            <h2>Agregar usuario</h2>
+            <div className="form-add">
+              <form>
+                <div className="input-container">
+                  <input
+                    type="text"
+                    placeholder=" "
+                    required
+                    className="input-float"
+                    value={id}
+                    onChange={(e) => {
+                      setId(e.target.value);
+                      setErrorMesage("");
+                      setSuccesMesage("");
+                    }}
+                  />
+                  <label className="label-float">Número identificación</label>
+                </div>
+                <div className="input-container">
+                  <input
+                    type="text"
+                    placeholder=" "
+                    required
+                    className="input-float"
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      setErrorMesage("");
+                      setSuccesMesage("");
+                    }}
+                  />
+                  <label className="label-float">Nombre usuario</label>
+                </div>
+                <div className="input-container">
+                  <input
+                    type="password"
+                    placeholder=" "
+                    required
+                    className="input-float"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setErrorMesage("");
+                      setSuccesMesage("");
+                    }}
+                  />
+                  <label className="label-float">Contraseña</label>
+                </div>
+                <div className="input-container">
+                  <input
+                    type="password"
+                    placeholder=" "
+                    required
+                    className="input-float"
+                    value={confPassword}
+                    onChange={(e) => {
+                      setConfPassword(e.target.value);
+                      setErrorMesage("");
+                      setSuccesMesage("");
+                    }}
+                  />
+                  <label className="label-float">Confirmar contraseña</label>
+                </div>
+                {errorMesage && (
+                  <span className="error-message">{errorMesage}</span>
+                )}
+                {succesMesage && (
+                  <span className="success-message">{succesMesage}</span>
+                )}
+                <button className="add-button" onClick={handledSubmit}>
+                  Guardar
+                </button>
+              </form>
+            </div>
+            <div className="enlaces">
+              <Link className="regresar-button" to={"/"}>
+                Regresar a Home
+              </Link>
+              <span className="separador"></span>
+              <Link className="regresar-button" to={"/users"}>
+                Regresar a Usuarios
+              </Link>
+            </div>
           </div>
-          <div className="form-add">
-            <form>
-              <div className="input-container">
-                <input
-                  type="text"
-                  placeholder=" "
-                  required
-                  className="input-float"
-                  value={id}
-                  onChange={(e) => {
-                    setId(e.target.value);
-                    setErrorMesage("");
-                    setSuccesMesage("");
-                  }}
-                />
-                <label className="label-float">Número identificación</label>
-              </div>
-              <div className="input-container">
-                <input
-                  type="text"
-                  placeholder=" "
-                  required
-                  className="input-float"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                    setErrorMesage("");
-                    setSuccesMesage("");
-                  }}
-                />
-                <label className="label-float">Nombre usuario</label>
-              </div>
-              <div className="input-container">
-                <input
-                  type="password"
-                  placeholder=" "
-                  required
-                  className="input-float"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    setErrorMesage("");
-                    setSuccesMesage("");
-                  }}
-                />
-                <label className="label-float">Contraseña</label>
-              </div>
-              <div className="input-container">
-                <input
-                  type="password"
-                  placeholder=" "
-                  required
-                  className="input-float"
-                  value={confPassword}
-                  onChange={(e) => {
-                    setConfPassword(e.target.value);
-                    setErrorMesage("");
-                    setSuccesMesage("");
-                  }}
-                />
-                <label className="label-float">Confirmar contraseña</label>
-              </div>
-              {errorMesage && (
-                <span className="error-message">{errorMesage}</span>
-              )}
-              {succesMesage && (
-                <span className="success-message">{succesMesage}</span>
-              )}
-              <button className="add-button" onClick={handledSubmit}>
-                Guardar
-              </button>
-            </form>
-          </div>
-          <div className="enlaces">
-            <Link className="regresar-button" to={"/"}>
-              Regresar a Home
-            </Link>
-            <span className="separador"></span>
-            <Link className="regresar-button" to={"/users"}>
-              Regresar a Usuarios
-            </Link>
-          </div>
-        </div>
-      </section>
-
+        </section>
+      </div>
       <Footer />
     </div>
   );

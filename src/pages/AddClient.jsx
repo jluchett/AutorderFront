@@ -16,7 +16,7 @@ const AddClient = () => {
   const [client, setClient] = useState(initialForm);
   const [errorMesage, setErrorMesage] = useState("");
   const [succesMesage, setSuccesMesage] = useState("");
-  const {ipHost} = useStore()
+  const { ipHost } = useStore();
 
   const handleChange = (e) => {
     setClient({
@@ -24,7 +24,7 @@ const AddClient = () => {
       [e.target.name]: e.target.value,
     });
     setErrorMesage("");
-      setSuccesMesage("");
+    setSuccesMesage("");
   };
 
   function validarForm(obj) {
@@ -73,82 +73,86 @@ const AddClient = () => {
   return (
     <div className="app">
       <HeaderBar />
-      <div className="info-user">
-        <div className="encabezado">
-          <div className="user-add">
-            <img src="/src/assets/client.png" className="imgCli"></img>
+      <div className="body">
+        <div>
+          <div className="info-user">
+            <div className="encabezado">
+              <div className="user-add">
+                <img src="/src/assets/client.png" className="imgCli"></img>
+              </div>
+              <h2>Agregar Cliente</h2>
+            </div>
+            <div className="form-add">
+              <form>
+                <div className="input-container">
+                  <input
+                    type="text"
+                    placeholder=" "
+                    required
+                    className="input-float"
+                    name="id"
+                    value={client.id}
+                    onChange={handleChange}
+                  />
+                  <label className="label-float">Número identificación</label>
+                </div>
+                <div className="input-container">
+                  <input
+                    type="text"
+                    placeholder=" "
+                    required
+                    className="input-float"
+                    name="nombre"
+                    value={client.nombre}
+                    onChange={handleChange}
+                  />
+                  <label className="label-float">Nombre cliente</label>
+                </div>
+                <div className="input-container">
+                  <input
+                    type="text"
+                    placeholder=" "
+                    required
+                    className="input-float"
+                    name="telefono"
+                    value={client.telefono}
+                    onChange={handleChange}
+                  />
+                  <label className="label-float">Numero celular</label>
+                </div>
+                <div className="input-container">
+                  <input
+                    type="text"
+                    placeholder=" "
+                    required
+                    className="input-float"
+                    name="email"
+                    value={client.email}
+                    onChange={handleChange}
+                  />
+                  <label className="label-float">Email cliente</label>
+                </div>
+                {errorMesage && (
+                  <span className="error-message">{errorMesage}</span>
+                )}
+                {succesMesage && (
+                  <span className="success-message">{succesMesage}</span>
+                )}
+                <button className="add-button" onClick={handledSubmit}>
+                  Guardar
+                </button>
+              </form>
+            </div>
+            <div className="enlaces">
+              <Link className="regresar-button" to={"/"}>
+                Regresar a Home
+              </Link>
+              <span className="separador"></span>
+              <Link className="regresar-button" to={"/clients"}>
+                Regresar a Clientes
+              </Link>
+            </div>
           </div>
-          <h2>Agregar Cliente</h2>
-        </div>
-        <div className="form-add">
-          <form>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="id"
-                value={client.id}
-                onChange={handleChange}
-              />
-              <label className="label-float">Número identificación</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="nombre"
-                value={client.nombre}
-                onChange={handleChange}
-              />
-              <label className="label-float">Nombre cliente</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="telefono"
-                value={client.telefono}
-                onChange={handleChange}
-              />
-              <label className="label-float">Numero celular</label>
-            </div>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder=" "
-                required
-                className="input-float"
-                name="email"
-                value={client.email}
-                onChange={handleChange}
-              />
-              <label className="label-float">Email cliente</label>
-            </div>
-            {errorMesage && (
-              <span className="error-message">{errorMesage}</span>
-            )}
-            {succesMesage && (
-              <span className="success-message">{succesMesage}</span>
-            )}
-            <button className="add-button" onClick={handledSubmit}>
-              Guardar
-            </button>
-          </form>
-        </div>
-        <div className="enlaces">
-          <Link className="regresar-button" to={"/"}>
-            Regresar a Home
-          </Link>
-          <span className="separador"></span>
-          <Link className="regresar-button" to={"/clients"}>
-            Regresar a Clientes
-          </Link>
         </div>
       </div>
       <Footer />

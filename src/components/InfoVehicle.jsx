@@ -52,7 +52,7 @@ const InfoVehicle = () => {
 
 
   return (
-    <>
+    <div className="body">
       <div className="info-user">
         <h2>Datos del Vehiculo</h2>
         <div className="user-details">
@@ -187,7 +187,7 @@ const InfoVehicle = () => {
           Regresar a vehiculos
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 

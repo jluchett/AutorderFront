@@ -11,7 +11,7 @@ const InfoClient = () => {
   const [editingClient, setEditingClient] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const {ipHost} = useStore()
+  const { ipHost } = useStore();
 
   const handleChange = (e) => {
     setDatos({
@@ -24,9 +24,9 @@ const InfoClient = () => {
 
   const handleSaveClient = async (e) => {
     e.preventDefault();
-    if (datos.nombre ==="" || datos.telefono ==="" || datos.email ==="" ){
-      setErrorMessage("Los datos no pueden estar vacios")
-      return
+    if (datos.nombre === "" || datos.telefono === "" || datos.email === "") {
+      setErrorMessage("Los datos no pueden estar vacios");
+      return;
     }
     // Lógica para guardar nuevos datos en la base de datos
     await fetch(`http://${ipHost}:3001/clients/update/${client.id}`, {
@@ -51,85 +51,92 @@ const InfoClient = () => {
   };
 
   return (
-    <>
-      <div className="info-user">
-        <h2>Datos del cliente</h2>
-        <div className="user-details">
-          <div className="client-image">
-            <i className="fa-solid fa-user-tie"></i>
+    <div className="body">
+      <div className="users-page">
+        <div className="info-user">
+          <h2>Datos del cliente</h2>
+          <div className="user-details">
+            <div className="client-image">
+              <i className="fa-solid fa-user-tie"></i>
+            </div>
+            <div className="user-data">
+              <label>ID: </label>
+              <span>{datos.id}</span>
+              <div>
+                <label>Nombre: </label>
+                <span>{datos.nombre}</span>
+              </div>
+              <label>Telefono: </label>
+              <span>{datos.telefono}</span>
+              <div>
+                <label>Email: </label>
+                <span>{datos.email}</span>
+              </div>
+            </div>
           </div>
-          <div className="user-data">
-            <label>ID: </label>
-            <span>{datos.id}</span>
-            <div>
-              <label>Nombre: </label>
-              <span>{datos.nombre}</span>
-            </div>
-            <label>Telefono: </label>
-            <span>{datos.telefono}</span>
-            <div>
-              <label>Email: </label>
-              <span>{datos.email}</span>
-            </div>
+          <div>
+            {editingClient ? (
+              <div>
+                <div className="form-conte">
+                  <form>
+                    <br />
+                    <div className="input-container">
+                      <input
+                        className="input-float"
+                        placeholder=" "
+                        type="text"
+                        name="nombre"
+                        value={datos.nombre}
+                        onChange={handleChange}
+                      />
+                      <label className="label-float">Nombre</label>
+                    </div>
+                    <div className="input-container">
+                      <input
+                        placeholder=" "
+                        className="input-float"
+                        type="text"
+                        name="telefono"
+                        value={datos.telefono}
+                        onChange={handleChange}
+                      />
+                      <label className="label-float">Telefono</label>
+                    </div>
+                    <div className="input-container">
+                      <input
+                        className="input-float"
+                        placeholder=" "
+                        type="text"
+                        name="email"
+                        value={datos.email}
+                        onChange={handleChange}
+                      />
+                      <label className="label-float">Email</label>
+                    </div>
+                    {errorMessage && (
+                      <span className="error-message">{errorMessage}</span>
+                    )}
+                    <button onClick={handleSaveClient} className="add-button">
+                      Guardar
+                    </button>
+                    <button onClick={handleCancelEdit} className="add-button">
+                      Cancelar
+                    </button>
+                  </form>
+                </div>
+              </div>
+            ) : (
+              <div className="name-display">
+                <button onClick={handleEditCli}>Modificar datos</button>
+              </div>
+            )}
+            {successMessage && (
+              <span className="success-message">{successMessage}</span>
+            )}
           </div>
-        </div>
-        <div>
-          {editingClient ? (
-            <div>
-              <div className="form-conte">
-                <form>
-                  <br />
-                  <div className="input-container">
-                    <input
-                      className="input-float"
-                      placeholder=" "
-                      type="text"
-                      name="nombre"
-                      value={datos.nombre}
-                      onChange={handleChange}
-                    />
-                    <label className="label-float">Nombre</label>
-                  </div>
-                  <div className="input-container">
-                    <input
-                      placeholder=" "
-                      className="input-float"
-                      type="text"
-                      name="telefono"
-                      value={datos.telefono}
-                      onChange={handleChange}
-                    />
-                    <label className="label-float">Telefono</label>
-                  </div>
-                  <div className="input-container">
-                    <input
-                      className="input-float"
-                      placeholder=" "
-                      type="text"
-                      name="email"
-                      value={datos.email}
-                      onChange={handleChange}
-                    />
-                     <label className="label-float">Email</label>
-                  </div>
-                  {errorMessage && (
-                    <span className="error-message">{errorMessage}</span>
-                  )}
-                  <button onClick={handleSaveClient} className="add-button">Guardar</button>
-                  <button onClick={handleCancelEdit} className="add-button">Cancelar</button>
-                </form>
-              </div>  
-            </div>
-          ) : (
-            <div className="name-display">
-              <button onClick={handleEditCli}>Modificar datos</button>
-            </div>
-          )}
-          {successMessage && (
-            <span className="success-message">{successMessage}</span>
-          )}
         </div>
       </div>
+
       <div className="enlaces">
         <Link className="regresar-button" to={"/"}>
           Regresar a Home
@@ -139,7 +146,7 @@ const InfoClient = () => {
           Regresar a Clientes
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 

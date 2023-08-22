@@ -5,12 +5,12 @@ import useStore from "../store";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
 import { actualClients } from "../api";
-import '../styles/Clients.css'
+import "../styles/Clients.css";
 
 const Clients = () => {
   const clients = useStore((state) => state.clients);
   const setClients = useStore((state) => state.setClients);
-  const {ipHost} = useStore()
+  const { ipHost } = useStore();
 
   useEffect(() => {
     const getClients = async () => {
@@ -18,9 +18,9 @@ const Clients = () => {
       setClients(data);
     };
     getClients();
-  },[setClients]);
+  }, [setClients]);
 
-  const deleteClient = async(clientId) => {
+  const deleteClient = async (clientId) => {
     // Lógica para eliminar un cliente de la base de datos
     try {
       const confirmed = window.confirm(
@@ -30,7 +30,7 @@ const Clients = () => {
         await fetch(`http://${ipHost}:3001/clients/delete/${clientId}`, {
           method: "DELETE",
         });
-        // Actualizar el estado "clients" eliminando el cliente 
+        // Actualizar el estado "clients" eliminando el cliente
         const data = await actualClients();
         setClients(data);
       }
@@ -42,51 +42,53 @@ const Clients = () => {
   return (
     <div className="app">
       <HeaderBar />
-      <div className="users-page">
-        <div className="encabezado">
-          <div className="client">
-            <i className="fa-solid fa-user-tie"></i>
+      <div className="body">
+        <div className="users-page">
+          <div className="encabezado">
+            <div className="client">
+              <i className="fa-solid fa-user-tie"></i>
+            </div>
+            <h2>Clientes</h2>
           </div>
-          <h2>Clientes</h2>
-        </div>
-        <div className="table-container">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {clients.map((client) => (
-                <tr key={client.id}>
-                  <td>{client.id}</td>
-                  <td>{client.nombre}</td>
-                  <td className="actions">
-                    <Link to={`/clients/${client.id}`}>
-                      <button className="edit">
-                        <i className="fa-solid fa-pen-to-square"></i>
-                      </button>
-                    </Link>
-                    <button
-                      className="delete"
-                      onClick={() => deleteClient(client.id)}
-                    >
-                      <i className="fa-regular fa-trash-can"></i>
-                    </button>
-                  </td>
+          <div className="table-container">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {clients.map((client) => (
+                  <tr key={client.id}>
+                    <td>{client.id}</td>
+                    <td>{client.nombre}</td>
+                    <td className="actions">
+                      <Link to={`/clients/${client.id}`}>
+                        <button className="edit">
+                          <i className="fa-solid fa-pen-to-square"></i>
+                        </button>
+                      </Link>
+                      <button
+                        className="delete"
+                        onClick={() => deleteClient(client.id)}
+                      >
+                        <i className="fa-regular fa-trash-can"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Link className="agregar-button" to={"/clients/add"}>
+            Agregar Cliente
+          </Link>
+          <Link className="regresar-button" to={"/"}>
+            Ir a Home
+          </Link>
         </div>
-        <Link className="agregar-button" to={"/clients/add"}>
-          Agregar Cliente
-        </Link>
-        <Link className="regresar-button" to={"/"}>
-          Ir a Home
-        </Link>
       </div>
       <Footer />
     </div>
