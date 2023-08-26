@@ -31,3 +31,14 @@ export const actualVehicles = async () => {
     return [];
   }
 };
+
+export const actualProducts = async () => {
+  try {
+    const response = await fetch(`http://${ipHost}:3001/products/`);
+    const data = await response.json();
+    return data.products;
+  } catch (error) {
+    console.log("Error fetching products", error);
+    return [];
+  }
+};
