@@ -5,7 +5,7 @@ import useStore from "../store";
 
 const InfoVehicle = () => {
   const vehicles = useStore((state) => state.vehicles);
-  const {ipHost} = useStore()
+  const { ipHost } = useStore();
   const { vehicPlaca } = useParams();
   const vehicle = vehicles.find((vehic) => vehic.placa === vehicPlaca);
   const [datos, setDatos] = useState(vehicle);
@@ -24,9 +24,9 @@ const InfoVehicle = () => {
 
   const handleSaveClient = async (e) => {
     e.preventDefault();
-    if (datos.marca ==="" || datos.modelo ==="" || datos.anio ==="" ){
-      setErrorMessage("Los datos no pueden estar vacios")
-      return
+    if (datos.marca === "" || datos.modelo === "" || datos.anio === "") {
+      setErrorMessage("Los datos no pueden estar vacios");
+      return;
     }
     // Lógica para guardar nuevos datos en la base de datos
     await fetch(`http://${ipHost}:3001/vehicles/update/${vehicle.placa}`, {
@@ -50,15 +50,16 @@ const InfoVehicle = () => {
     setDatos(vehicle);
   };
 
-
   return (
     <div className="body">
       <div className="info-user">
-        <h2>Datos del Vehiculo</h2>
-        <div className="user-details">
+        <section className="encabezado">
           <div className="client-image">
             <i className="fa-solid fa-car-side"></i>
           </div>
+          <h2>Datos del Vehiculo</h2>
+        </section>
+        <div className="user-details">
           <div className="user-data">
             <label>Placa: </label>
             <span>{datos.placa}</span>
@@ -125,7 +126,7 @@ const InfoVehicle = () => {
                       value={datos.anio}
                       onChange={handleChange}
                     />
-                     <label className="label-float">Año del vehiculo</label>
+                    <label className="label-float">Año del vehiculo</label>
                   </div>
                   <div className="input-container">
                     <input
@@ -158,15 +159,19 @@ const InfoVehicle = () => {
                       value={datos.transmision}
                       onChange={handleChange}
                     />
-                     <label className="label-float">Tipo transmision</label>
+                    <label className="label-float">Tipo transmision</label>
                   </div>
                   {errorMessage && (
                     <span className="error-message">{errorMessage}</span>
                   )}
-                  <button onClick={handleSaveClient} className="add-button">Guardar</button>
-                  <button onClick={handleCancelEdit} className="add-button">Cancelar</button>
+                  <button onClick={handleSaveClient} className="add-button">
+                    Guardar
+                  </button>
+                  <button onClick={handleCancelEdit} className="add-button">
+                    Cancelar
+                  </button>
                 </form>
-              </div>  
+              </div>
             </div>
           ) : (
             <div className="name-display">

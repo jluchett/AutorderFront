@@ -17,6 +17,10 @@ const Body = () => {
   const goToVehicles = () =>{
     navigate("/vehicles")
   }
+
+  const goToProducts = () =>{
+    navigate("/products")
+  }
   return (
     <div className="body">
       <div className="pages">
@@ -41,6 +45,11 @@ const Body = () => {
           <i className="fa-solid fa-circle-user"></i>
           <p></p>
           Usuarios
+        </button>
+        <button className="btn-action"  onClick={goToProducts}>
+        <i className="fa-solid fa-store"></i>
+          <p></p>
+          Productos
         </button>
       </div>
     </div>
