@@ -2,7 +2,7 @@
 import { create } from "zustand";
 
 const useStore = create((set) => ({
-  ipHost: "172.37.131.193",
+  ipHost: "192.168.1.18",
   user: null,
   login: (user) => set({ user }),
   logout: () => set({ user: null }),

@@ -17,3 +17,64 @@ body {
   margin-right: 10px;
   color: rgb(255, 244, 36);
 }
+
+/* Estilos para el contenedor del filtro */
+.filter {
+  margin-bottom: 10px;
+}
+
+/* Estilos para el input del filtro */
+.filter input[type="text"] {
+  width: 70%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px; 
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+/* Estilos cuando el input tiene el foco */
+.filter input[type="text"]:focus {
+  border-color: #007bff; /* Puedes cambiar este color al que desees */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efecto de sombra suave */
+}
+
+
+/* Estilos para los botones de navegación "Anterior" y "Siguiente" */
+.pagination {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.pagination button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease-in-out;
+  outline: none;
+  margin-right: 10px;
+}
+
+/* Estilos para los botones de navegación al pasar el ratón por encima */
+.pagination button:hover {
+  background-color: #0056b3; /* Cambia el color al pasar el ratón */
+}
+
+/* Estilo para el botón "Anterior" cuando está deshabilitado */
+.pagination button[disabled]:first-child {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Estilo para el botón "Siguiente" cuando está deshabilitado */
+.pagination button[disabled]:last-child {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
