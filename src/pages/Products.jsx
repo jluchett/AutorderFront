@@ -46,14 +46,14 @@ const Products = () => {
     }
   };
 
-  const deleteProduct = async (clientId) => {
+  const deleteProduct = async (productId) => {
     // Lógica para eliminar un producto de la base de datos
     try {
       const confirmed = window.confirm(
         "¿Estás seguro de que deseas eliminar este Producto?"
       );
       if (confirmed) {
-        await fetch(`http://${ipHost}:3001/products/delete/${clientId}`, {
+        await fetch(`http://${ipHost}:3001/products/delete/${productId}`, {
           method: "DELETE",
         });
         // Actualizar el estado "products" eliminando el producto del estado
@@ -134,7 +134,7 @@ const Products = () => {
               <i className="fa-solid fa-arrow-right"></i>
             </button>
           </section>
-          <Link className="agregar-button" to={"/clients/add"}>
+          <Link className="agregar-button" to={"/products/add"}>
             Agregar Producto
           </Link>
           <Link className="regresar-button" to={"/"}>
