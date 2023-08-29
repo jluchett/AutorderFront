@@ -16,6 +16,7 @@ import VehicleDetail from "./pages/VehicleDetail";
 import AddVehicle from "./pages/AddVehicle";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import AddProduct from "./pages/AddProduct";
 
 
 const App = () => {
@@ -46,7 +47,7 @@ const App = () => {
         <Route path="/vehicles/add" element={user ? <AddVehicle /> : <Navigate to="/login" />} />
         <Route path="/products" element={user ? <Products/> : <Navigate to="/login" />} />
         <Route path="/products/:productId" element={user ? <ProductDetail/> : <Navigate to="/login" />} />
-        <Route path="/products/add" element={user ? <AddClient /> : <Navigate to="/login" />} />
+        <Route path="/products/add" element={user ? <AddProduct /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
