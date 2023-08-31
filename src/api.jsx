@@ -1,4 +1,4 @@
-const ipHost = '192.168.1.18'
+const ipHost = 'localhost'
 export const actualUsers = async () => {
   try {
     const response = await fetch(`http://${ipHost}:3001/users/`);
@@ -37,6 +37,17 @@ export const actualProducts = async () => {
     const response = await fetch(`http://${ipHost}:3001/products/`);
     const data = await response.json();
     return data.products;
+  } catch (error) {
+    console.log("Error fetching products", error);
+    return [];
+  }
+};
+
+export const actualOrders = async () => {
+  try {
+    const response = await fetch(`http://${ipHost}:3001/orders/`);
+    const data = await response.json();
+    return data.orders;
   } catch (error) {
     console.log("Error fetching products", error);
     return [];

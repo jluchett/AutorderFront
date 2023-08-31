@@ -21,10 +21,14 @@ const Body = () => {
   const goToProducts = () =>{
     navigate("/products")
   }
+
+  const goToOrders = () => {
+    navigate("/orders")
+  }
   return (
     <div className="body">
       <div className="pages">
-        <button className="btn-action">
+        <button className="btn-action" onClick={goToOrders}>
           <i className="fa-solid fa-car"></i>
           <span> </span>
           <i className="fa-solid fa-screwdriver-wrench"></i>

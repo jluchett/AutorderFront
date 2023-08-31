@@ -17,6 +17,8 @@ import AddVehicle from "./pages/AddVehicle";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import AddProduct from "./pages/AddProduct";
+import Orders from "./pages/Orders";
+//import MyReport from "./pages/MyReport";
 
 
 const App = () => {
@@ -48,6 +50,7 @@ const App = () => {
         <Route path="/products" element={user ? <Products/> : <Navigate to="/login" />} />
         <Route path="/products/:productId" element={user ? <ProductDetail/> : <Navigate to="/login" />} />
         <Route path="/products/add" element={user ? <AddProduct /> : <Navigate to="/login" />} />
+        <Route path="/orders" element={user ? <Orders/> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

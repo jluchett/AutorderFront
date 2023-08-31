@@ -2,7 +2,7 @@
 import { create } from "zustand";
 
 const useStore = create((set) => ({
-  ipHost: "192.168.1.18",
+  ipHost: "localhost",
   user: null,
   login: (user) => set({ user }),
   logout: () => set({ user: null }),
@@ -14,6 +14,8 @@ const useStore = create((set) => ({
   setVehicles: (vehicles) => set({ vehicles }),
   products: [],
   setProducts: (products) => set({ products }),
+  orders: [],
+  setOrders: (orders) => set({ orders }),
 }));
 
 export default useStore;
