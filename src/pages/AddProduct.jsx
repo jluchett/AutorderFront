@@ -119,11 +119,11 @@ const AddProduct = () => {
             </div>
             <div className="enlaces">
               <Link className="regresar-button" to={"/"}>
-                Regresar a Home
+                Ir a Home
               </Link>
               <span className="separador"></span>
               <Link className="regresar-button" to={"/products"}>
-                Regresar a Productos
+                Ir a Productos
               </Link>
             </div>
           </div>

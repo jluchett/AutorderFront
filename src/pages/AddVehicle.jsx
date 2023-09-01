@@ -202,11 +202,11 @@ const AddVehicle = () => {
           </div>
           <div className="enlaces">
             <Link className="regresar-button" to={"/"}>
-              Regresar a Home
+              Ir a Home
             </Link>
             <span className="separador"></span>
             <Link className="regresar-button" to={"/vehicles"}>
-              Regresar a vehiculos
+              Ir a vehiculos
             </Link>
           </div>
         </div>

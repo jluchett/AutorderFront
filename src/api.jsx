@@ -1,4 +1,4 @@
-const ipHost = 'localhost'
+const ipHost = '192.168.1.18'
 export const actualUsers = async () => {
   try {
     const response = await fetch(`http://${ipHost}:3001/users/`);

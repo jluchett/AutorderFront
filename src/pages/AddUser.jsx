@@ -153,11 +153,11 @@ const AddUser = () => {
             </div>
             <div className="enlaces">
               <Link className="regresar-button" to={"/"}>
-                Regresar a Home
+                Ir a Home
               </Link>
               <span className="separador"></span>
               <Link className="regresar-button" to={"/users"}>
-                Regresar a Usuarios
+                Ir a Usuarios
               </Link>
             </div>
           </div>

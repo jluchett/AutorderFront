@@ -53,7 +53,7 @@ const Orders = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>Id Orden</th>
+                <th>Orden</th>
                 <th>Fecha</th>
                 <th>Cliente</th>
                 <th>Placa</th>

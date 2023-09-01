@@ -30,7 +30,7 @@ const Footer = () => {
           </a>
         </div>
         <div className="rights-reserved">
-          <span>Todos los derechos reservados &copy; 2023 Los Carros</span>
+          <span className="textFooter">Todos los derechos reservados &copy; 2023 Los Carros</span>
         </div>
       </footer>
     </>

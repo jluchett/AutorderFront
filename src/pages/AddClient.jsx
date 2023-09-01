@@ -145,11 +145,11 @@ const AddClient = () => {
             </div>
             <div className="enlaces">
               <Link className="regresar-button" to={"/"}>
-                Regresar a Home
+                Ir a Home
               </Link>
               <span className="separador"></span>
               <Link className="regresar-button" to={"/clients"}>
-                Regresar a Clientes
+                Ir a Clientes
               </Link>
             </div>
           </div>

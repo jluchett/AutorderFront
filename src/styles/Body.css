@@ -3,7 +3,8 @@
   display: flex;
   flex-direction: column; /* Cambio a dirección de columna */
   justify-content: space-between; /* Alineación vertical entre el contenido y el Footer */
-  padding-bottom: 60px; /* Ajusta el tamaño del footer según sea necesario */
+  padding-bottom: 70px; /* Ajusta el tamaño del footer según sea necesario */
+  background-color: #a9a9a9;
 }
 
 .pages {

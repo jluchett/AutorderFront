@@ -54,7 +54,6 @@ const Vehicles = () => {
                 <th>Placa</th>
                 <th>Marca</th>
                 <th>Modelo</th>
-                <th>Cliente</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -64,7 +63,6 @@ const Vehicles = () => {
                   <td>{vehicle.placa}</td>
                   <td>{vehicle.marca}</td>
                   <td>{vehicle.modelo}</td>
-                  <td>{vehicle.nombre_cliente}</td>
                   <td className="actions">
                     <Link to={`/vehicles/${vehicle.placa}`}>
                       <button className="edit">

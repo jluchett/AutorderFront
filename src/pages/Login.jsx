@@ -42,47 +42,49 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="app">
       <header className="header">
-        <div className="logo">
-          <img src="/src/assets/LogoH.png" alt="Logo de la empresa" />
-        </div>
-      </header>
-      <div className="login-container">
-        <i className="fa-solid fa-user-lock"></i>
-        <h1>Inicia Sesión</h1>
-        <div className="form-container">
-          <form className="login-form" onSubmit={handleLogin}>
-            <div className="form-group">
-              <label htmlFor="id" className="form-label">
-                Usuario
-              </label>
-              <input
-                type="text"
-                id="id"
-                value={id}
-                placeholder="Numero de identificacion"
-                onChange={(e) => setId(e.target.value)}
-                className="form-input"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password" className="form-label">
-                Contraseña
-              </label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="form-input"
-              />
-            </div>
-            <button type="submit" className="login-button">
-              Iniciar sesión
-            </button>
-          </form>
+          <div className="logo">
+            <img src="/src/assets/LogoH.png" alt="Logo de la empresa" />
+          </div>
+        </header>
+      <div className="body">
+        <div className="login-container">
+          <i className="fa-solid fa-user-lock"></i>
+          <h1>Inicia Sesión</h1>
+          <div className="form-container">
+            <form className="login-form" onSubmit={handleLogin}>
+              <div className="form-group">
+                <label htmlFor="id" className="form-label">
+                  Usuario
+                </label>
+                <input
+                  type="text"
+                  id="id"
+                  value={id}
+                  placeholder="Numero de identificacion"
+                  onChange={(e) => setId(e.target.value)}
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password" className="form-label">
+                  Contraseña
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="form-input"
+                />
+              </div>
+              <button type="submit" className="login-button">
+                Iniciar sesión
+              </button>
+            </form>
+          </div>
         </div>
       </div>
       <Footer />
