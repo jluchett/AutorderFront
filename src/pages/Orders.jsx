@@ -23,7 +23,7 @@ const Orders = () => {
     // Lógica para eliminar una orden de la base de datos
     try {
       const confirmed = window.confirm(
-        "¿Estás seguro de que deseas eliminar esta orden?"
+        `¿Estás seguro de que deseas eliminar esta orden #${idOrder} ?`
       );
       if (confirmed) {
         await fetch(`http://${ipHost}:3001/orders/delete/${idOrder}`, {
@@ -62,7 +62,7 @@ const Orders = () => {
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr key={order.placa}>
+                <tr key={order.order_id}>
                   <td>{order.orden_id}</td>
                   <td>{order.fecha_orden}</td>
                   <td>{order.nombre_cliente}</td>
@@ -70,7 +70,7 @@ const Orders = () => {
                   <td className="actions">
                     <Link to={`/orders/${order.orden_id}`}>
                       <button className="edit">
-                        <i className="fa-solid fa-pen-to-square"></i>
+                        <i className="fa-brands fa-searchengin"></i>
                       </button>
                     </Link>
                     <button

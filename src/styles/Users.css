@@ -49,6 +49,7 @@
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 18px;
 }
 
 .actions button.edit {
@@ -67,7 +68,7 @@
 }
 
 .actions button:hover {
-  opacity: 0.8;
+  color: rgb(8, 106, 203);
 }
 
 .agregar-button {
@@ -75,14 +76,13 @@
   border: none;
   cursor: pointer;
   background-color: #46c012;
-  opacity: 0.8;
   color: white;
   border-radius: 10px;
   text-decoration: none;
   margin-right: 10px;
 }
 .agregar-button:hover {
-  opacity: 1;
+  color: rgb(8, 106, 203);
 }
 
 .regresar-button:hover {

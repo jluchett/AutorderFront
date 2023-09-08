@@ -53,3 +53,14 @@ export const actualOrders = async () => {
     return [];
   }
 };
+
+export const actualDetalle = async (idOrder)=> {
+  try {
+    const response = await fetch(`http://${ipHost}:3001/orders/detail/${idOrder}`);
+    const data = await response.json();
+    return data.detalle;
+  } catch (error) {
+    console.log("Error fetching products", error);
+    return [];
+  }
+}
