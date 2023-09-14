@@ -6,7 +6,7 @@ import InfoOrder from "../components/InfoOrder";
 
 const OrderDeatil = () => {
   return (
-    <div>
+    <div className="app">
       <HeaderBar />
       <InfoOrder />
       <Footer />

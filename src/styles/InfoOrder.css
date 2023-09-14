@@ -1,0 +1,16 @@
+.info-user3 {
+  width: 600px;
+  margin: 10px auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 450px) {
+  .info-user3 {
+    max-width: 310px;
+    padding: 15px;
+    margin: 10px;
+  }
+}
