@@ -25,7 +25,7 @@ const InfoOrder = () => {
       <div className="info-user3">
         <div className="order-info">
           <h2>
-            Información de la orden #<span className="numOrden">{idOrden}</span>
+            Datos de la orden No. <span className="numOrden">{idOrden}</span>
           </h2>
           <div>
             <label>Fecha: </label>

@@ -2,7 +2,7 @@
   width: 600px;
   margin: 10px auto;
   padding: 20px;
-  background-color: #f8f8f8;
+  background-color: #0c32f15b;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
@@ -13,4 +13,13 @@
     padding: 15px;
     margin: 10px;
   }
+}
+
+.numOrden {
+  font-size: 28px;
+  color: rgba(255, 0, 0, 0.724);
+}
+
+.total {
+  text-align: right;
 }

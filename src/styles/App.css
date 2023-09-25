@@ -24,7 +24,7 @@ body {
 
 /* Estilos para el input del filtro */
 .filter input[type="text"] {
-  width: 70%;
+  width: 80%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px; 

@@ -14,7 +14,7 @@ const Products = () => {
   const [filterValue, setFilterValue] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 10;
+  const productsPerPage = 7;
 
   useEffect(() => {
     const getProds = async () => {
