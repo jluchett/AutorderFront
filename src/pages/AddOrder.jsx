@@ -7,6 +7,7 @@ const iniOrderData = {
   fecha_orden: "",
   id_cliente: "",
   placa_vehic: "",
+  total_orden: 0,
 };
 const iniDetalle = {
   producto_id: "",
@@ -18,6 +19,13 @@ const iniClientInfo = {
   telefono: "",
   email: "",
 };
+const iniVehicle = {
+  placa: "",
+  marca: "",
+  modelo: "",
+  kilometraje: 0,
+  cliente_id: "",
+};
 const AddOrder = () => {
   const setClients = useStore((state) => state.setClients);
   const clients = useStore((state) => state.clients);
@@ -27,6 +35,7 @@ const AddOrder = () => {
   const [detalle, setDetalle] = useState([]);
   const [detalleData, setDetalleData] = useState(iniDetalle);
   const [clienteInfo, setClienteInfo] = useState(iniClientInfo);
+  const [vehicleInfo, setVehicleInfo] = useState([iniVehicle]);
 
   useEffect(() => {
     const getClients = async () => {
@@ -48,7 +57,7 @@ const AddOrder = () => {
     const vehiClient = vehicles.filter(
       (vehicle) => vehicle.cliente_id === id_cliente
     );
-    console.log(vehiClient)
+    vehiClient ? setVehicleInfo(vehiClient) : setVehicleInfo(iniVehicle);
   };
 
   const handleInputChange = (event) => {
@@ -56,6 +65,11 @@ const AddOrder = () => {
     setOrderData({ ...orderData, [name]: value });
     setClienteInfo(iniClientInfo);
   };
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    setOrderData({ ...orderData, [name]: value })
+  }
 
   const handleDetailInputChange = (event) => {
     const { name, value } = event.target;
@@ -122,16 +136,22 @@ const AddOrder = () => {
           </div>
         </div>
       </div>
+      
       <div>
         <label>Placa del Vehículo:</label>
-        <input
-          type="text"
+        <select
           name="placa_vehic"
           value={orderData.placa_vehic}
-          onChange={handleInputChange}
-        />
+          onChange={handleSelectChange}
+        >
+          <option value="">Selecciona una placa</option>
+          {vehicleInfo.map((vehi) => (
+            <option key={vehi.placa} value={vehi.placa}>
+              {vehi.placa}
+            </option>
+          ))}
+        </select>
       </div>
-
       <div>
         <h2>Detalle de la Orden</h2>
         <div>
