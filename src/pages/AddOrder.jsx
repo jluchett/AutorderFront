@@ -36,7 +36,7 @@ const AddOrder = () => {
   const [detalleData, setDetalleData] = useState(iniDetalle);
   const [clienteInfo, setClienteInfo] = useState(iniClientInfo);
   const [vehicleInfo, setVehicleInfo] = useState([iniVehicle]);
-
+  let selectedVehic= {}
   useEffect(() => {
     const getClients = async () => {
       const data = await actualClients();
@@ -69,6 +69,7 @@ const AddOrder = () => {
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
     setOrderData({ ...orderData, [name]: value })
+    selectedVehic = vehicleInfo.find(vehic => vehic.placa === value)
   }
 
   const handleDetailInputChange = (event) => {
@@ -152,6 +153,8 @@ const AddOrder = () => {
           ))}
         </select>
       </div>
+      {selectedVehic ? <div>con datosnuevois</div> : <p>sin datos</p>}
+      
       <div>
         <h2>Detalle de la Orden</h2>
         <div>
