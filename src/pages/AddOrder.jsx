@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
 import useStore from "../store";
-import { actualClients, actualVehicles } from "../api";
+import { actualClients, actualVehicles, actualProducts } from "../api";
 
 const iniOrderData = {
   fecha_orden: "",
@@ -13,6 +13,7 @@ const iniDetalle = {
   producto_id: "",
   cantidad: 0,
   precio_unitario: 0,
+  producto_nom: "",
 };
 const iniClientInfo = {
   nombre: "",
@@ -26,17 +27,28 @@ const iniVehicle = {
   kilometraje: 0,
   cliente_id: "",
 };
+const iniProd = {
+  id: 0,
+  nombre: "",
+  precio: 0,
+};
 const AddOrder = () => {
   const setClients = useStore((state) => state.setClients);
   const clients = useStore((state) => state.clients);
   const vehicles = useStore((state) => state.vehicles);
   const setVehicles = useStore((state) => state.setVehicles);
+  const products = useStore((state) => state.products);
+  const setProducts = useStore((state) => state.setProducts);
+  //const { ipHost } = useStore();
+
   const [orderData, setOrderData] = useState(iniOrderData);
   const [detalle, setDetalle] = useState([]);
   const [detalleData, setDetalleData] = useState(iniDetalle);
   const [clienteInfo, setClienteInfo] = useState(iniClientInfo);
+  const [vehiclesInfo, setVehiclesInfo] = useState([iniVehicle]);
   const [vehicleInfo, setVehicleInfo] = useState([iniVehicle]);
-  let selectedVehic= {}
+  const [infoProd, setInfoProd] = useState(iniProd);
+
   useEffect(() => {
     const getClients = async () => {
       const data = await actualClients();
@@ -48,7 +60,12 @@ const AddOrder = () => {
       setVehicles(data);
     };
     getVehicles();
-  }, [setClients, setVehicles]);
+    const getProds = async () => {
+      const data = await actualProducts();
+      setProducts(data);
+    };
+    getProds();
+  }, [setClients, setProducts, setVehicles]);
 
   const buscarCliente = () => {
     const { id_cliente } = orderData; // Obtén el ID del cliente desde el estado de datos de orden
@@ -57,7 +74,22 @@ const AddOrder = () => {
     const vehiClient = vehicles.filter(
       (vehicle) => vehicle.cliente_id === id_cliente
     );
-    vehiClient ? setVehicleInfo(vehiClient) : setVehicleInfo(iniVehicle);
+    vehiClient ? setVehiclesInfo(vehiClient) : setVehiclesInfo(iniVehicle);
+  };
+
+  const buscarProd = () => {
+    const dataProd = products.find(
+      (prod) => prod.id === parseInt(detalleData.producto_id)
+    );
+    if(dataProd){
+      setInfoProd(dataProd)
+      
+      setDetalleData({ ...detalleData, ["precio_unitario"]: dataProd.precio, ["producto_nom"]: dataProd.nombre})
+      
+    }else {
+      setInfoProd(iniProd)
+    }
+    
   };
 
   const handleInputChange = (event) => {
@@ -68,9 +100,10 @@ const AddOrder = () => {
 
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
-    setOrderData({ ...orderData, [name]: value })
-    selectedVehic = vehicleInfo.find(vehic => vehic.placa === value)
-  }
+    setOrderData({ ...orderData, [name]: value });
+    const selectedVehic = vehiclesInfo.find((vehic) => vehic.placa === value);
+    selectedVehic ? setVehicleInfo(selectedVehic) : setVehicleInfo(iniVehicle);
+  };
 
   const handleDetailInputChange = (event) => {
     const { name, value } = event.target;
@@ -85,6 +118,7 @@ const AddOrder = () => {
     ) {
       setDetalle([...detalle, detalleData]);
       setDetalleData(iniDetalle);
+      setInfoProd(iniProd)
     }
   };
 
@@ -137,7 +171,7 @@ const AddOrder = () => {
           </div>
         </div>
       </div>
-      
+
       <div>
         <label>Placa del Vehículo:</label>
         <select
@@ -146,15 +180,29 @@ const AddOrder = () => {
           onChange={handleSelectChange}
         >
           <option value="">Selecciona una placa</option>
-          {vehicleInfo.map((vehi) => (
+          {vehiclesInfo.map((vehi) => (
             <option key={vehi.placa} value={vehi.placa}>
               {vehi.placa}
             </option>
           ))}
         </select>
       </div>
-      {selectedVehic ? <div>con datosnuevois</div> : <p>sin datos</p>}
-      
+      <div>
+        <div>
+          <label>Marca: {vehicleInfo.marca}</label>
+        </div>
+        <div>
+          <label>Modelo: {vehicleInfo.modelo}</label>
+        </div>
+        <div>
+          <label>Kms anterior: {vehicleInfo.kilometraje}</label>
+        </div>
+        <div>
+          <label>Kms actual: </label>
+          <input type="text" />
+        </div>
+      </div>
+
       <div>
         <h2>Detalle de la Orden</h2>
         <div>
@@ -163,6 +211,16 @@ const AddOrder = () => {
             type="text"
             name="producto_id"
             value={detalleData.producto_id}
+            onChange={handleDetailInputChange}
+          />
+          <button onClick={buscarProd}>Buscar</button>
+        </div>
+        <div>
+          <label>Descripcion:</label>
+          <input
+            type="text"
+            name="nombre"
+            value={infoProd.nombre}
             onChange={handleDetailInputChange}
           />
         </div>
@@ -180,7 +238,7 @@ const AddOrder = () => {
           <input
             type="number"
             name="precio_unitario"
-            value={detalleData.precio_unitario}
+            value={infoProd.precio}
             onChange={handleDetailInputChange}
           />
         </div>
@@ -188,17 +246,21 @@ const AddOrder = () => {
         <table>
           <thead>
             <tr>
-              <th>ID Producto</th>
+              <th>ID</th>
+              <th>Descripcion</th>
               <th>Cantidad</th>
               <th>Precio Unitario</th>
+              <th>Valor Total</th>
             </tr>
           </thead>
           <tbody>
             {detalle.map((item, index) => (
               <tr key={index}>
                 <td>{item.producto_id}</td>
+                <td>{item.producto_nom}</td>
                 <td>{item.cantidad}</td>
                 <td>{item.precio_unitario}</td>
+                <td>{item.precio_unitario * item.cantidad}</td>
               </tr>
             ))}
           </tbody>
