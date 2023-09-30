@@ -65,8 +65,19 @@ const AddOrder = () => {
       setProducts(data);
     };
     getProds();
-  }, [setClients, setProducts, setVehicles]);
+    getFecha()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ setClients, setProducts, setVehicles]);
 
+  const getFecha = () =>{
+    const fechaAct = new Date();
+    const fechaFormato = fechaAct.toLocaleDateString('es-CO', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    setOrderData({ ...orderData, fecha_orden: fechaFormato });
+  }
   const buscarCliente = () => {
     const { id_cliente } = orderData; // Obtén el ID del cliente desde el estado de datos de orden
     const client = clients.find((cli) => cli.id === id_cliente); //filtramos el cliente del store
@@ -75,21 +86,24 @@ const AddOrder = () => {
       (vehicle) => vehicle.cliente_id === id_cliente
     );
     vehiClient ? setVehiclesInfo(vehiClient) : setVehiclesInfo(iniVehicle);
+    getFecha()
   };
 
   const buscarProd = () => {
     const dataProd = products.find(
       (prod) => prod.id === parseInt(detalleData.producto_id)
     );
-    if(dataProd){
-      setInfoProd(dataProd)
-      
-      setDetalleData({ ...detalleData, ["precio_unitario"]: dataProd.precio, ["producto_nom"]: dataProd.nombre})
-      
-    }else {
-      setInfoProd(iniProd)
+    if (dataProd) {
+      setInfoProd(dataProd);
+
+      setDetalleData({
+        ...detalleData,
+        ["precio_unitario"]: dataProd.precio,
+        ["producto_nom"]: dataProd.nombre,
+      });
+    } else {
+      setInfoProd(iniProd);
     }
-    
   };
 
   const handleInputChange = (event) => {
@@ -116,22 +130,25 @@ const AddOrder = () => {
       detalleData.cantidad > 0 &&
       detalleData.precio_unitario > 0
     ) {
-      
       setDetalle([...detalle, detalleData]);
       setDetalleData(iniDetalle);
-      setInfoProd(iniProd)
-      const acu = orderData.total_orden
-      const subTotal = parseInt(detalleData.precio_unitario * detalleData.cantidad)
-      const total = acu + subTotal
-      setOrderData({ ...orderData, ["total_orden"]: total })
+      setInfoProd(iniProd);
+      const acu = orderData.total_orden;
+      const subTotal = parseInt(
+        detalleData.precio_unitario * detalleData.cantidad
+      );
+      const total = acu + subTotal;
+      setOrderData({ ...orderData, ["total_orden"]: total });
     }
   };
 
   const handleSubmit = () => {
+    getFecha()
     const orderToSend = {
       ...orderData,
       detalle: [...detalle],
     };
+    
     // Realiza la solicitud POST al backend con orderToSend y maneja la respuesta.
     // Añade aquí tu lógica de solicitud al servidor.
     console.log("Orden a enviar:", orderToSend);
@@ -140,18 +157,15 @@ const AddOrder = () => {
     setOrderData(iniOrderData);
     setDetalle([]);
     setDetalleData(iniDetalle);
+    setClienteInfo(iniClientInfo)
+    setVehicleInfo(iniVehicle)
+    setVehiclesInfo([iniVehicle])
   };
   return (
     <div>
       <h1>Crear Orden</h1>
       <div>
-        <label>Fecha de la Orden:</label>
-        <input
-          type="date"
-          name="fecha_orden"
-          value={orderData.fecha_orden}
-          onChange={handleInputChange}
-        />
+        <label>Fecha de la Orden: {orderData.fecha_orden}</label>
       </div>
       <div>
         <label>ID del Cliente:</label>
@@ -264,19 +278,35 @@ const AddOrder = () => {
                 <td>{item.producto_id}</td>
                 <td>{item.producto_nom}</td>
                 <td>{item.cantidad}</td>
-                <td>{item.precio_unitario}</td>
-                <td>{item.precio_unitario * item.cantidad}</td>
+                <td>
+                  {parseInt(item.precio_unitario).toLocaleString("es-CO", {
+                    style: "currency",
+                    currency: "COP",
+                    maximumFractionDigits: 0,
+                  })}
+                </td>
+                <td>
+                  {(
+                    parseInt(item.precio_unitario) * parseInt(item.cantidad)
+                  ).toLocaleString("es-CO", {
+                    style: "currency",
+                    currency: "COP",
+                    maximumFractionDigits: 0,
+                  })}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
         <div>
-          <label>Total de la Orden:</label>
-          <input
-            type="number"
-            name="total_orden"
-            value={orderData.total_orden}
-          />
+          <label>
+            Total de la Orden:{" "}
+            {orderData.total_orden.toLocaleString("es-CO", {
+              style: "currency",
+              currency: "COP",
+              maximumFractionDigits: 0,
+            })}
+          </label>
         </div>
       </div>
       <button onClick={handleSubmit}>Crear Orden</button>
