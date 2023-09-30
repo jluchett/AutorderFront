@@ -116,9 +116,14 @@ const AddOrder = () => {
       detalleData.cantidad > 0 &&
       detalleData.precio_unitario > 0
     ) {
+      
       setDetalle([...detalle, detalleData]);
       setDetalleData(iniDetalle);
       setInfoProd(iniProd)
+      const acu = orderData.total_orden
+      const subTotal = parseInt(detalleData.precio_unitario * detalleData.cantidad)
+      const total = acu + subTotal
+      setOrderData({ ...orderData, ["total_orden"]: total })
     }
   };
 
