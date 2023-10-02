@@ -210,11 +210,8 @@ const AddVehicle = () => {
             </Link>
           </div>
         </div>
-
         </div>
-        
       </section>
-
       <Footer />
     </main>
   );

@@ -31,7 +31,7 @@ const Orders = () => {
         });
         // Actualizar el estado "Orders" eliminando la orden 
         const data = await actualOrders();
-        actualOrders(data);
+        setOrders(data);
       }
     } catch (error) {
       console.log("Error al eliminar Orden:", error);

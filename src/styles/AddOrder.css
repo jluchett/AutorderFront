@@ -1,0 +1,86 @@
+/* AddOrder.css */
+
+/* Estilos generales para el contenedor principal */
+.containerOrder {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Estilos para los títulos */
+  .containerOrder h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .containerOrder h2 {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para las etiquetas y campos de entrada */
+  .containerOrder label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  
+  
+  .containerOrder select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Estilos para los botones */
+  .containerOrder button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .containerOrder button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos para la tabla */
+  .containerOrder table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .containerOrder table th,
+  .containerOrder table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  /* Estilos específicos para dispositivos móviles */
+  @media screen and (max-width: 600px) {
+    /* Redefine el tamaño de fuente para pantallas pequeñas */
+    .containerOrder h1 {
+      font-size: 20px;
+    }
+  
+    .containerOrder h2 {
+      font-size: 18px;
+    }
+  
+    /* Haz que los campos de entrada ocupen el ancho completo */
+    .containerOrder input[type="text"],
+    .containerOrder input[type="number"],
+    .containerOrder select {
+      width: 100%;
+    }
+  }
+  
