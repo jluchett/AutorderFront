@@ -39,8 +39,9 @@ const AddOrder = () => {
   const setVehicles = useStore((state) => state.setVehicles);
   const products = useStore((state) => state.products);
   const setProducts = useStore((state) => state.setProducts);
-  //const { ipHost } = useStore();
-
+  const { ipHost } = useStore();
+  const [errorMesage, setErrorMesage] = useState("");
+  const [succesMesage, setSuccesMesage] = useState("");
   const [orderData, setOrderData] = useState(iniOrderData);
   const [detalle, setDetalle] = useState([]);
   const [detalleData, setDetalleData] = useState(iniDetalle);
@@ -65,19 +66,19 @@ const AddOrder = () => {
       setProducts(data);
     };
     getProds();
-    getFecha()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ setClients, setProducts, setVehicles]);
+    getFecha();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setClients, setProducts, setVehicles]);
 
-  const getFecha = () =>{
+  const getFecha = () => {
     const fechaAct = new Date();
-    const fechaFormato = fechaAct.toLocaleDateString('es-CO', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
+    const fechaFormato = fechaAct.toLocaleDateString("es-CO", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
     });
     setOrderData({ ...orderData, fecha_orden: fechaFormato });
-  }
+  };
   const buscarCliente = () => {
     const { id_cliente } = orderData; // Obtén el ID del cliente desde el estado de datos de orden
     const client = clients.find((cli) => cli.id === id_cliente); //filtramos el cliente del store
@@ -86,7 +87,7 @@ const AddOrder = () => {
       (vehicle) => vehicle.cliente_id === id_cliente
     );
     vehiClient ? setVehiclesInfo(vehiClient) : setVehiclesInfo(iniVehicle);
-    getFecha()
+    getFecha();
   };
 
   const buscarProd = () => {
@@ -142,14 +143,62 @@ const AddOrder = () => {
     }
   };
 
+  function validarObj(obj) {
+    return Object.values(obj).every((value) => value !== "");
+  }
+
+  function validarArrayDeObjetos(arr) {
+    if (arr.length === 0) {
+      return false; // Si el array está vacío, considerarlo inválido
+    }
+
+    for (const obj of arr) {
+      for (const value of Object.values(obj)) {
+        if (value === "") {
+          return false; // Si se encuentra un valor vacío, el array no es válido
+        }
+      }
+    }
+    return true; // Si no se encontraron valores vacíos en ningún objeto, el array es válido
+  }
+
   const handleSubmit = () => {
-    getFecha()
+    getFecha();
+    const isMainValid = validarObj(orderData);
+    if (!isMainValid) {
+      setErrorMesage("Todos los datos son necesarios");
+      setSuccesMesage("");
+      return;
+    }
+    const isDetValid = validarArrayDeObjetos(detalle);
+    if (!isDetValid) {
+      setErrorMesage("Debe agregar por lo menos un producto");
+      setSuccesMesage("");
+      return;
+    }
+
     const orderToSend = {
       ...orderData,
       detalle: [...detalle],
     };
-    
+
     // Realiza la solicitud POST al backend con orderToSend y maneja la respuesta.
+    fetch(`http://${ipHost}:3001/orders/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderToSend),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        data.succes
+          ? setSuccesMesage(data.message)
+          : setErrorMesage(data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     // Añade aquí tu lógica de solicitud al servidor.
     console.log("Orden a enviar:", orderToSend);
 
@@ -157,9 +206,9 @@ const AddOrder = () => {
     setOrderData(iniOrderData);
     setDetalle([]);
     setDetalleData(iniDetalle);
-    setClienteInfo(iniClientInfo)
-    setVehicleInfo(iniVehicle)
-    setVehiclesInfo([iniVehicle])
+    setClienteInfo(iniClientInfo);
+    setVehicleInfo(iniVehicle);
+    setVehiclesInfo([iniVehicle]);
   };
   return (
     <div>
@@ -308,6 +357,10 @@ const AddOrder = () => {
             })}
           </label>
         </div>
+        {errorMesage && <span className="error-message">{errorMesage}</span>}
+        {succesMesage && (
+          <span className="success-message">{succesMesage}</span>
+        )}
       </div>
       <button onClick={handleSubmit}>Crear Orden</button>
     </div>
