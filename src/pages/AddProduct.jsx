@@ -75,9 +75,9 @@ const AddProduct = () => {
           <div className="info-user">
             <div className="encabezado">
               <div className="user-add">
-              <i className="fa-solid fa-file-circle-plus"></i>
+              <img src="/src/assets/addprod.png" className="imgCli"></img>
               </div>
-              <h2>Agregar Producto</h2>
+              <h2>Agregar Producto/Servicio</h2>
             </div>
             <div className="form-add">
               <form>

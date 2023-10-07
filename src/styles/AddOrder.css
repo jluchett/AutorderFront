@@ -1,0 +1,57 @@
+.container-addor {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background: #e6e6e6;
+}
+
+.wrap-addor {
+  width: 700px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 5px 20px 70px;
+}
+.addor-data {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border: 1px solid #e6e6e6;
+  border-radius: 13px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.table-container-order {
+    overflow-x: auto;
+    width: 100%;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #b5b6bc5b;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+.addor-input {
+  width: 100%;
+  position: relative;
+  padding-left: 10px;
+  padding-top: 2px;
+}
+
+th,
+td {
+  padding: 5px;
+}
+
+.rs1-addor-input {
+  width: calc((100% - 30px) / 2);
+}
+
+@media (max-width: 530px) {
+    .rs1-addor-input {
+      width: 100%;
+    }
+  }

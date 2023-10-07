@@ -74,7 +74,7 @@ const Products = () => {
             <div className="client">
               <i className="fa-solid fa-store"></i>
             </div>
-            <h2>Productos</h2>
+            <h2>Productos/Servicios</h2>
           </div>
           <div className="filter">
             <label htmlFor="">Busqueda: </label>
@@ -135,7 +135,7 @@ const Products = () => {
             </button>
           </section>
           <Link className="agregar-button" to={"/products/add"}>
-            Agregar Producto
+            Agregar Prod/Serv
           </Link>
           <Link className="regresar-button" to={"/"}>
             Ir a Home
