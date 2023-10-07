@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import useStore from "../store";
 import { actualClients, actualVehicles, actualProducts } from "../api";
+import HeaderBar from "../components/HeaderBar";
+import Footer from "../components/Footer";
 
 const iniOrderData = {
   fecha_orden: "",
@@ -211,159 +213,163 @@ const AddOrder = () => {
     setVehiclesInfo([iniVehicle]);
   };
   return (
-    <div>
-      <h1>Crear Orden</h1>
-      <div>
-        <label>Fecha de la Orden: {orderData.fecha_orden}</label>
-      </div>
-      <div>
-        <label>ID del Cliente:</label>
-        <input
-          type="text"
-          name="id_cliente"
-          value={orderData.id_cliente}
-          onChange={handleInputChange}
-        />
-        <button onClick={buscarCliente}>Buscar</button>
-      </div>
-      <div>
+    <main className="app">
+      <HeaderBar/>
+      <article className="body">
+        <h1>Crear Orden</h1>
         <div>
-          <div>
-            <label>Nombre: {clienteInfo.nombre}</label>
-          </div>
-          <div>
-            <label>Teléfono: {clienteInfo.telefono}</label>
-          </div>
-          <div>
-            <label>Dirección: {clienteInfo.email}</label>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <label>Placa del Vehículo:</label>
-        <select
-          name="placa_vehic"
-          value={orderData.placa_vehic}
-          onChange={handleSelectChange}
-        >
-          <option value="">Selecciona una placa</option>
-          {vehiclesInfo.map((vehi) => (
-            <option key={vehi.placa} value={vehi.placa}>
-              {vehi.placa}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <div>
-          <label>Marca: {vehicleInfo.marca}</label>
+          <label>Fecha de la Orden: {orderData.fecha_orden}</label>
         </div>
         <div>
-          <label>Modelo: {vehicleInfo.modelo}</label>
-        </div>
-        <div>
-          <label>Kms anterior: {vehicleInfo.kilometraje}</label>
-        </div>
-        <div>
-          <label>Kms actual: </label>
-          <input type="text" />
-        </div>
-      </div>
-
-      <div>
-        <h2>Detalle de la Orden</h2>
-        <div>
-          <label>ID del Producto:</label>
+          <label>ID del Cliente:</label>
           <input
             type="text"
-            name="producto_id"
-            value={detalleData.producto_id}
-            onChange={handleDetailInputChange}
+            name="id_cliente"
+            value={orderData.id_cliente}
+            onChange={handleInputChange}
           />
-          <button onClick={buscarProd}>Buscar</button>
+          <button onClick={buscarCliente}>Buscar</button>
         </div>
         <div>
-          <label>Descripcion:</label>
-          <input
-            type="text"
-            name="nombre"
-            value={infoProd.nombre}
-            onChange={handleDetailInputChange}
-          />
+          <div>
+            <div>
+              <label>Nombre: {clienteInfo.nombre}</label>
+            </div>
+            <div>
+              <label>Teléfono: {clienteInfo.telefono}</label>
+            </div>
+            <div>
+              <label>Dirección: {clienteInfo.email}</label>
+            </div>
+          </div>
         </div>
+
         <div>
-          <label>Cantidad:</label>
-          <input
-            type="number"
-            name="cantidad"
-            value={detalleData.cantidad}
-            onChange={handleDetailInputChange}
-          />
-        </div>
-        <div>
-          <label>Precio Unitario:</label>
-          <input
-            type="number"
-            name="precio_unitario"
-            value={infoProd.precio}
-            onChange={handleDetailInputChange}
-          />
-        </div>
-        <button onClick={handleAddDetail}>Agregar Detalle</button>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Descripcion</th>
-              <th>Cantidad</th>
-              <th>Precio Unitario</th>
-              <th>Valor Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {detalle.map((item, index) => (
-              <tr key={index}>
-                <td>{item.producto_id}</td>
-                <td>{item.producto_nom}</td>
-                <td>{item.cantidad}</td>
-                <td>
-                  {parseInt(item.precio_unitario).toLocaleString("es-CO", {
-                    style: "currency",
-                    currency: "COP",
-                    maximumFractionDigits: 0,
-                  })}
-                </td>
-                <td>
-                  {(
-                    parseInt(item.precio_unitario) * parseInt(item.cantidad)
-                  ).toLocaleString("es-CO", {
-                    style: "currency",
-                    currency: "COP",
-                    maximumFractionDigits: 0,
-                  })}
-                </td>
-              </tr>
+          <label>Placa del Vehículo:</label>
+          <select
+            name="placa_vehic"
+            value={orderData.placa_vehic}
+            onChange={handleSelectChange}
+          >
+            <option value="">Selecciona una placa</option>
+            {vehiclesInfo.map((vehi) => (
+              <option key={vehi.placa} value={vehi.placa}>
+                {vehi.placa}
+              </option>
             ))}
-          </tbody>
-        </table>
-        <div>
-          <label>
-            Total de la Orden:{" "}
-            {orderData.total_orden.toLocaleString("es-CO", {
-              style: "currency",
-              currency: "COP",
-              maximumFractionDigits: 0,
-            })}
-          </label>
+          </select>
         </div>
-        {errorMesage && <span className="error-message">{errorMesage}</span>}
-        {succesMesage && (
-          <span className="success-message">{succesMesage}</span>
-        )}
-      </div>
-      <button onClick={handleSubmit}>Crear Orden</button>
-    </div>
+        <div>
+          <div>
+            <label>Marca: {vehicleInfo.marca}</label>
+          </div>
+          <div>
+            <label>Modelo: {vehicleInfo.modelo}</label>
+          </div>
+          <div>
+            <label>Kms anterior: {vehicleInfo.kilometraje}</label>
+          </div>
+          <div>
+            <label>Kms actual: </label>
+            <input type="text" />
+          </div>
+        </div>
+
+        <div>
+          <h2>Detalle de la Orden</h2>
+          <div>
+            <label>ID del Producto:</label>
+            <input
+              type="text"
+              name="producto_id"
+              value={detalleData.producto_id}
+              onChange={handleDetailInputChange}
+            />
+            <button onClick={buscarProd}>Buscar</button>
+          </div>
+          <div>
+            <label>Descripcion:</label>
+            <input
+              type="text"
+              name="nombre"
+              value={infoProd.nombre}
+              onChange={handleDetailInputChange}
+            />
+          </div>
+          <div>
+            <label>Cantidad:</label>
+            <input
+              type="number"
+              name="cantidad"
+              value={detalleData.cantidad}
+              onChange={handleDetailInputChange}
+            />
+          </div>
+          <div>
+            <label>Precio Unitario:</label>
+            <input
+              type="number"
+              name="precio_unitario"
+              value={infoProd.precio}
+              onChange={handleDetailInputChange}
+            />
+          </div>
+          <button onClick={handleAddDetail}>Agregar Detalle</button>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Descripcion</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Valor Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {detalle.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.producto_id}</td>
+                  <td>{item.producto_nom}</td>
+                  <td>{item.cantidad}</td>
+                  <td>
+                    {parseInt(item.precio_unitario).toLocaleString("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                      maximumFractionDigits: 0,
+                    })}
+                  </td>
+                  <td>
+                    {(
+                      parseInt(item.precio_unitario) * parseInt(item.cantidad)
+                    ).toLocaleString("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                      maximumFractionDigits: 0,
+                    })}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div>
+            <label>
+              Total de la Orden:{" "}
+              {orderData.total_orden.toLocaleString("es-CO", {
+                style: "currency",
+                currency: "COP",
+                maximumFractionDigits: 0,
+              })}
+            </label>
+          </div>
+          {errorMesage && <span className="error-message">{errorMesage}</span>}
+          {succesMesage && (
+            <span className="success-message">{succesMesage}</span>
+          )}
+        </div>
+        <button onClick={handleSubmit}>Crear Orden</button>
+      </article>
+      <Footer/>
+    </main>
   );
 };
 
