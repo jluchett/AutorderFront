@@ -373,7 +373,7 @@ const AddOrder = () => {
             <div></div>
           </section>
 
-          <button onClick={handleSubmit}>Crear Orden</button>
+          <button className="add-button" onClick={handleSubmit}>Crear Orden</button>
           <div className="enlaces">
             <Link className="regresar-button" to={"/"}>
               Ir a Home
