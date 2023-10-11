@@ -26,19 +26,42 @@
   padding-bottom: 5px;
 }
 .table-container-order {
-    overflow-x: auto;
-    width: 100%;
-    margin: 10px auto;
-    padding: 10px;
-    background-color: #b5b6bc5b;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
+  overflow-x: auto;
+  width: 100%;
+  margin: 10px auto;
+  padding: 10px;
+  background-color: #b5b6bc5b;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
 .addor-input {
   width: 100%;
   position: relative;
   padding-left: 10px;
   padding-top: 2px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: auto;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.btn-order {
+  background-color: #007BFF;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-order:hover {
+  background-color: #0056b3;
 }
 
 th,
@@ -51,7 +74,7 @@ td {
 }
 
 @media (max-width: 530px) {
-    .rs1-addor-input {
-      width: 100%;
-    }
+  .rs1-addor-input {
+    width: 100%;
   }
+}

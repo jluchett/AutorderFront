@@ -237,7 +237,7 @@ const AddOrder = () => {
                 value={orderData.id_cliente}
                 onChange={handleInputChange}
               />
-              <button onClick={buscarCliente}>Buscar</button>
+              <button className="btn-order" onClick={buscarCliente}>Buscar</button>
             </div>
             <div className="addor-input rs1-addor-input">
               <label>Nombre: {clienteInfo.nombre}</label>
@@ -290,14 +290,20 @@ const AddOrder = () => {
                 value={detalleData.producto_id}
                 onChange={handleDetailInputChange}
               />
-              <button onClick={buscarProd}>Buscar</button>
+              <button className="btn-order" onClick={buscarProd}>Buscar</button>
             </div>
             <div className="addor-input rs1-addor-input">
               <label>Descripcion: {infoProd.nombre}</label>
             </div>
             <div className="addor-input rs1-addor-input">
-              <label>Precio Unitario: {infoProd.precio}</label>
-              
+              <label>
+                Precio Unitario:{" "}
+                {parseInt(infoProd.precio).toLocaleString("es-CO", {
+                  style: "currency",
+                  currency: "COP",
+                  maximumFractionDigits: 0
+                })}
+              </label>
             </div>
             <div className="addor-input rs1-addor-input">
               <label>Cantidad:</label>
@@ -309,7 +315,7 @@ const AddOrder = () => {
               />
             </div>
             <div className="addor-input rs1-addor-input">
-              <button onClick={handleAddDetail}>Agregar Detalle</button>
+              <button className="btn-order" onClick={handleAddDetail}>Agregar Detalle</button>
             </div>
             <div className="table-container-order">
               <table className="table">
@@ -373,7 +379,9 @@ const AddOrder = () => {
             <div></div>
           </section>
 
-          <button className="add-button" onClick={handleSubmit}>Crear Orden</button>
+          <button className="add-button" onClick={handleSubmit}>
+            Crear Orden
+          </button>
           <div className="enlaces">
             <Link className="regresar-button" to={"/"}>
               Ir a Home
