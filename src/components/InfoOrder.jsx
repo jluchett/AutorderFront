@@ -94,6 +94,7 @@ const InfoOrder = () => {
             })}
           </h3>
         </div>
+        <button>Imprimir</button>
       </div>
 
       <div className="enlaces">
