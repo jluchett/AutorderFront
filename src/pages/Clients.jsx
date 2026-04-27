@@ -5,12 +5,12 @@ import useStore from "../store";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
 import { actualClients } from "../api";
+import apiClient from "../services/apiClient";
 import "../styles/Clients.css";
 
 const Clients = () => {
   const clients = useStore((state) => state.clients);
   const setClients = useStore((state) => state.setClients);
-  const { ipHost } = useStore();
 
   useEffect(() => {
     const getClients = async () => {
@@ -21,21 +21,17 @@ const Clients = () => {
   }, [setClients]);
 
   const deleteClient = async (clientId) => {
-    // Lógica para eliminar un cliente de la base de datos
     try {
       const confirmed = window.confirm(
-        "¿Estás seguro de que deseas eliminar este Cliente?"
+        "¿Estás seguro de que deseas eliminar este cliente?"
       );
       if (confirmed) {
-        await fetch(`http://${ipHost}:3001/clients/delete/${clientId}`, {
-          method: "DELETE",
-        });
-        // Actualizar el estado "clients" eliminando el cliente
+        await apiClient.delete(`/clients/delete/${clientId}`);  // ← USAR APICLIENT
         const data = await actualClients();
         setClients(data);
       }
     } catch (error) {
-      console.log("Error al eliminar cliente:", error);
+      console.error("Error al eliminar cliente:", error);
     }
   };
 

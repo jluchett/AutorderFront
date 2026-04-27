@@ -5,13 +5,12 @@ import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
 import useStore from "../store";
 import { actualUsers } from "../api";
+import apiClient from "../services/apiClient";
 import "../styles/Users.css";
 
 const Users = () => {
   const users = useStore((state) => state.users);
   const setUsers = useStore((state) => state.setUsers);
-  const {ipHost} = useStore()
-
   useEffect(() => {
     // Lógica para obtener los usuarios de la base de datos y almacenarlos en el estado "users"
     const getUsers = async () => {
@@ -23,49 +22,38 @@ const Users = () => {
   }, [setUsers]);
 
   const deleteUser = async (userId) => {
-    // Lógica para eliminar un usuario de la base de datos
     try {
-      const confirmed = window.confirm(
-        "¿Estás seguro de que deseas eliminar este usuario?"
-      );
-      if (confirmed) {
-        await fetch(`http://${ipHost}:3001/users/delete/${userId}`, {
-          method: "DELETE",
-        });
-        // Actualizar el estado "users" eliminando el usuario eliminado
-        const data = await actualUsers();
-        setUsers(data);
-      }
-    } catch (error) {
-      console.log("Error deleting user:", error);
+    const confirmed = window.confirm(
+      "¿Estás seguro de que deseas eliminar este usuario?"
+    );
+    if (confirmed) {
+      await apiClient.delete(`/users/${userId}`);  // ← CAMBIO PRINCIPAL
+      // Actualizar estado
+      const data = await actualUsers();
+      setUsers(data);
     }
+  } catch (error) {
+    console.error("Error al eliminar usuario:", error);
+    // Mostrar error al usuario
+  }
   };
 
   const lockUser = async (userId) => {
-    // Lógica para bloquear un usuario en la base de datos
     try {
-      // Obtener el usuario actual por su ID
-      const user = users.find((user) => user.id === userId);
-      // Invertir el valor del campo "locked"
+      const user = users.find((u) => u.id === userId);
       const newLockedValue = !user.locked;
 
       const confirmed = window.confirm(
-        "Esto cambiará el acceso del usuario la aplicacion \n¿Desea continuar?"
+        "Esto cambiará el acceso del usuario en la aplicación\n¿Desea continuar?"
       );
+      
       if (confirmed) {
-        await fetch(`http://${ipHost}:3001/users/lock/${userId}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ locked: newLockedValue }),
-        });
-        // Actualizar el estado "users" modificando el campo de estado del usuario bloqueado
+        await apiClient.put(`/users/locked/${userId}`, { locked: newLockedValue });  // ← CAMBIO
         const data = await actualUsers();
         setUsers(data);
       }
     } catch (error) {
-      console.log("Error updating user:", error);
+      console.error("Error al cambiar estado del usuario:", error);
     }
   };
 

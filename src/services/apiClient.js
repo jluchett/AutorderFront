@@ -3,10 +3,20 @@
  * Proporciona manejo consistente de errores, timeouts y headers
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://192.168.1.18:3000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 const API_TIMEOUT = import.meta.env.VITE_API_TIMEOUT || 10000;
 
+// Callback para manejar logout automático (se asigna desde App.jsx)
+let onUnauthorized = null;
+
 class ApiClient {
+  /**
+   * Asigna callback para manejar unauthorized (401)
+   */
+  setUnauthorizedCallback(callback) {
+    onUnauthorized = callback;
+  }
+
   /**
    * Realiza una solicitud HTTP con manejo de errores
    */
@@ -22,7 +32,7 @@ class ApiClient {
       ...options,
     };
 
-    // Agregar token si existe
+    // Agregar token en Authorization header si existe
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -37,6 +47,19 @@ class ApiClient {
       });
 
       clearTimeout(timeoutId);
+
+      // Manejar 401 - Token expirado o inválido
+      if (response.status === 401) {
+        this.clearAuthToken();
+        if (onUnauthorized) {
+          onUnauthorized();
+        }
+        throw new ApiError(
+          'Sesión expirada. Por favor inicia sesión nuevamente',
+          401,
+          { unauthorized: true }
+        );
+      }
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -83,15 +106,33 @@ class ApiClient {
 
   /**
    * Obtiene el token de autenticación del localStorage
+   * El token puede estar en user.token o en authToken
    */
   getAuthToken() {
-    const user = localStorage.getItem('user');
-    if (!user) return null;
     try {
-      const userData = JSON.parse(user);
+      // Primero intenta obtener del localStorage directamente (authToken)
+      const authToken = localStorage.getItem('authToken');
+      if (authToken) return authToken;
+
+      // Luego intenta obtenerlo del objeto user
+      const userStr = localStorage.getItem('user');
+      if (!userStr) return null;
+
+      const userData = JSON.parse(userStr);
       return userData.token || null;
     } catch {
       return null;
+    }
+  }
+
+  /**
+   * Guarda el token de autenticación
+   */
+  setAuthToken(token) {
+    if (token) {
+      localStorage.setItem('authToken', token);
+    } else {
+      localStorage.removeItem('authToken');
     }
   }
 

@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import useStore from "../store";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
+import apiClient from "../services/apiClient";
 import "../styles/AddUser.css";
 
 const AddUser = () => {
@@ -13,57 +13,57 @@ const AddUser = () => {
   const [confPassword, setConfPassword] = useState("");
   const [errorMesage, setErrorMesage] = useState("");
   const [succesMesage, setSuccesMesage] = useState("");
-  const { ipHost } = useStore();
+  
 
-  const handledSubmit = (e) => {
+  const handledSubmit = async (e) => {
     e.preventDefault();
+
+    // Validaciones
     if (!id || !name) {
       setErrorMesage("Todos los datos son necesarios");
       setSuccesMesage("");
       return;
     }
-    // Comprobar aquí si el campo de entrada contiene solo números
+
     const isNumeric = /^\d+$/.test(id);
     if (!isNumeric) {
-      // Muestra un mensaje de error o realiza otra acción en caso de que el campo no contenga solo números
-      setErrorMesage("El campo Identificacion debe contener solo números.");
+      setErrorMesage("El campo Identificación debe contener solo números.");
       setSuccesMesage("");
       return;
     }
+
     if (password.length < 8) {
       setErrorMesage("La contraseña debe tener al menos 8 caracteres");
       setSuccesMesage("");
       return;
     }
-    if (password != confPassword) {
-      setErrorMesage("La confrmacion es diferente a la contraseña");
+
+    if (password !== confPassword) {
+      setErrorMesage("La confirmación es diferente a la contraseña");
       setSuccesMesage("");
       return;
     }
-    fetch(`http://${ipHost}:3001/users/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+
+    try {
+      const response = await apiClient.post('/users/create', {  // ← USAR APICLIENT
         id,
         name,
         password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        data.succes
-          ? setSuccesMesage(data.message)
-          : setErrorMesage(data.message);
-        setId("");
-        setName("");
-        setPassword("");
-        setConfPassword("");
-      })
-      .catch((error) => {
-        console.log(error);
       });
+      
+      setSuccesMesage(response.message);
+      setErrorMesage("");
+      
+      // Limpiar formulario
+      setId("");
+      setName("");
+      setPassword("");
+      setConfPassword("");
+    } catch (error) {
+      setErrorMesage(error.message || 'Error al crear usuario');
+      setSuccesMesage("");
+      console.error("Error:", error);
+    }
   };
 
   return (

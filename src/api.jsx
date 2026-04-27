@@ -85,18 +85,37 @@ export const actualDetalle = async (idOrder) => {
 
 /**
  * Realiza login - Centralizado con validaciones
+ * Guarda el token en localStorage para todas las requests posteriores
  */
 export const loginUser = async (id, password) => {
   try {
     const response = await apiClient.post("/auth/login", { id, password });
-    // Guardar usuario y token
-    if (response.user) {
-      localStorage.setItem("user", JSON.stringify(response.user));
-      if (response.token) {
-        localStorage.setItem("authToken", response.token);
-      }
+    
+    // El backend retorna { user, token } o { user: {..., token } }
+    let user = response.user;
+    let token = response.token;
+
+    // Si el token viene dentro del user, extraerlo
+    if (user && user.token && !token) {
+      token = user.token;
     }
-    return response.user || response;
+
+    // Asegurar que el usuario tenga el token
+    if (user && token) {
+      user.token = token;
+    }
+
+    // Guardar usuario (con token incluido)
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+
+    // Guardar token también directamente (para acceso rápido)
+    if (token) {
+      apiClient.setAuthToken(token);
+    }
+
+    return user || response;
   } catch (error) {
     console.error("Login error:", error.message);
     throw error;
@@ -172,3 +191,42 @@ export const getErrorMessage = (error) => {
     return [];
   }
 }
+
+/**
+ * Obtiene detalles de un vehículo
+ */
+export const getVehicleDetails = async (placa) => {
+  try {
+    const data = await apiClient.get(`/vehicles/${placa}`);
+    return data || {};
+  } catch (error) {
+    console.error("Error fetching vehicle details:", error.message);
+    throw error;
+  }
+};
+
+/**
+ * Actualiza un vehículo
+ */
+export const updateVehicle = async (placa, vehicleData) => {
+  try {
+    const data = await apiClient.put(`/vehicles/update/${placa}`, vehicleData);
+    return data;
+  } catch (error) {
+    console.error("Error updating vehicle:", error.message);
+    throw error;
+  }
+};
+
+/**
+ * Elimina un vehículo
+ */
+export const deleteVehicle = async (placa) => {
+  try {
+    const data = await apiClient.delete(`/vehicles/delete/${placa}`);
+    return data;
+  } catch (error) {
+    console.error("Error deleting vehicle:", error.message);
+    throw error;
+  }
+};

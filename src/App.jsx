@@ -1,7 +1,8 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import useStore from "./store";
+import { apiClient } from "./services/apiClient";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -24,7 +25,16 @@ import AddOrder from "./pages/AddOrder";
 //import MyReport from "./pages/MyReport";
 
 const App = () => {
-  const { user, login } = useStore();
+  const { user, login, logout } = useStore();
+  
+  // Configurar callback para manejar 401 (token expirado)
+  useEffect(() => {
+    apiClient.setUnauthorizedCallback(() => {
+      console.warn('Sesión expirada - Token inválido o vencido');
+      logout();
+      // El router automáticamente redirigirá a /login porque user será null
+    });
+  }, [logout]);
   
   // Verificar si ya hay un usuario autenticado en el estado global
   if (!user) {
@@ -33,10 +43,20 @@ const App = () => {
     // Si hay datos de usuario almacenados, establecerlos en el estado global
     if (storedUser) {
       try {
-        login(JSON.parse(storedUser));
+        const userData = JSON.parse(storedUser);
+        
+        // Verificar que el usuario tenga un token válido
+        if (userData.token) {
+          login(userData);
+        } else {
+          // Si no hay token, limpiar localStorage
+          localStorage.removeItem("user");
+          apiClient.clearAuthToken();
+        }
       } catch (error) {
         console.error("Error al recuperar usuario del localStorage:", error);
         localStorage.removeItem("user");
+        apiClient.clearAuthToken();
       }
     }
   }
