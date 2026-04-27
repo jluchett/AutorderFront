@@ -65,17 +65,17 @@ const InfoOrder = () => {
             <tbody>
               {ordenD.map((order, index) => (
                 <tr key={index}>
-                  <td>{order.codigo}</td>
-                  <td>{order.descripcion}</td>
-                  <td>{order.cant}</td>
+                  <td>{order.producto_id}</td>
+                  <td>{order.producto_nombre}</td>
+                  <td>{order.cantidad}</td>
                   <td>
-                    {parseInt(order.precio_und).toLocaleString("es-CO", {
+                    {parseInt(order.precio_unitario).toLocaleString("es-CO", {
                       style: "currency",
                       currency: "COP",
                     })}
                   </td>
                   <td>
-                    {parseInt(order.valor_total).toLocaleString("es-CO", {
+                    {parseInt(order.subtotal).toLocaleString("es-CO", {
                       style: "currency",
                       currency: "COP",
                     })}
