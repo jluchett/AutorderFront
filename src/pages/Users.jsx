@@ -5,7 +5,7 @@ import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
 import useStore from "../store";
 import { actualUsers } from "../api";
-import apiClient from "../services/apiClient";
+import { apiClient } from "../services/apiClient";
 import "../styles/Users.css";
 
 const Users = () => {

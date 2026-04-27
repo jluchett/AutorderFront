@@ -167,8 +167,13 @@ export const getUserDetail = async (userId) => {
 export const getErrorMessage = (error) => {
   try {
     if (error instanceof ApiError) {
+      if (error.status === 400) {
+        // Error de validación - mostrar mensaje específico del backend
+        return error.data?.message || "Datos inválidos";
+      }
       if (error.status === 401) {
-        return "Credenciales inválidas";
+        // Error de autenticación - mostrar mensaje específico del backend
+        return error.data?.message || "Credenciales inválidas";
       }
       if (error.status === 403) {
         return "No tienes permisos para esto";
@@ -180,7 +185,8 @@ export const getErrorMessage = (error) => {
         return "La solicitud tardó demasiado. Intenta de nuevo";
       }
       if (error.status === 500) {
-        return "Error en el servidor. Intenta más tarde";
+        // Extraer el mensaje específico del backend si existe
+        return error.data?.message || "Error en el servidor. Intenta más tarde";
       }
       return error.message || "Error desconocido";
     }

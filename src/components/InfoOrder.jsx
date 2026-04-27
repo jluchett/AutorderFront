@@ -63,8 +63,8 @@ const InfoOrder = () => {
               </tr>
             </thead>
             <tbody>
-              {ordenD.map((order) => (
-                <tr key={order.codigo}>
+              {ordenD.map((order, index) => (
+                <tr key={index}>
                   <td>{order.codigo}</td>
                   <td>{order.descripcion}</td>
                   <td>{order.cant}</td>

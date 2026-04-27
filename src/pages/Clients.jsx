@@ -5,7 +5,7 @@ import useStore from "../store";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
 import { actualClients } from "../api";
-import apiClient from "../services/apiClient";
+import { apiClient } from "../services/apiClient";
 import "../styles/Clients.css";
 
 const Clients = () => {
