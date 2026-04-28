@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import HeaderBar from "../components/HeaderBar";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
-import useStore from "../store";
+import { apiClient } from "../services/apiClient";
 
 const initialForm = {
   nombre: "",
@@ -14,7 +14,6 @@ const AddProduct = () => {
   const [product, setProduct] = useState(initialForm);
   const [errorMesage, setErrorMesage] = useState("");
   const [succesMesage, setSuccesMesage] = useState("");
-  const { ipHost } = useStore();
 
   const handleChange = (e) => {
     setProduct({
@@ -29,7 +28,7 @@ const AddProduct = () => {
     return Object.values(obj).every((value) => value !== "");
   }
 
-  const handledSubmit = (e) => {
+  const handledSubmit = async (e) => {
     e.preventDefault();
     const isFormValid = validarForm(product);
     if (!isFormValid) {
@@ -46,25 +45,25 @@ const AddProduct = () => {
       return;
     }
 
-    fetch(`http://${ipHost}:3001/products/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    try {
+      const data = await apiClient.post("/products/add", {
         nombre: product.nombre,
         precio: product.precio,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        data.succes
-          ? (setSuccesMesage(data.message), setProduct(initialForm))
-          : setErrorMesage(data.message);
-      })
-      .catch((error) => {
-        console.log(error);
       });
+
+      if (data.success) {
+        setSuccesMesage(data.message);
+        setErrorMesage("");
+        setProduct(initialForm);
+      } else {
+        setErrorMesage(data.message || "Error al crear producto");
+        setSuccesMesage("");
+      }
+    } catch (error) {
+      setErrorMesage(error.message || "Error al crear producto");
+      setSuccesMesage("");
+      console.error(error);
+    }
   };
 
   return (

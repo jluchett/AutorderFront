@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { apiClient } from "../services/apiClient";
 import useStore from "../store.jsx";
 
 const InfoProduct = () => {
@@ -11,7 +12,6 @@ const InfoProduct = () => {
   const [editingProduct, setEditingProduct] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const { ipHost } = useStore();
 
   const handleChange = (e) => {
     setDatos({
@@ -29,15 +29,21 @@ const InfoProduct = () => {
       return;
     }
     // Lógica para guardar nuevos datos en la base de datos
-    await fetch(`http://${ipHost}:3001/products/update/${product.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(datos),
-    });
-    setEditingProduct(false);
-    setSuccessMessage("Datos actualizados");
+    try {
+      const data = await apiClient.put(`/products/update/${product.id}`, datos);
+      if (data.success) {
+        setSuccessMessage("Datos actualizados");
+        setErrorMessage("");
+      } else {
+        setErrorMessage(data.message || "Error al actualizar producto");
+        setSuccessMessage("");
+      }
+      setEditingProduct(false);
+    } catch (error) {
+      setErrorMessage(error.message || "Error al actualizar producto");
+      setSuccessMessage("");
+      console.error(error);
+    }
   };
 
   const handleEditProd = () => {

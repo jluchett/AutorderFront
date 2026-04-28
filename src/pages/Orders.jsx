@@ -3,13 +3,13 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
+import { apiClient } from "../services/apiClient";
 import { actualOrders } from "../api";
 import useStore from "../store";
 
 const Orders = () => {
   const orders = useStore((state) => state.orders);
   const setOrders = useStore((state) => state.setOrders);
-  const { ipHost } = useStore();
 
   useEffect(() => {
     const getOrders = async () => {
@@ -26,9 +26,7 @@ const Orders = () => {
         `¿Estás seguro de que deseas eliminar esta orden #${idOrder} ?`
       );
       if (confirmed) {
-        await fetch(`http://${ipHost}:3001/orders/delete/${idOrder}`, {
-          method: "DELETE",
-        });
+        await apiClient.delete(`/orders/delete/${idOrder}`);
         // Actualizar el estado "Orders" eliminando la orden 
         const data = await actualOrders();
         setOrders(data);

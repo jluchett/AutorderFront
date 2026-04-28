@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { apiClient } from "../services/apiClient";
 import useStore from "../store.jsx";
 
 const InfoClient = () => {
@@ -11,7 +12,6 @@ const InfoClient = () => {
   const [editingClient, setEditingClient] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const { ipHost } = useStore();
 
   const handleChange = (e) => {
     setDatos({
@@ -29,15 +29,21 @@ const InfoClient = () => {
       return;
     }
     // Lógica para guardar nuevos datos en la base de datos
-    await fetch(`http://${ipHost}:3001/clients/update/${client.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(datos),
-    });
-    setEditingClient(false);
-    setSuccessMessage("Datos actualizados");
+    try {
+      const data = await apiClient.put(`/clients/update/${client.id}`, datos);
+      if (data.success) {
+        setSuccessMessage("Datos actualizados");
+        setErrorMessage("");
+      } else {
+        setErrorMessage(data.message || "Error al actualizar cliente");
+        setSuccessMessage("");
+      }
+      setEditingClient(false);
+    } catch (error) {
+      setErrorMessage(error.message || "Error al actualizar cliente");
+      setSuccessMessage("");
+      console.error(error);
+    }
   };
 
   const handleEditCli = () => {

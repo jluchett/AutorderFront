@@ -1,79 +1,135 @@
 @import "/node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "./variables.css";
+@import "./base.css";
+@import "./responsive.css";
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #a9a9a9;
+/* ====================================
+   ESTILOS GLOBALES APP
+   ==================================== */
+
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-secondary);
+}
+
+.app::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--footer-height);
 }
 
 #root {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-family-base);
   height: 100%;
 }
 
+/* ====================================
+   ÍCONO VEHÍCULO
+   ==================================== */
+
 .vehicle {
-  font-size: 40px;
-  margin-right: 10px;
-  color: rgb(255, 244, 36);
+  font-size: var(--font-size-3xl);
+  margin-right: var(--spacing-sm);
+  color: #ffe41e;
 }
 
-/* Estilos para el contenedor del filtro */
+/* ====================================
+   FILTRO
+   ==================================== */
+
 .filter {
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-md);
 }
 
-/* Estilos para el input del filtro */
 .filter input[type="text"] {
-  width: 80%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px; 
-  font-size: 16px;
+  width: 100%;
+  max-width: 600px;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-base);
   outline: none;
-  transition: border-color 0.2s ease-in-out;
+  transition: border-color var(--transition-normal),
+              box-shadow var(--transition-normal);
 }
 
-/* Estilos cuando el input tiene el foco */
 .filter input[type="text"]:focus {
-  border-color: #007bff; /* Puedes cambiar este color al que desees */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efecto de sombra suave */
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 60, 211, 0.1);
 }
 
+/* ====================================
+   PAGINACIÓN
+   ==================================== */
 
-/* Estilos para los botones de navegación "Anterior" y "Siguiente" */
 .pagination {
   padding: 0;
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
 }
 
 .pagination button {
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.2s ease-in-out;
+  font-size: var(--font-size-base);
+  transition: background-color var(--transition-normal),
+              transform var(--transition-normal);
   outline: none;
-  margin-right: 10px;
 }
 
-/* Estilos para los botones de navegación al pasar el ratón por encima */
-.pagination button:hover {
-  background-color: #0056b3; /* Cambia el color al pasar el ratón */
+.pagination button:hover:not([disabled]) {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
 }
 
-/* Estilo para el botón "Anterior" cuando está deshabilitado */
-.pagination button[disabled]:first-child {
-  background-color: #ccc;
+.pagination button:active:not([disabled]) {
+  transform: translateY(0);
+}
+
+.pagination button[disabled] {
+  background-color: var(--color-neutral-lighter);
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
-/* Estilo para el botón "Siguiente" cuando está deshabilitado */
-.pagination button[disabled]:last-child {
-  background-color: #ccc;
-  cursor: not-allowed;
+/* ====================================
+   RESPONSIVE MOBILE
+   ==================================== */
+
+@media (max-width: 767px) {
+  .filter input[type="text"] {
+    width: 100%;
+  }
+  
+  .pagination {
+    gap: var(--spacing-xs);
+  }
+  
+  .pagination button {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
 }
+

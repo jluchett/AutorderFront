@@ -1,44 +1,308 @@
-/* Header.css */
+/* ====================================
+   HEADER - ESTILOS PRINCIPALES
+   ==================================== */
+
 .header {
+  position: sticky;
+  top: 0;
+  height: var(--header-height);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  box-shadow: var(--shadow-md);
+  z-index: var(--z-fixed);
+  padding: 0 var(--spacing-md);
+  display: flex;
+  align-items: center;
+}
+
+.header-container {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 9px;
-  background-color: rgb(0, 60, 211);
+  gap: var(--spacing-md);
+}
+
+/* ▼ LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 100%;
 }
 
 .logo img {
-  width: 80%;
-  height: 50px;
+  height: 100%;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
 }
 
+/* ▼ INFORMACIÓN DE USUARIO (DESKTOP) */
 .user-info {
   display: flex;
   align-items: center;
+  gap: var(--spacing-md);
+  flex-shrink: 0;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .avatar i {
-  font-size: 25px;
-  margin-right: 10px;
-  color: #fe9a02;
+  font-size: var(--font-size-lg);
+  color: var(--color-secondary);
 }
 
 .user-name {
-  font-size: 18px;
-    
-  color: #fff;
+  font-size: var(--font-size-sm);
+  color: var(--color-white);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
 }
 
 .logout-button {
-  padding: 5px 16px;
-  background-color: rgb(201, 27, 27);
-  color: #fff;
-  font-size: 14px;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: var(--color-danger);
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
-  margin-left: 10px;
-  border-radius: 10px;
+  border-radius: var(--border-radius-md);
+  border: 2px solid transparent;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
 }
 
 .logout-button:hover {
-  background-color: #f73838;
+  background-color: var(--color-danger-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
 }
+
+.logout-button:active {
+  transform: translateY(0);
+}
+
+.logout-button:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+/* ====================================
+   MENÚ HAMBURGUESA (MOBILE)
+   ==================================== */
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: var(--z-modal);
+}
+
+.menu-toggle span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--color-secondary);
+  border-radius: 2px;
+  transition: all var(--transition-normal);
+}
+
+.menu-toggle:active span:first-child {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.menu-toggle:active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle:active span:last-child {
+  transform: rotate(-45deg) translate(7px, -8px);
+}
+
+/* ====================================
+   MENÚ MÓVIL
+   ==================================== */
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: calc(var(--z-modal) - 1);
+  animation: fadeIn var(--transition-normal);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mobile-menu {
+  position: fixed;
+  top: var(--header-height);
+  right: 0;
+  width: 100%;
+  max-width: 300px;
+  height: calc(100vh - var(--header-height));
+  background-color: var(--bg-primary);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-modal);
+  transform: translateX(100%);
+  transition: transform var(--transition-normal);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mobile-menu-header h3 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+}
+
+.close-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  transition: color var(--transition-normal);
+}
+
+.close-button:hover {
+  color: var(--color-primary);
+}
+
+.mobile-menu-content {
+  padding: var(--spacing-md);
+}
+
+.mobile-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  text-align: center;
+}
+
+.mobile-user-info .avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.mobile-user-info .user-name {
+  max-width: 100%;
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+}
+
+.logout-button.mobile {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background-color: var(--color-danger);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-normal);
+}
+
+.logout-button.mobile:hover {
+  background-color: var(--color-danger-light);
+}
+
+/* ====================================
+   RESPONSIVE MOBILE
+   ==================================== */
+
+@media (max-width: 767px) {
+  .header {
+    padding: 0 var(--spacing-sm);
+    height: 60px;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .user-info.desktop-only {
+    display: none;
+  }
+
+  .logo img {
+    max-width: 160px;
+  }
+
+  .user-name {
+    max-width: 100px;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-menu-overlay,
+  .mobile-menu {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .user-info.desktop-only {
+    display: flex;
+  }
+}
+
+/* ====================================
+   ANIMACIONES
+   ==================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .mobile-menu,
+  .logout-button {
+    transition: none;
+  }
+}
+

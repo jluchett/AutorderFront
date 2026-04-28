@@ -1,103 +1,298 @@
+/* ====================================
+   USERS PAGE - PÁGINA DE USUARIOS
+   ==================================== */
+
 .users-page {
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-bottom: 80px; /* Ajusta el tamaño del footer según sea necesario */
+  padding: var(--spacing-md);
+  padding-bottom: calc(var(--footer-height) + var(--spacing-lg));
 }
 
 .users {
-  font-size: 40px;
-  margin-right: 10px;
-  color: gold;
-}
-.title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  font-size: var(--font-size-3xl);
+  margin-right: var(--spacing-sm);
+  color: #ffe41e;
 }
 
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ▼ CONTENEDOR DE TABLA RESPONSIVA */
 .table-container {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-lg);
+  background-color: var(--bg-primary);
 }
 
+.table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-light);
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neutral);
+}
+
+/* Indicador de scroll horizontal (móvil) */
+@media (max-width: 767px) {
+  .table-container::after {
+    content: "← Desliza para ver más →";
+    display: block;
+    text-align: center;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-lighter);
+    padding: var(--spacing-sm);
+    background-color: var(--bg-secondary);
+  }
+}
+
+/* ▼ TABLA */
 .table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 0;
+  background-color: var(--bg-primary);
 }
 
 .table th {
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   text-align: left;
-  padding: 5px;
-  background-color: #f2f2f2;
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  border: none;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .table td {
-  padding: 5px;
-  border-bottom: 1px solid #ccc;
-  white-space: nowrap;
-  font-size: 16px;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  font-size: var(--font-size-sm);
 }
 
+.table tbody tr {
+  transition: background-color var(--transition-normal);
+}
+
+.table tbody tr:hover {
+  background-color: var(--bg-secondary);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Alternancia de colores de fila */
+.table tbody tr:nth-child(even) {
+  background-color: rgba(0, 60, 211, 0.02);
+}
+
+/* ▼ ACCIONES (BOTONES EN TABLA) */
 .actions {
   display: flex;
-  gap: 10px;
+  gap: var(--spacing-sm);
+  align-items: center;
+  flex-wrap: wrap;
+  white-space: normal;
 }
 
 .actions button {
-  padding: 5px 10px;
-  border: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 2px solid transparent;
   cursor: pointer;
-  border-radius: 5px;
-  font-size: 18px;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  color: var(--color-white);
+}
+
+.actions button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .actions button.edit {
-  background-color: #4caf50;
-  color: white;
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.actions button.edit:hover {
+  background-color: var(--color-success-light);
+  box-shadow: var(--shadow-md);
 }
 
 .actions button.delete {
-  background-color: #f44336;
-  color: white;
+  background-color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.actions button.delete:hover {
+  background-color: var(--color-danger-light);
+  box-shadow: var(--shadow-md);
 }
 
 .actions button.lock {
-  background-color: #ffc107;
-  color: black;
+  background-color: var(--color-warning);
+  color: var(--color-text);
+  border-color: var(--color-warning);
 }
 
-.actions button:hover {
-  color: rgb(8, 106, 203);
+.actions button.lock:hover {
+  background-color: var(--color-warning-light);
+  box-shadow: var(--shadow-md);
 }
 
-.agregar-button {
-  padding: 10px 20px;
-  border: none;
+.actions button.locked-status {
+  background-color: var(--color-neutral);
+  border-color: var(--color-neutral);
+}
+
+.actions button.locked-status:hover {
+  background-color: var(--color-neutral-light);
+  box-shadow: var(--shadow-md);
+}
+
+.actions button:active {
+  transform: scale(0.95);
+}
+
+/* ▼ BOTONES DE NAVEGACIÓN */
+.agregar-button,
+.regresar-button {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid transparent;
   cursor: pointer;
-  background-color: #46c012;
-  color: white;
-  border-radius: 10px;
+  background: linear-gradient(135deg, var(--color-success), var(--color-success-light));
+  color: var(--color-white);
+  border-radius: var(--border-radius-md);
   text-decoration: none;
-  margin-right: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  font-weight: var(--font-weight-bold);
+  transition: all var(--transition-normal);
+  margin-right: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-base);
 }
+
 .agregar-button:hover {
-  color: rgb(8, 106, 203);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  opacity: 0.95;
+}
+
+.regresar-button {
+  background: linear-gradient(135deg, var(--color-info), var(--color-info-light));
+  margin-right: 0;
 }
 
 .regresar-button:hover {
-  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
-/* Media Queries */
-@media screen and (max-width: 767px) {
-  /* Estilos para pantallas de hasta 767px de ancho (celulares) */
+
+.agregar-button:focus-visible,
+.regresar-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ====================================
+   RESPONSIVE MOBILE (< 767px)
+   ==================================== */
+
+@media (max-width: 767px) {
   .users-page {
-    padding: 10px;
+    padding: var(--spacing-sm);
+    padding-bottom: calc(var(--footer-height) + var(--spacing-lg));
   }
 
   h2 {
-    font-size: 24px;
+    font-size: var(--font-size-lg);
   }
+
+  .table {
+    font-size: var(--font-size-xs);
+  }
+
+  .table th,
+  .table td {
+    padding: var(--spacing-sm);
+  }
+
+  .table th {
+    font-size: var(--font-size-xs);
+  }
+
+  .actions {
+    gap: var(--spacing-xs);
+  }
+
+  .actions button {
+    padding: var(--spacing-xs);
+    min-width: 32px;
+    height: 32px;
+    font-size: var(--font-size-sm);
+  }
+
+  .agregar-button,
+  .regresar-button {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-md);
+  }
+}
+
+@media (min-width: 768px) {
+  .users-page {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .agregar-button,
+  .regresar-button {
+    margin-right: var(--spacing-md);
+    margin-bottom: 0;
+  }
+}
+
+/* ====================================
+   ANIMACIONES
+   ==================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .table tbody tr,
+  .actions button,
+  .agregar-button,
+  .regresar-button {
+    transition: none;
+  }
+}
+
 
   .table {
     font-size: 16px;

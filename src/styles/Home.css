@@ -1,4 +1,16 @@
+/* ====================================
+   HOME PAGE - PÁGINA PRINCIPAL
+   ==================================== */
+
 .app {
   position: relative;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  background-color: var(--bg-secondary);
+}
+
+/* Asegurar que el contenido se expanda y el footer esté al fondo */
+.app > *:last-child {
+  margin-top: auto;
 }

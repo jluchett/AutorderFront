@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import HeaderBar from "../components/HeaderBar";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
-import useStore from "../store";
+import { apiClient } from "../services/apiClient";
 
 const initialForm = {
   id: "",
@@ -16,8 +16,6 @@ const AddClient = () => {
   const [client, setClient] = useState(initialForm);
   const [errorMesage, setErrorMesage] = useState("");
   const [succesMesage, setSuccesMesage] = useState("");
-  const { ipHost } = useStore();
-
   const handleChange = (e) => {
     setClient({
       ...client,
@@ -31,7 +29,7 @@ const AddClient = () => {
     return Object.values(obj).every((value) => value !== "");
   }
 
-  const handledSubmit = (e) => {
+  const handledSubmit = async (e) => {
     e.preventDefault();
     const isFormValid = validarForm(client);
     if (!isFormValid) {
@@ -48,27 +46,27 @@ const AddClient = () => {
       return;
     }
 
-    fetch(`http://${ipHost}:3001/clients/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    try {
+      const data = await apiClient.post("/clients/add", {
         id: client.id,
         nombre: client.nombre,
         telefono: client.telefono,
         email: client.email,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        data.succes
-          ? (setSuccesMesage(data.message), setClient(initialForm))
-          : setErrorMesage(data.message);
-      })
-      .catch((error) => {
-        console.log(error);
       });
+
+      if (data.success) {
+        setSuccesMesage(data.message);
+        setErrorMesage("");
+        setClient(initialForm);
+      } else {
+        setErrorMesage(data.message || "Error al crear cliente");
+        setSuccesMesage("");
+      }
+    } catch (error) {
+      setErrorMesage(error.message || "Error al crear cliente");
+      setSuccesMesage("");
+      console.error(error);
+    }
   };
   return (
     <div className="app">

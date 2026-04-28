@@ -1,48 +1,266 @@
+/* ====================================
+   LOGIN PAGE - PÁGINA DE AUTENTICACIÓN
+   ==================================== */
+
 .login-container {
-  width: 300px;
-  margin: 0 auto;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  margin: var(--spacing-lg) auto;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
   text-align: center;
   display: flex;
   flex-direction: column;
-  background-color: #ccc;
-  margin-top: 30px;
-}
-.login-container i {
-  font-size: 40px;
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+  border: 1px solid var(--border-color);
 }
 
+.login-container i {
+  font-size: var(--font-size-3xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.login-container h1 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text);
+}
+
+/* ▼ FORMULARIO */
 .form-container {
-  margin-top: 20px;
+  margin-top: var(--spacing-lg);
   text-align: left;
 }
 
 .form-label {
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 }
 
 .form-container form input {
-  width: 94%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-base);
+  background-color: var(--bg-primary);
+  color: var(--color-text);
+  transition: all var(--transition-normal);
+  font-family: var(--font-family-base);
+  box-sizing: border-box;
+}
+
+.form-container form input::placeholder {
+  color: var(--color-text-lighter);
+}
+
+.form-container form input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 60, 211, 0.1);
+  outline: none;
+}
+
+.form-container form input:invalid {
+  border-color: var(--color-danger);
 }
 
 .form-container form button {
   width: 100%;
-  padding: 8px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: var(--color-white);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-md);
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  position: relative;
+  overflow: hidden;
 }
 
-.login-button:hover {
-  background-color: #0056b3;
+.form-container form button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left var(--transition-normal);
 }
+
+.form-container form button:hover {
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.form-container form button:hover::before {
+  left: 100%;
+}
+
+.form-container form button:active {
+  transform: translateY(0);
+}
+
+.form-container form button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.form-container form button:disabled {
+  background: var(--color-neutral-lighter);
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+/* ▼ MENSAJES DE ERROR Y ÉXITO */
+.error-message,
+.success-message {
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  animation: slideDown var(--transition-normal);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error-message {
+  background-color: rgba(244, 67, 54, 0.1);
+  border-left: 4px solid var(--color-danger);
+  color: var(--color-danger);
+}
+
+.error-message::before {
+  content: "!";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-danger);
+  color: white;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-weight: var(--font-weight-bold);
+}
+
+.success-message {
+  background-color: rgba(76, 175, 80, 0.1);
+  border-left: 4px solid var(--color-success);
+  color: var(--color-success);
+}
+
+.success-message::before {
+  content: "✓";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-success);
+  color: white;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-weight: var(--font-weight-bold);
+}
+
+/* ▼ FOOTER DE LOGIN */
+.login-footer {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-lighter);
+}
+
+/* ====================================
+   RESPONSIVE MOBILE
+   ==================================== */
+
+@media (max-width: 479px) {
+  .login-container {
+    width: calc(100% - var(--spacing-md));
+    margin: var(--spacing-md) auto;
+    padding: var(--spacing-md);
+  }
+
+  .login-container i {
+    font-size: var(--font-size-2xl);
+  }
+
+  .login-container h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  .form-container form input {
+    font-size: 16px; /* Previene zoom en iOS */
+  }
+
+  .form-container form button {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (min-width: 480px) {
+  .login-container {
+    max-width: 420px;
+  }
+}
+
+/* ====================================
+   ANIMACIONES
+   ==================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .login-container,
+  .form-container form input,
+  .form-container form button,
+  .error-message,
+  .success-message {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* ====================================
+   MODO OSCURO
+   ==================================== */
+
+@media (prefers-color-scheme: dark) {
+  .login-container {
+    border-color: var(--color-neutral-lighter);
+  }
+}
+

@@ -1,0 +1,401 @@
+/* ====================================
+   SISTEMA DE RESPONSIVE DESIGN (MOBILE-FIRST)
+   ==================================== */
+
+/* 
+   ✅ ESTRATEGIA MOBILE-FIRST:
+   - Estilos base para móvil (< 480px)
+   - Añadir media queries para pantallas más grandes
+   - Nunca usar max-width, usar min-width
+*/
+
+/* ====================================
+   MIXINS Y HELPERS RESPONSIVE
+   ==================================== */
+
+/* 
+   Uso de media queries:
+   
+   /* Mobile (< 480px) */
+   .element {
+     font-size: var(--font-size-sm);
+   }
+   
+   /* Tablet (≥ 768px) */
+   @media (min-width: 768px) {
+     .element {
+       font-size: var(--font-size-base);
+     }
+   }
+   
+   /* Desktop (≥ 1024px) */
+   @media (min-width: 1024px) {
+     .element {
+       font-size: var(--font-size-lg);
+     }
+   }
+
+
+/* ====================================
+   BREAKPOINTS RESPONSIVE
+   ==================================== */
+
+/* 📱 EXTRA PEQUEÑO: < 320px (muy raramente usado) */
+@media (max-width: 319px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+/* 📱 PEQUEÑO: 320px - 479px */
+@media (min-width: 320px) and (max-width: 479px) {
+  /* Usado explícitamente en algunos casos especiales */
+}
+
+/* 📱 TELÉFONO HORIZONTAL: ≥ 480px */
+@media (min-width: 480px) {
+  body {
+    font-size: var(--font-size-base);
+  }
+  
+  h1 {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* 📱 TABLET: ≥ 768px */
+@media (min-width: 768px) {
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* 🖥️ DESKTOP: ≥ 1024px */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+/* 🖥️ DESKTOP GRANDE: ≥ 1280px */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* 🖥️ EXTRA GRANDE: ≥ 1536px */
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+/* ====================================
+   ORIENTACIÓN
+   ==================================== */
+
+@media (orientation: landscape) and (max-height: 500px) {
+  /* Reducir alturas en landscape */
+  --header-height: 50px;
+  --footer-height: 50px;
+}
+
+/* ====================================
+   CARACTERÍSTICAS DE DISPOSITIVO
+   ==================================== */
+
+/* Pantallas táctiles */
+@media (hover: none) and (pointer: coarse) {
+  button,
+  a {
+    padding: var(--spacing-md);
+    min-height: 44px; /* Apple recomendación */
+    min-width: 44px;
+  }
+}
+
+/* Pantallas con hover (desktop) */
+@media (hover: hover) and (pointer: fine) {
+  button:hover,
+  a:hover {
+    opacity: 0.85;
+  }
+}
+
+/* Navegador soporta subgrid */
+@supports (grid-template-columns: subgrid) {
+  /* Futuros estilos con subgrid */
+}
+
+/* Navegador soporta CSS Grid */
+@supports (display: grid) {
+  /* Grid está disponible */
+}
+
+/* ====================================
+   PREFERENCIAS DEL USUARIO
+   ==================================== */
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bg-primary);
+    color: var(--color-text);
+  }
+}
+
+/* Modo claro explícito */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: var(--bg-secondary);
+    color: var(--color-text);
+  }
+}
+
+/* Reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Aumentar contraste */
+@media (prefers-contrast: more) {
+  :root {
+    --color-text: #000000;
+    --color-primary: #0014a8;
+  }
+}
+
+/* ====================================
+   Print STYLES
+   ==================================== */
+
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
+  
+  header,
+  footer,
+  nav,
+  .no-print {
+    display: none;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+}
+
+/* ====================================
+   UTILIDADES RESPONSIVE
+   ==================================== */
+
+/* Mostrar/Ocultar por tamaño */
+.hide-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hide-mobile {
+    display: block;
+  }
+  
+  .hide-tablet-up {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hide-desktop {
+    display: none;
+  }
+  
+  .hide-lg-up {
+    display: none;
+  }
+}
+
+/* Ancho responsive */
+.w-full {
+  width: 100%;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.max-w-none {
+  max-width: none;
+}
+
+@media (min-width: 768px) {
+  .w-md-auto {
+    width: auto;
+  }
+  
+  .w-md-full {
+    width: 100%;
+  }
+}
+
+/* Padding responsive */
+.p-mobile {
+  padding: var(--spacing-sm);
+}
+
+@media (min-width: 768px) {
+  .p-mobile {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .p-mobile {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Margen responsive */
+.m-mobile {
+  margin: var(--spacing-sm);
+}
+
+@media (min-width: 768px) {
+  .m-mobile {
+    margin: var(--spacing-md);
+  }
+}
+
+/* Grid columns responsive */
+.grid-auto {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+}
+
+@media (min-width: 480px) {
+  .grid-auto {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-auto {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-auto {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ====================================
+   SCROLL Y OVERFLOW RESPONSIVE
+   ==================================== */
+
+@media (max-width: 767px) {
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .table-responsive::after {
+    content: "← Desliza para ver más →";
+    display: block;
+    text-align: center;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-lighter);
+    padding: var(--spacing-sm);
+  }
+}
+
+/* ====================================
+   TIPOGRAFÍA RESPONSIVE
+   ==================================== */
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: calc(var(--font-size-3xl) * 1.2);
+  }
+  
+  h2 {
+    font-size: calc(var(--font-size-2xl) * 1.1);
+  }
+}
+
+/* ====================================
+   BOTONES RESPONSIVE
+   ==================================== */
+
+@media (max-width: 767px) {
+  button,
+  .btn {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+}
+
+@media (min-width: 768px) {
+  button.btn-inline {
+    width: auto;
+    margin-right: var(--spacing-sm);
+  }
+}
+
+/* ====================================
+   CONTENEDORES RESPONSIVE
+   ==================================== */
+
+.container-responsive {
+  width: 100%;
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
+}
+
+@media (min-width: 480px) {
+  .container-responsive {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+}
+
+@media (min-width: 768px) {
+  .container-responsive {
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-responsive {
+    max-width: 1280px;
+  }
+}

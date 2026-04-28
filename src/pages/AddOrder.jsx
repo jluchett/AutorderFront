@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useStore from "../store";
 import { actualClients, actualVehicles, actualProducts } from "../api";
+import { apiClient } from "../services/apiClient";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
 import "../styles/AddOrder.css";
@@ -43,7 +44,6 @@ const AddOrder = () => {
   const setVehicles = useStore((state) => state.setVehicles);
   const products = useStore((state) => state.products);
   const setProducts = useStore((state) => state.setProducts);
-  const { ipHost } = useStore();
   const [errorMesage, setErrorMesage] = useState("");
   const [succesMesage, setSuccesMesage] = useState("");
   const [orderData, setOrderData] = useState(iniOrderData);
@@ -166,7 +166,7 @@ const AddOrder = () => {
     return true; // Si no se encontraron valores vacíos en ningún objeto, el array es válido
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     getFecha();
     const isMainValid = validarObj(orderData);
     if (!isMainValid) {
@@ -187,24 +187,21 @@ const AddOrder = () => {
     };
 
     // Realiza la solicitud POST al backend con orderToSend y maneja la respuesta.
-    fetch(`http://${ipHost}:3001/orders/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(orderToSend),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        data.succes
-          ? setSuccesMesage(data.message)
-          : setErrorMesage(data.message);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // Añade aquí tu lógica de solicitud al servidor.
-    console.log("Orden a enviar:", orderToSend);
+    try {
+      const data = await apiClient.post("/orders/add", orderToSend);
+      if (data.success) {
+        setSuccesMesage(data.message);
+        setErrorMesage("");
+      } else {
+        setErrorMesage(data.message || "Error al crear orden");
+        setSuccesMesage("");
+      }
+      console.log("Orden a enviar:", orderToSend);
+    } catch (error) {
+      setErrorMesage(error.message || "Error al crear orden");
+      setSuccesMesage("");
+      console.error(error);
+    }
 
     // Limpia el estado después de enviar la orden.
     setOrderData(iniOrderData);

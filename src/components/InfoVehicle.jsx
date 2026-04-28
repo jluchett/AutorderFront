@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { apiClient } from "../services/apiClient";
 import useStore from "../store";
 
 const InfoVehicle = () => {
   const vehicles = useStore((state) => state.vehicles);
-  const { ipHost } = useStore();
   const { vehicPlaca } = useParams();
   const vehicle = vehicles.find((vehic) => vehic.placa === vehicPlaca);
   const [datos, setDatos] = useState(vehicle);
@@ -29,15 +29,21 @@ const InfoVehicle = () => {
       return;
     }
     // Lógica para guardar nuevos datos en la base de datos
-    await fetch(`http://${ipHost}:3001/vehicles/update/${vehicle.placa}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(datos),
-    });
-    setEditingClient(false);
-    setSuccessMessage("Datos actualizados");
+    try {
+      const data = await apiClient.put(`/vehicles/update/${vehicle.placa}`, datos);
+      if (data.success) {
+        setSuccessMessage("Datos actualizados");
+        setErrorMessage("");
+      } else {
+        setErrorMessage(data.message || "Error al actualizar vehículo");
+        setSuccessMessage("");
+      }
+      setEditingClient(false);
+    } catch (error) {
+      setErrorMessage(error.message || "Error al actualizar vehículo");
+      setSuccessMessage("");
+      console.error(error);
+    }
   };
 
   const handleEditCli = () => {

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import HeaderBar from "../components/HeaderBar";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
-import useStore from "../store";
+import { apiClient } from "../services/apiClient";
 
 const initialForm = {
   placa: "",
@@ -21,7 +21,6 @@ const AddVehicle = () => {
   const [vehicle, setVehicle] = useState(initialForm);
   const [errorMesage, setErrorMesage] = useState("");
   const [succesMesage, setSuccesMesage] = useState("");
-  const { ipHost } = useStore();
 
   const handleChange = (e) => {
     setVehicle({
@@ -36,7 +35,7 @@ const AddVehicle = () => {
     return Object.values(obj).every((value) => value !== "");
   }
 
-  const handledSubmit = (e) => {
+  const handledSubmit = async (e) => {
     e.preventDefault();
     const isFormValid = validarForm(vehicle);
     if (!isFormValid) {
@@ -53,12 +52,8 @@ const AddVehicle = () => {
       return;
     }
 
-    fetch(`http://${ipHost}:3001/vehicles/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    try {
+      const data = await apiClient.post("/vehicles/add", {
         placa: vehicle.placa,
         marca: vehicle.marca,
         modelo: vehicle.modelo,
@@ -67,17 +62,21 @@ const AddVehicle = () => {
         motor: vehicle.motor,
         transmision: vehicle.transmision,
         cliente_id: vehicle.cliente_id,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        data.succes
-          ? (setSuccesMesage(data.message), setVehicle(initialForm))
-          : setErrorMesage(data.message);
-      })
-      .catch((error) => {
-        console.log(error);
       });
+
+      if (data.success) {
+        setSuccesMesage(data.message);
+        setErrorMesage("");
+        setVehicle(initialForm);
+      } else {
+        setErrorMesage(data.message || "Error al crear vehículo");
+        setSuccesMesage("");
+      }
+    } catch (error) {
+      setErrorMesage(error.message || "Error al crear vehículo");
+      setSuccesMesage("");
+      console.error(error);
+    }
   };
   return (
     <main className="app">

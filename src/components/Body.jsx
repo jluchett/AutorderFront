@@ -29,8 +29,6 @@ const Body = () => {
     <div className="body">
       <div className="pages">
         <button className="btn-action" onClick={goToOrders}>
-          <i className="fa-solid fa-car"></i>
-          <span> </span>
           <i className="fa-solid fa-screwdriver-wrench"></i>
           <p></p>
           Ordenes

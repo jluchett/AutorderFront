@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import useStore from "../store";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
+import { apiClient } from "../services/apiClient";
 import { actualProducts } from "../api";
 
 const Products = () => {
   const products = useStore((state) => state.products);
   const setProducts = useStore((state) => state.setProducts);
-  const { ipHost } = useStore();
 
   const [filterValue, setFilterValue] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -53,9 +53,7 @@ const Products = () => {
         "¿Estás seguro de que deseas eliminar este Producto?"
       );
       if (confirmed) {
-        await fetch(`http://${ipHost}:3001/products/delete/${productId}`, {
-          method: "DELETE",
-        });
+        await apiClient.delete(`/products/delete/${productId}`);
         // Actualizar el estado "products" eliminando el producto del estado
         const data = await actualProducts();
         setProducts(data);

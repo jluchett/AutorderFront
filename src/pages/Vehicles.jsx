@@ -3,13 +3,13 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
+import { apiClient } from "../services/apiClient";
 import { actualVehicles } from "../api";
 import useStore from "../store";
 
 const Vehicles = () => {
   const vehicles = useStore((state) => state.vehicles);
   const setVehicles = useStore((state) => state.setVehicles);
-  const {ipHost} = useStore()
 
   useEffect(() => {
     const getVehicles = async () => {
@@ -26,9 +26,7 @@ const Vehicles = () => {
         "¿Estás seguro de que deseas eliminar este Vehiculo?"
       );
       if (confirmed) {
-        await fetch(`http://${ipHost}:3001/vehicles/delete/${vehicPlaca}`, {
-          method: "DELETE",
-        });
+        await apiClient.delete(`/vehicles/delete/${vehicPlaca}`);
         // Actualizar el estado "vehicles" eliminando el vehiculo 
         const data = await actualVehicles();
         setVehicles(data);

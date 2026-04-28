@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { apiClient } from "../services/apiClient";
 import useStore from "../store";
 import "../styles/InfoUser.css";
 
@@ -8,7 +9,6 @@ const InfoUser = () => {
   const { userId } = useParams();
   const { users } = useStore();
   const user = users.find((user) => user.id === userId);
-  const { ipHost } = useStore();
   const [editingName, setEditingName] = useState(false);
   const [newName, setNewName] = useState(user.name);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -23,17 +23,25 @@ const InfoUser = () => {
   };
 
   const handleSaveName = async () => {
-    // Lógica para guardar el nuevo nombre en la base de datos
-    await fetch(`http://${ipHost}:3001/users/update/${user.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: newName }),
-    });
-    user.name = newName;
+    try {
+      const data = await apiClient.put(`/users/update/${user.id}`, {
+        name: newName,
+        role: user.role,
+      });
+      if (data.success) {
+        user.name = newName;
+        setShowSuccessMessage(true);
+        setErrorMessage("");
+      } else {
+        setErrorMessage(data.message || "Error al actualizar el nombre");
+        setShowSuccessMessage(false);
+      }
+    } catch (error) {
+      setErrorMessage(error.message || "Error al actualizar el nombre");
+      setShowSuccessMessage(false);
+      console.error(error);
+    }
     setEditingName(false);
-    setShowSuccessMessage(true);
   };
 
   const handleEditName = () => {
@@ -58,15 +66,22 @@ const InfoUser = () => {
       return;
     }
     // Lógica para cambiar la contraseña del usuario
-    await fetch(`http://${ipHost}:3001/users/update/${user.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: newName, password }),
-    });
-    // Implementar la lógica de cambio de contraseña según tus necesidades
-    setSuccessMessage("Contraseña cambiada exitosamente");
+    try {
+      const data = await apiClient.put(`/users/changepass/${user.id}`, {
+        password,
+      });
+      if (data.success) {
+        setSuccessMessage("Contraseña cambiada exitosamente");
+        setErrorMessage("");
+      } else {
+        setErrorMessage(data.message || "Error al actualizar contraseña");
+        setSuccessMessage("");
+      }
+    } catch (error) {
+      setErrorMessage(error.message || "Error al actualizar contraseña");
+      setSuccessMessage("");
+      console.error(error);
+    }
   };
 
   if (!user) {
