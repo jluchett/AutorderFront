@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { apiClient } from "../services/apiClient";
 import useStore from "../store";
+import "../styles/AddUser.css";
 import "../styles/InfoUser.css";
 
 const InfoUser = () => {
@@ -91,13 +92,13 @@ const InfoUser = () => {
   return (
     <div className="body">
       <div className="users-page">
-        <div className="info-user">
+        <div className="info-user-page">
           <h2>Datos del usuario</h2>
-          <div className="user-details">
-            <div className="user-image">
+          <div className="info-user-details">
+            <div className="info-user-image">
               <i className="fa-solid fa-user"></i>
             </div>
-            <div className="user-data">
+            <div className="info-user-data">
               <label>ID: </label>
               <span>{user.id}</span>
               <div>

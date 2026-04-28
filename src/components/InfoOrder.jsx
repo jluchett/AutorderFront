@@ -22,7 +22,7 @@ const InfoOrder = () => {
 
   return (
     <div className="body">
-      <div className="info-user3">
+      <div className="info-order-page">
         <div className="order-info">
           <h2>
             Datos de la orden No. <span className="numOrden">{idOrden}</span>
@@ -50,7 +50,7 @@ const InfoOrder = () => {
         </div>
       </div>
 
-      <div className="info-user3">
+      <div className="order-section">
         <div className="table-container">
           <table className="table">
             <thead>

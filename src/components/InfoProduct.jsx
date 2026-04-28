@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { apiClient } from "../services/apiClient";
 import useStore from "../store.jsx";
+import "../styles/AddProduct.css";
+import "../styles/InfoUser.css";
 
 const InfoProduct = () => {
   const products = useStore((state) => state.products);
@@ -60,11 +62,11 @@ const InfoProduct = () => {
       <div className="users-page">
         <div className="info-user">
           <h2>Datos del producto</h2>
-          <div className="user-details">
+          <div className="product-details">
             <div className="client-image">
               <i className="fa-solid fa-store"></i>
             </div>
-            <div className="user-data">
+            <div className="product-data">
               <label>ID: </label>
               <span>{datos.id}</span>
               <div>

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { apiClient } from "../services/apiClient";
 import useStore from "../store";
+import "../styles/AddVehicle.css";
+import "../styles/InfoUser.css";
 
 const InfoVehicle = () => {
   const vehicles = useStore((state) => state.vehicles);
@@ -58,15 +60,15 @@ const InfoVehicle = () => {
 
   return (
     <div className="body">
-      <div className="info-user">
+      <div className="info-vehicle-page">
         <section className="encabezado">
-          <div className="client-image">
+          <div className="vehicle-image">
             <i className="fa-solid fa-car-side"></i>
           </div>
           <h2>Datos del Vehiculo</h2>
         </section>
-        <div className="user-details">
-          <div className="user-data">
+        <div className="info-vehicle-details">
+          <div className="info-vehicle-data">
             <label>Placa: </label>
             <span>{datos.placa}</span>
             <div>
@@ -80,7 +82,7 @@ const InfoVehicle = () => {
               <span>{datos.anio}</span>
             </div>
           </div>
-          <div className="user-data">
+          <div className="info-vehicle-data">
             <label>Kilometros: </label>
             <span>{datos.kilometraje}</span>
             <div>

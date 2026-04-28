@@ -175,6 +175,106 @@
   font-weight: var(--font-weight-bold);
 }
 
+.info-order-page,
+.order-section {
+  max-width: 1000px;
+  margin: 0 auto var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background-color: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.order-info {
+  display: grid;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.order-info h2 {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  color: var(--color-text);
+}
+
+.order-info div {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--spacing-md);
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.order-info div:last-child {
+  border-bottom: none;
+}
+
+.order-info label {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-light);
+}
+
+.order-info span {
+  color: var(--color-text);
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-secondary);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  padding: var(--spacing-md);
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+  background-color: var(--bg-primary);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.total {
+  margin-top: var(--spacing-md);
+  text-align: right;
+}
+
+.total h3 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+}
+
+.order-section button {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: var(--color-white);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.order-section button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
 .badge.success {
   background-color: var(--color-success);
 }

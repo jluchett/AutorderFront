@@ -163,7 +163,74 @@
   color: var(--color-primary-dark);
   gap: var(--spacing-md);
 }
+.info-user .user-details,
+.info-user-page .info-user-details,
+.info-vehicle-page .info-vehicle-details,
+.info-user .client-details,
+.info-user .product-details,
+.info-user .vehicle-details {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-lg);
+  align-items: flex-start;
+  margin-bottom: var(--spacing-lg);
+}
 
+.info-user .user-data,
+.info-user-page .info-user-data,
+.info-vehicle-page .info-vehicle-data,
+.info-user .client-data,
+.info-user .product-data,
+.info-user .vehicle-data {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+.info-user .user-data > div,
+.info-user-page .info-user-data > div,
+.info-vehicle-page .info-vehicle-data > div,
+.info-user .client-data > div,
+.info-user .product-data > div,
+.info-user .vehicle-data > div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.info-user .user-data label,
+.info-user-page .info-user-data label,
+.info-vehicle-page .info-vehicle-data label,
+.info-user .client-data label,
+.info-user .product-data label,
+.info-user .vehicle-data label {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-light);
+}
+
+.info-user .user-data span,
+.info-user-page .info-user-data span,
+.info-vehicle-page .info-vehicle-data span,
+.info-user .client-data span,
+.info-user .product-data span,
+.info-user .vehicle-data span {
+  color: var(--color-text);
+}
+
+.info-user .user-data > span,
+.info-user-page .info-user-data > span,
+.info-vehicle-page .info-vehicle-data > span,
+.info-user .client-data > span,
+.info-user .product-data > span,
+.info-user .vehicle-data > span {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+}
 /* ▼ ETIQUETAS Y BADGES */
 .badge {
   display: inline-block;

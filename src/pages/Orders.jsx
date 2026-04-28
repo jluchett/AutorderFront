@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { apiClient } from "../services/apiClient";
 import { actualOrders } from "../api";
 import useStore from "../store";
+import "../styles/Orders.css";
 
 const Orders = () => {
   const orders = useStore((state) => state.orders);

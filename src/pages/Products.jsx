@@ -6,6 +6,7 @@ import HeaderBar from "../components/HeaderBar";
 import Footer from "../components/Footer";
 import { apiClient } from "../services/apiClient";
 import { actualProducts } from "../api";
+import "../styles/Products.css";
 
 const Products = () => {
   const products = useStore((state) => state.products);

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { apiClient } from "../services/apiClient";
 import useStore from "../store.jsx";
+import "../styles/AddClient.css";
+import "../styles/InfoUser.css";
 
 const InfoClient = () => {
   const clients = useStore((state) => state.clients);
@@ -61,11 +63,11 @@ const InfoClient = () => {
       <div className="users-page">
         <div className="info-user">
           <h2>Datos del cliente</h2>
-          <div className="user-details">
+          <div className="client-details">
             <div className="client-image">
               <i className="fa-solid fa-user-tie"></i>
             </div>
-            <div className="user-data">
+            <div className="client-data">
               <label>ID: </label>
               <span>{datos.id}</span>
               <div>
