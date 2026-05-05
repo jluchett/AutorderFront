@@ -29,6 +29,14 @@ export const userService = {
     });
     return data;
   },
+
+  changePassword: async (id, password) => {
+    // Tu backend espera { password } en el body
+    const { data } = await api.put(`/users/changepass/${id}`, { password }, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return data;
+  },
   
   delete: async (id) => {
     const { data } = await api.delete(`/users/${id}`);

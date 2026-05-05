@@ -55,6 +55,18 @@ export const useUserStore = create((set, get) => ({
     }
   },
 
+  changePassword: async (id, password) => {
+    set({ isLoading: true, error: null });
+    try {
+      await userService.changePassword(id, password);
+      set({ isLoading: false });
+      return true;
+    } catch (error) {
+      set({ error: error.response?.data?.message || 'Error al cambiar contraseña', isLoading: false });
+      return false;
+    }
+  },
+
   deleteUser: async (id) => {
     set({ isLoading: true, error: null });
     try {

@@ -3,16 +3,19 @@ import { useUserStore } from '../../stores/userStore';
 import { useAuthStore } from '../../stores/authStore';
 import { Modal } from '../../components/Modal/Modal';
 import { UserForm } from './UserForm';
+import { ChangePasswordForm } from './ChangePasswordForm';
 import { useToastStore } from '../../stores/toastStore';
 import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
 import { useConfirmStore } from '../../stores/confirmStore';
 import styles from '../Clientes/Clientes.module.css'; // Reutilizamos estilos
 
 const Usuarios = () => {
-  const { users, isLoading, error, fetchUsers, deleteUser, createUser, updateUser, toggleLockStatus } = useUserStore();
+  const { users, isLoading, error, fetchUsers, deleteUser, createUser, updateUser, toggleLockStatus, changePassword } = useUserStore();
   const { user: currentUser } = useAuthStore(); // Para evitar que el admin se borre o bloquee a sí mismo
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState(null);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [userForPassword, setUserForPassword] = useState(null);
 
   const { addToast } = useToastStore();
   const { askConfirm } = useConfirmStore();
@@ -84,6 +87,26 @@ const Usuarios = () => {
     setUserToEdit(null);
   };
 
+  const handleOpenPassword = (usuario) => {
+    setUserForPassword(usuario);
+    setIsPasswordModalOpen(true);
+  };
+
+  const handleClosePasswordModal = () => {
+    setIsPasswordModalOpen(false);
+    setUserForPassword(null);
+  };
+
+  const handlePasswordSubmit = async (userId, newPassword) => {
+    const success = await changePassword(userId, newPassword);
+    if (success) {
+      addToast('Contraseña actualizada correctamente', 'success');
+      handleClosePasswordModal();
+    } else {
+      addToast('Error al cambiar la contraseña', 'error');
+    }
+  };
+
   const handleFormSubmit = async (data) => {
     // eslint-disable-next-line no-useless-assignment
     let success = false;
@@ -150,7 +173,13 @@ const Usuarios = () => {
                   <td>
                     <div className={styles.actions}>
                       <button className={styles.btnEdit} onClick={() => handleOpenEdit(usuario)}>Editar</button>
-                      
+                      <button 
+                        className={styles.btnEdit} 
+                        style={{ borderColor: 'var(--primary-color)', color: 'var(--primary-color)' }}
+                        onClick={() => handleOpenPassword(usuario)}
+                      >
+                        Clave
+                      </button>
                       {usuario.id !== currentUser.id && (
                         <>
                           <button 
@@ -177,6 +206,15 @@ const Usuarios = () => {
           initialData={userToEdit} 
           onSubmit={handleFormSubmit} 
           onCancel={handleCloseModal}
+          isLoading={isLoading}
+        />
+      </Modal>
+      
+      <Modal isOpen={isPasswordModalOpen} onClose={handleClosePasswordModal}>
+        <ChangePasswordForm 
+          user={userForPassword} 
+          onSubmit={handlePasswordSubmit} 
+          onCancel={handleClosePasswordModal}
           isLoading={isLoading}
         />
       </Modal>

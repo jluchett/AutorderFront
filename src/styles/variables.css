@@ -27,3 +27,50 @@ body {
   color: var(--text-primary);
   line-height: 1.5;
 }
+
+/* =========================================
+   ESTILOS PARA IMPRESIÓN DE FACTURAS (PDF)
+   ========================================= */
+@media print {
+  /* 1. Ocultar absolutamente todo */
+  body * {
+    visibility: hidden;
+  }
+
+  /* 2. MAGIA: Forzar a todos los contenedores padres (Modal, Layout, etc.) 
+     a que dejen de estar fijos y centrados, permitiendo que la hoja fluya */
+  html, body, #root, div {
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  /* 3. Hacer visible SOLO la factura */
+  #factura-imprimible, #factura-imprimible * {
+    visibility: visible;
+  }
+
+  /* 4. Posicionar la factura exactamente en la esquina superior izquierda */
+  #factura-imprimible {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 1cm 2cm !important; /* Margen elegante para la hoja */
+  }
+
+  /* 5. Asegurar que las tablas no se rompan a la mitad si la factura es muy larga */
+  table {
+    page-break-inside: auto;
+  }
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  /* 6. Ocultar los botones */
+  .no-print {
+    display: none !important;
+  }
+}
