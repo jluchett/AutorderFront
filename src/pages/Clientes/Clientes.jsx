@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { useClientStore } from '../../stores/clientStore';
 import { Modal } from '../../components/Modal/Modal';
 import { ClientForm } from './ClientForm';
+import { useToastStore } from '../../stores/toastStore';
+import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
 import styles from './Clientes.module.css';
 
 const Clientes = () => {
   const { clients, isLoading, error, fetchClients, deleteClient, createClient, updateClient } = useClientStore();
+  const { addToast } = useToastStore(); // 👈 3. Extraer addToast
+  
   const [searchTerm, setSearchTerm] = useState('');
-
   // Estados para el Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clientToEdit, setClientToEdit] = useState(null);
@@ -24,8 +27,14 @@ const Clientes = () => {
   };
 
   const handleDelete = async (id, nombre) => {
-    if (window.confirm(`¿Estás seguro de que deseas eliminar al cliente ${nombre}?`)) {
-      await deleteClient(id);
+   if (window.confirm(`¿Estás seguro de que deseas eliminar al cliente ${nombre}?`)) {
+      const success = await deleteClient(id);
+      // 👇 4. Mostrar Toast de éxito o error
+      if (success) {
+        addToast(`Cliente ${nombre} eliminado correctamente`, 'success');
+      } else {
+        addToast('No se pudo eliminar el cliente', 'error');
+      }
     }
   };
 
@@ -55,12 +64,16 @@ const Clientes = () => {
       // Si estamos editando, tu backend espera { nombre, telefono, email } y el ID por URL
       const payload = { nombre: data.nombre, telefono: data.telefono, email: data.email };
       success = await updateClient(clientToEdit.id, payload);
+      if (success) addToast('Cliente actualizado correctamente', 'info'); // 👈 Toast Info
     } else {
       success = await createClient(data);
+      if (success) addToast('Cliente creado exitosamente', 'success'); // 👈 Toast Success
     }
 
     if (success) {
       handleCloseModal();
+    }else {
+      addToast('Ocurrió un error al guardar', 'error'); // 👈 Toast Error
     }
   };
 
@@ -98,9 +111,7 @@ const Clientes = () => {
           </thead>
           <tbody>
             {isLoading && clients.length === 0 ? (
-              <tr>
-                <td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>Cargando clientes...</td>
-              </tr>
+              <TableSkeleton rows={5} columns={5} />
             ) : clients.length === 0 ? (
               <tr>
                 <td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>No se encontraron clientes.</td>

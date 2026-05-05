@@ -96,7 +96,7 @@ const Vehiculos = () => {
                   <td><strong>{vehiculo.placa}</strong></td>
                   <td>{vehiculo.marca} {vehiculo.modelo}</td>
                   <td>{vehiculo.anio}</td>
-                  <td>{vehiculo.nombre_cliente}</td> {/* Este campo lo trae tu query del backend */}
+                  <td>{vehiculo.nombre_cliente}</td>
                   <td>
                     <div className={styles.actions}>
                       <button className={styles.btnEdit} onClick={() => handleOpenEdit(vehiculo)}>Editar</button>
