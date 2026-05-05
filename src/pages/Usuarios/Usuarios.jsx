@@ -3,12 +3,14 @@ import { useUserStore } from '../../stores/userStore';
 import { useAuthStore } from '../../stores/authStore';
 import { Modal } from '../../components/Modal/Modal';
 import { UserForm } from './UserForm';
+import { useToastStore } from '../../stores/toastStore';
+import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
 import styles from '../Clientes/Clientes.module.css'; // Reutilizamos estilos
 
 const Usuarios = () => {
   const { users, isLoading, error, fetchUsers, deleteUser, createUser, updateUser, toggleLockStatus } = useUserStore();
   const { user: currentUser } = useAuthStore(); // Para evitar que el admin se borre o bloquee a sí mismo
-  
+  const { addToast } = useToastStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState(null);
 
@@ -22,7 +24,12 @@ const Usuarios = () => {
       return;
     }
     if (window.confirm(`¿Estás seguro de que deseas eliminar permanentemente al usuario ${nombre}?`)) {
-      await deleteUser(id);
+      const success = await deleteUser(id);
+      if (success) {
+        addToast('Usuario eliminado correctamente', 'success');
+      } else {
+        addToast('No se pudo eliminar el usuario', 'error');
+      }
     }
   };
 
@@ -33,7 +40,16 @@ const Usuarios = () => {
     }
     const accion = currentStatus ? "desbloquear" : "bloquear";
     if (window.confirm(`¿Estás seguro de ${accion} a este usuario?`)) {
-      await toggleLockStatus(id, currentStatus);
+      const success = await toggleLockStatus(id, currentStatus);
+      if (success) {
+        if (accion === "bloquear") {
+          addToast(`Usuario bloqueado correctamente`, 'success');
+        } else {
+          addToast(`Usuario desbloqueado correctamente`, 'success');
+        }
+      } else {
+        addToast(`No se pudo ${accion} al usuario`, 'error');
+      }
     }
   };
 
@@ -59,8 +75,10 @@ const Usuarios = () => {
       // Para editar, enviamos solo name y role según el backend
       const payload = { name: data.name, role: data.role };
       success = await updateUser(userToEdit.id, payload);
+      if (success) addToast('Usuario actualizado correctamente', 'info');
     } else {
       success = await createUser(data);
+      if (success) addToast('Usuario creado exitosamente', 'success');
     }
 
     if (success) {
@@ -90,7 +108,7 @@ const Usuarios = () => {
           </thead>
           <tbody>
             {isLoading && users.length === 0 ? (
-              <tr><td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>Cargando usuarios...</td></tr>
+              <TableSkeleton rows={5} columns={5} />
             ) : users.length === 0 ? (
               <tr><td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>No hay usuarios registrados.</td></tr>
             ) : (
