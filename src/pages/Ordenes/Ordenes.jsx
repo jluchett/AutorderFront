@@ -3,11 +3,14 @@ import { useOrderStore } from '../../stores/orderStore';
 import { Modal } from '../../components/Modal/Modal';
 import { OrderDetail } from './OrderDetail';
 import { OrderForm } from './OrderForm';
+import { useToastStore } from '../../stores/toastStore';
+import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
 import styles from '../Clientes/Clientes.module.css'; // Reutilizamos estilos
 
 const Ordenes = () => {
   const { orders, isLoading, error, fetchOrders, deleteOrder, getOrderDetail } = useOrderStore();
   const [searchTerm, setSearchTerm] = useState('');
+  const { addToast } = useToastStore();
   
   // Estados para el Modal de Detalles
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -37,7 +40,12 @@ const Ordenes = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm(`¿Estás seguro de anular/eliminar la orden #${id}? Esta acción es irreversible.`)) {
-      await deleteOrder(id);
+      const success = await deleteOrder(id);
+      if (success) {
+        addToast('Orden anulada/eliminada correctamente', 'success');
+      } else {
+        addToast('No se pudo anular/eliminar la orden', 'error');
+      }
     }
   };
 
@@ -92,7 +100,7 @@ const Ordenes = () => {
           </thead>
           <tbody>
             {isLoading && orders.length === 0 ? (
-              <tr><td colSpan="6" style={{ textAlign: 'center', padding: '2rem' }}>Cargando órdenes...</td></tr>
+              <TableSkeleton rows={5} columns={6} />
             ) : orders.length === 0 ? (
               <tr><td colSpan="6" style={{ textAlign: 'center', padding: '2rem' }}>No hay órdenes registradas.</td></tr>
             ) : (

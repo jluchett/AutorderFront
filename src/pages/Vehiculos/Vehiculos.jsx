@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useVehicleStore } from '../../stores/vehicleStore';
 import { Modal } from '../../components/Modal/Modal';
 import { VehicleForm } from './VehicleForm';
+import { useToastStore } from '../../stores/toastStore';
+import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
 import styles from '../Clientes/Clientes.module.css'; // ¡Reutilizamos los estilos!
 
 const Vehiculos = () => {
@@ -9,6 +11,7 @@ const Vehiculos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [vehicleToEdit, setVehicleToEdit] = useState(null);
+  const { addToast } = useToastStore(); // 👈 3. Extraer addToast
 
   useEffect(() => {
     fetchVehicles();
@@ -21,7 +24,12 @@ const Vehiculos = () => {
 
   const handleDelete = async (placa) => {
     if (window.confirm(`¿Estás seguro de que deseas eliminar el vehículo con placa ${placa}?`)) {
-      await deleteVehicle(placa);
+      const success = await deleteVehicle(placa);
+      if (success) {
+        addToast(`Vehículo con placa ${placa} eliminado correctamente`, 'success');
+      } else {
+        addToast('No se pudo eliminar el vehículo', 'error');
+      }
     }
   };
 
@@ -45,12 +53,16 @@ const Vehiculos = () => {
     let success = false;
     if (vehicleToEdit) {
       success = await updateVehicle(vehicleToEdit.placa, data);
+      if (success) addToast('Vehículo actualizado correctamente', 'info'); // 👈 Toast Info
     } else {
       success = await createVehicle(data);
+      if (success) addToast('Vehículo creado exitosamente', 'success'); // 👈 Toast Success
     }
 
     if (success) {
       handleCloseModal();
+    } else {
+      addToast('Ocurrió un error al guardar', 'error'); // 👈 Toast Error
     }
   };
 
@@ -87,7 +99,7 @@ const Vehiculos = () => {
           </thead>
           <tbody>
             {isLoading && vehicles.length === 0 ? (
-              <tr><td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>Cargando vehículos...</td></tr>
+              <TableSkeleton rows={5} columns={5} />
             ) : vehicles.length === 0 ? (
               <tr><td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>No se encontraron vehículos.</td></tr>
             ) : (

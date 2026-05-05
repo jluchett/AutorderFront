@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useProductStore } from '../../stores/productStore';
 import { Modal } from '../../components/Modal/Modal';
 import { ProductForm } from './ProductForm';
+import { useToastStore } from '../../stores/toastStore';
+import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
 import styles from '../Clientes/Clientes.module.css'; // Reutilizamos estilos
 
 const Productos = () => {
@@ -9,6 +11,7 @@ const Productos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
+  const { addToast } = useToastStore(); // 👈 3. Extraer addToast
 
   useEffect(() => {
     fetchProducts();
@@ -21,7 +24,12 @@ const Productos = () => {
 
   const handleDelete = async (id, nombre) => {
     if (window.confirm(`¿Estás seguro de que deseas eliminar "${nombre}"?`)) {
-      await deleteProduct(id);
+      const success = await deleteProduct(id);
+      if (success) {
+        addToast(`Producto "${nombre}" eliminado correctamente`, 'success');
+      } else {
+        addToast('No se pudo eliminar el producto', 'error');
+      }
     }
   };
 
@@ -45,12 +53,16 @@ const Productos = () => {
     let success = false;
     if (productToEdit) {
       success = await updateProduct(productToEdit.id, data);
+      if (success) addToast('Producto actualizado correctamente', 'info'); // 👈 Toast Info
     } else {
       success = await createProduct(data);
+      if (success) addToast('Producto creado exitosamente', 'success'); // 👈 Toast Success
     }
 
     if (success) {
       handleCloseModal();
+    } else {
+      addToast('Ocurrió un error al guardar', 'error'); // 👈 Toast Error
     }
   };
 
@@ -86,7 +98,7 @@ const Productos = () => {
           </thead>
           <tbody>
             {isLoading && products.length === 0 ? (
-              <tr><td colSpan="4" style={{ textAlign: 'center', padding: '2rem' }}>Cargando catálogo...</td></tr>
+              <TableSkeleton rows={5} columns={4} />
             ) : products.length === 0 ? (
               <tr><td colSpan="4" style={{ textAlign: 'center', padding: '2rem' }}>No se encontraron productos.</td></tr>
             ) : (
