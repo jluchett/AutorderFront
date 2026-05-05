@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { useAuthStore } from './stores/authStore';
 import { AppRouter } from './router/AppRouter';
+import { ToastContainer } from './components/Toast/ToastContainer';
 import './styles/index.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <ToastContainer />
       <BrowserRouter>
         <AppRouter />
       </BrowserRouter>
