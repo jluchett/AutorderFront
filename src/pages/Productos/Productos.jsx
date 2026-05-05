@@ -4,6 +4,7 @@ import { Modal } from '../../components/Modal/Modal';
 import { ProductForm } from './ProductForm';
 import { useToastStore } from '../../stores/toastStore';
 import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
+import { useConfirmStore } from '../../stores/confirmStore';
 import styles from '../Clientes/Clientes.module.css'; // Reutilizamos estilos
 
 const Productos = () => {
@@ -12,7 +13,7 @@ const Productos = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
   const { addToast } = useToastStore(); // 👈 3. Extraer addToast
-
+  const { askConfirm } = useConfirmStore(); // 👈 4. Extraer askConfirm
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
@@ -23,7 +24,14 @@ const Productos = () => {
   };
 
   const handleDelete = async (id, nombre) => {
-    if (window.confirm(`¿Estás seguro de que deseas eliminar "${nombre}"?`)) {
+    const isConfirmed = await askConfirm({
+      title: 'Eliminar Producto',
+      message: `¿Estás seguro de que deseas eliminar "${nombre}"?`,
+      confirmText: 'Sí, eliminar',
+      isDanger: true
+    });
+
+    if (isConfirmed) {
       const success = await deleteProduct(id);
       if (success) {
         addToast(`Producto "${nombre}" eliminado correctamente`, 'success');

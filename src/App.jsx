@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { useAuthStore } from './stores/authStore';
 import { AppRouter } from './router/AppRouter';
 import { ToastContainer } from './components/Toast/ToastContainer';
+import { ConfirmDialog } from './components/Modal/ConfirmDialog';
 import './styles/index.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   return (
     <div className="app-container">
       <ToastContainer />
+      <ConfirmDialog />
       <BrowserRouter>
         <AppRouter />
       </BrowserRouter>

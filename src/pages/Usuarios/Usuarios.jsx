@@ -5,14 +5,17 @@ import { Modal } from '../../components/Modal/Modal';
 import { UserForm } from './UserForm';
 import { useToastStore } from '../../stores/toastStore';
 import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
+import { useConfirmStore } from '../../stores/confirmStore';
 import styles from '../Clientes/Clientes.module.css'; // Reutilizamos estilos
 
 const Usuarios = () => {
   const { users, isLoading, error, fetchUsers, deleteUser, createUser, updateUser, toggleLockStatus } = useUserStore();
   const { user: currentUser } = useAuthStore(); // Para evitar que el admin se borre o bloquee a sí mismo
-  const { addToast } = useToastStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState(null);
+
+  const { addToast } = useToastStore();
+  const { askConfirm } = useConfirmStore();
 
   useEffect(() => {
     fetchUsers();
@@ -20,13 +23,19 @@ const Usuarios = () => {
 
   const handleDelete = async (id, nombre) => {
     if (id === currentUser.id) {
-      alert("Por seguridad, no puedes eliminar tu propio usuario.");
+      addToast("Por seguridad, no puedes eliminar tu propio usuario.", 'error');
       return;
     }
-    if (window.confirm(`¿Estás seguro de que deseas eliminar permanentemente al usuario ${nombre}?`)) {
+    const isConfirmed = await askConfirm({
+      title: 'Eliminar Usuario',
+      message: `¿Estás seguro de que deseas eliminar permanentemente al usuario ${nombre}?`,
+      confirmText: 'Sí, eliminar',
+      isDanger: true
+    });
+    if (isConfirmed) {
       const success = await deleteUser(id);
       if (success) {
-        addToast('Usuario eliminado correctamente', 'success');
+        addToast(`Usuario ${nombre} eliminado`, 'success');
       } else {
         addToast('No se pudo eliminar el usuario', 'error');
       }
@@ -35,11 +44,18 @@ const Usuarios = () => {
 
   const handleToggleLock = async (id, currentStatus) => {
     if (id === currentUser.id) {
-      alert("No puedes bloquear tu propio usuario.");
+      addToast("No puedes bloquear tu propio usuario.", 'error');
       return;
     }
     const accion = currentStatus ? "desbloquear" : "bloquear";
-    if (window.confirm(`¿Estás seguro de ${accion} a este usuario?`)) {
+    const isConfirmed = await askConfirm({
+      title: `${accion.charAt(0).toUpperCase() + accion.slice(1)} Usuario`,
+      message: `¿Estás seguro de que deseas ${accion} a este usuario?`,
+      confirmText: `Sí, ${accion}`,
+      isDanger: !currentStatus
+    });
+    
+    if (isConfirmed) {
       const success = await toggleLockStatus(id, currentStatus);
       if (success) {
         if (accion === "bloquear") {

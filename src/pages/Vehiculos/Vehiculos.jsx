@@ -4,6 +4,7 @@ import { Modal } from '../../components/Modal/Modal';
 import { VehicleForm } from './VehicleForm';
 import { useToastStore } from '../../stores/toastStore';
 import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
+import { useConfirmStore } from '../../stores/confirmStore';
 import styles from '../Clientes/Clientes.module.css'; // ¡Reutilizamos los estilos!
 
 const Vehiculos = () => {
@@ -12,6 +13,7 @@ const Vehiculos = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [vehicleToEdit, setVehicleToEdit] = useState(null);
   const { addToast } = useToastStore(); // 👈 3. Extraer addToast
+  const { askConfirm } = useConfirmStore(); // 👈 4. Extraer askConfirm
 
   useEffect(() => {
     fetchVehicles();
@@ -23,7 +25,14 @@ const Vehiculos = () => {
   };
 
   const handleDelete = async (placa) => {
-    if (window.confirm(`¿Estás seguro de que deseas eliminar el vehículo con placa ${placa}?`)) {
+    const isConfirmed = await askConfirm({
+      title: 'Eliminar Vehículo',
+      message: `¿Estás seguro de que deseas eliminar el vehículo con placa ${placa}?`,
+      confirmText: 'Sí, eliminar',
+      isDanger: true
+    });
+
+    if (isConfirmed) {
       const success = await deleteVehicle(placa);
       if (success) {
         addToast(`Vehículo con placa ${placa} eliminado correctamente`, 'success');

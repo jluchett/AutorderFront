@@ -5,13 +5,15 @@ import { OrderDetail } from './OrderDetail';
 import { OrderForm } from './OrderForm';
 import { useToastStore } from '../../stores/toastStore';
 import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
+import { useConfirmStore } from '../../stores/confirmStore';
 import styles from '../Clientes/Clientes.module.css'; // Reutilizamos estilos
 
 const Ordenes = () => {
   const { orders, isLoading, error, fetchOrders, deleteOrder, getOrderDetail } = useOrderStore();
   const [searchTerm, setSearchTerm] = useState('');
   const { addToast } = useToastStore();
-  
+  const { askConfirm } = useConfirmStore();
+
   // Estados para el Modal de Detalles
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [currentDetail, setCurrentDetail] = useState(null);
@@ -39,7 +41,14 @@ const Ordenes = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm(`¿Estás seguro de anular/eliminar la orden #${id}? Esta acción es irreversible.`)) {
+    const isConfirmed = await askConfirm({
+      title: 'Anular/Eliminar Orden',
+      message: `¿Estás seguro de anular/eliminar la orden #${id}? Esta acción es irreversible.`,
+      confirmText: 'Sí, eliminar',
+      isDanger: true
+    });
+
+    if (isConfirmed) {
       const success = await deleteOrder(id);
       if (success) {
         addToast('Orden anulada/eliminada correctamente', 'success');

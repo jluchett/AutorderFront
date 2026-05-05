@@ -3,11 +3,13 @@ import { useForm, Controller } from 'react-hook-form';
 import { useClientStore } from '../../stores/clientStore';
 import { useVehicleStore } from '../../stores/vehicleStore';
 import { useProductStore } from '../../stores/productStore';
+import { useToastStore } from '../../stores/toastStore';
 import styles from '../Login/Login.module.css';
 
 export const OrderForm = ({ onSubmit, onCancel, isLoading }) => {
   // Traemos los stores globales
   const { clients, fetchClients } = useClientStore();
+  const { addToast } = useToastStore();
   const { vehiclesByClient, fetchVehiclesByClient } = useVehicleStore();
   const { products, fetchProducts } = useProductStore();
 
@@ -75,7 +77,7 @@ export const OrderForm = ({ onSubmit, onCancel, isLoading }) => {
 
   const onFormSubmit = (data) => {
     if (cart.length === 0) {
-      alert("Debe agregar al menos un producto o servicio a la orden.");
+      addToast("Debe agregar al menos un producto o servicio a la orden.", 'error');
       return;
     }
 

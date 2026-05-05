@@ -4,12 +4,13 @@ import { Modal } from '../../components/Modal/Modal';
 import { ClientForm } from './ClientForm';
 import { useToastStore } from '../../stores/toastStore';
 import { TableSkeleton } from '../../components/Skeleton/TableSkeleton';
+import { useConfirmStore } from '../../stores/confirmStore';
 import styles from './Clientes.module.css';
 
 const Clientes = () => {
   const { clients, isLoading, error, fetchClients, deleteClient, createClient, updateClient } = useClientStore();
   const { addToast } = useToastStore(); // 👈 3. Extraer addToast
-  
+  const { askConfirm } = useConfirmStore();
   const [searchTerm, setSearchTerm] = useState('');
   // Estados para el Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +28,14 @@ const Clientes = () => {
   };
 
   const handleDelete = async (id, nombre) => {
-   if (window.confirm(`¿Estás seguro de que deseas eliminar al cliente ${nombre}?`)) {
+    const isConfirmed = await askConfirm({
+      title: 'Eliminar Cliente',
+      message: `¿Estás seguro de que deseas eliminar al cliente ${nombre}?`,
+      confirmText: 'Sí, eliminar',
+      isDanger: true
+    });
+
+    if (isConfirmed) {
       const success = await deleteClient(id);
       // 👇 4. Mostrar Toast de éxito o error
       if (success) {
